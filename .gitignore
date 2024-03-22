@@ -1,0 +1,3 @@
+.DS_Store
+.env/
+whisper-tiny.en.tf_model.h5

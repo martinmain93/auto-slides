@@ -1,0 +1,10 @@
+librosa==0.10.1
+soundfile==0.12.1
+torch==2.2.1
+transformers==4.38.2
+pyaudio
+SpeechRecognition
+--extra-index-url https://download.pytorch.org/whl/cu116
+torch
+numpy
+git+https://github.com/openai/whisper.git
