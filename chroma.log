@@ -1,0 +1,989 @@
+[32mINFO[0m:     [23-03-2024 14:33:39] Set chroma_server_nofile to 65535
+[32mINFO[0m:     [23-03-2024 14:33:39] Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[36mDEBUG[0m:    [23-03-2024 14:33:39] Starting component System
+[36mDEBUG[0m:    [23-03-2024 14:33:39] Starting component OpenTelemetryClient
+[36mDEBUG[0m:    [23-03-2024 14:33:39] Starting component SimpleAssignmentPolicy
+[36mDEBUG[0m:    [23-03-2024 14:33:39] Starting component SqliteDB
+[36mDEBUG[0m:    [23-03-2024 14:33:39] Starting component QuotaEnforcer
+[36mDEBUG[0m:    [23-03-2024 14:33:39] Starting component Posthog
+[36mDEBUG[0m:    [23-03-2024 14:33:39] Starting component LocalSegmentManager
+[36mDEBUG[0m:    [23-03-2024 14:33:39] Starting component SegmentAPI
+[32mINFO[0m:     [23-03-2024 14:33:39] Started server process [[36m20624[0m]
+[32mINFO[0m:     [23-03-2024 14:33:39] Waiting for application startup.
+[32mINFO[0m:     [23-03-2024 14:33:39] Application startup complete.
+[32mINFO[0m:     [23-03-2024 14:33:39] Uvicorn running on [1mhttp://localhost:8000[0m (Press CTRL+C to quit)
+[32mINFO[0m:     [23-03-2024 14:38:18] ::1:61072 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [23-03-2024 14:38:18] ::1:61072 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [23-03-2024 14:38:18] ::1:61073 - "POST /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [23-03-2024 14:41:22] ::1:61219 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [23-03-2024 14:41:22] ::1:61219 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[31mERROR[0m:    [23-03-2024 14:41:22] Collection auto-slides already exists
+Traceback (most recent call last):
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/anyio/streams/memory.py", line 97, in receive
+    return self.receive_nowait()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/anyio/streams/memory.py", line 92, in receive_nowait
+    raise WouldBlock
+anyio.WouldBlock
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 159, in call_next
+    message = await recv_stream.receive()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/anyio/streams/memory.py", line 112, in receive
+    raise EndOfStream
+anyio.EndOfStream
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/server/fastapi/__init__.py", line 82, in catch_exceptions_middleware
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 165, in call_next
+    raise app_exc
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 151, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 189, in __call__
+    with collapse_excgroups():
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6/Frameworks/Python.framework/Versions/3.11/lib/python3.11/contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/_utils.py", line 93, in collapse_excgroups
+    raise exc
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 191, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/server/fastapi/__init__.py", line 96, in check_http_version_middleware
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 165, in call_next
+    raise app_exc
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 151, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/routing.py", line 74, in app
+    response = await func(request)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/fastapi/routing.py", line 278, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/fastapi/routing.py", line 193, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/concurrency.py", line 42, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/anyio/to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/anyio/_backends/_asyncio.py", line 2144, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/anyio/_backends/_asyncio.py", line 851, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/telemetry/opentelemetry/__init__.py", line 127, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/auth/fastapi.py", line 241, in wrapped
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/server/fastapi/__init__.py", line 415, in create_collection
+    return self._api.create_collection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/telemetry/opentelemetry/__init__.py", line 127, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/api/segment.py", line 167, in create_collection
+    coll, created = self._sysdb.create_collection(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/telemetry/opentelemetry/__init__.py", line 127, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/db/mixins/sysdb.py", line 225, in create_collection
+    raise UniqueConstraintError(f"Collection {name} already exists")
+chromadb.db.base.UniqueConstraintError: Collection auto-slides already exists
+[32mINFO[0m:     [23-03-2024 14:41:22] ::1:61220 - "POST /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 500
+[32mINFO[0m:     [23-03-2024 14:42:15] ::1:61261 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [23-03-2024 14:42:15] ::1:61261 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[31mERROR[0m:    [23-03-2024 14:42:15] Collection auto-slides already exists
+Traceback (most recent call last):
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/anyio/streams/memory.py", line 97, in receive
+    return self.receive_nowait()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/anyio/streams/memory.py", line 92, in receive_nowait
+    raise WouldBlock
+anyio.WouldBlock
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 159, in call_next
+    message = await recv_stream.receive()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/anyio/streams/memory.py", line 112, in receive
+    raise EndOfStream
+anyio.EndOfStream
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/server/fastapi/__init__.py", line 82, in catch_exceptions_middleware
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 165, in call_next
+    raise app_exc
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 151, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 189, in __call__
+    with collapse_excgroups():
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6/Frameworks/Python.framework/Versions/3.11/lib/python3.11/contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/_utils.py", line 93, in collapse_excgroups
+    raise exc
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 191, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/server/fastapi/__init__.py", line 96, in check_http_version_middleware
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 165, in call_next
+    raise app_exc
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 151, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/routing.py", line 74, in app
+    response = await func(request)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/fastapi/routing.py", line 278, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/fastapi/routing.py", line 193, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/concurrency.py", line 42, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/anyio/to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/anyio/_backends/_asyncio.py", line 2144, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/anyio/_backends/_asyncio.py", line 851, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/telemetry/opentelemetry/__init__.py", line 127, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/auth/fastapi.py", line 241, in wrapped
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/server/fastapi/__init__.py", line 415, in create_collection
+    return self._api.create_collection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/telemetry/opentelemetry/__init__.py", line 127, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/api/segment.py", line 167, in create_collection
+    coll, created = self._sysdb.create_collection(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/telemetry/opentelemetry/__init__.py", line 127, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/db/mixins/sysdb.py", line 225, in create_collection
+    raise UniqueConstraintError(f"Collection {name} already exists")
+chromadb.db.base.UniqueConstraintError: Collection auto-slides already exists
+[32mINFO[0m:     [23-03-2024 14:42:15] ::1:61262 - "POST /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 500
+[32mINFO[0m:     [23-03-2024 14:42:15] ::1:61262 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [23-03-2024 14:42:43] ::1:61281 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [23-03-2024 14:42:43] ::1:61281 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[31mERROR[0m:    [23-03-2024 14:42:43] Collection auto-slides already exists
+Traceback (most recent call last):
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/anyio/streams/memory.py", line 97, in receive
+    return self.receive_nowait()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/anyio/streams/memory.py", line 92, in receive_nowait
+    raise WouldBlock
+anyio.WouldBlock
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 159, in call_next
+    message = await recv_stream.receive()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/anyio/streams/memory.py", line 112, in receive
+    raise EndOfStream
+anyio.EndOfStream
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/server/fastapi/__init__.py", line 82, in catch_exceptions_middleware
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 165, in call_next
+    raise app_exc
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 151, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 189, in __call__
+    with collapse_excgroups():
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6/Frameworks/Python.framework/Versions/3.11/lib/python3.11/contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/_utils.py", line 93, in collapse_excgroups
+    raise exc
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 191, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/server/fastapi/__init__.py", line 96, in check_http_version_middleware
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 165, in call_next
+    raise app_exc
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 151, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/routing.py", line 74, in app
+    response = await func(request)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/fastapi/routing.py", line 278, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/fastapi/routing.py", line 193, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/concurrency.py", line 42, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/anyio/to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/anyio/_backends/_asyncio.py", line 2144, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/anyio/_backends/_asyncio.py", line 851, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/telemetry/opentelemetry/__init__.py", line 127, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/auth/fastapi.py", line 241, in wrapped
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/server/fastapi/__init__.py", line 415, in create_collection
+    return self._api.create_collection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/telemetry/opentelemetry/__init__.py", line 127, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/api/segment.py", line 167, in create_collection
+    coll, created = self._sysdb.create_collection(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/telemetry/opentelemetry/__init__.py", line 127, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/db/mixins/sysdb.py", line 225, in create_collection
+    raise UniqueConstraintError(f"Collection {name} already exists")
+chromadb.db.base.UniqueConstraintError: Collection auto-slides already exists
+[32mINFO[0m:     [23-03-2024 14:42:43] ::1:61282 - "POST /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 500
+[32mINFO[0m:     [23-03-2024 14:42:43] ::1:61282 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [23-03-2024 14:43:08] ::1:61316 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [23-03-2024 14:43:08] ::1:61316 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[31mERROR[0m:    [23-03-2024 14:43:08] Collection auto-slides already exists
+Traceback (most recent call last):
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/anyio/streams/memory.py", line 97, in receive
+    return self.receive_nowait()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/anyio/streams/memory.py", line 92, in receive_nowait
+    raise WouldBlock
+anyio.WouldBlock
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 159, in call_next
+    message = await recv_stream.receive()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/anyio/streams/memory.py", line 112, in receive
+    raise EndOfStream
+anyio.EndOfStream
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/server/fastapi/__init__.py", line 82, in catch_exceptions_middleware
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 165, in call_next
+    raise app_exc
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 151, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 189, in __call__
+    with collapse_excgroups():
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6/Frameworks/Python.framework/Versions/3.11/lib/python3.11/contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/_utils.py", line 93, in collapse_excgroups
+    raise exc
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 191, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/server/fastapi/__init__.py", line 96, in check_http_version_middleware
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 165, in call_next
+    raise app_exc
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 151, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/routing.py", line 74, in app
+    response = await func(request)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/fastapi/routing.py", line 278, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/fastapi/routing.py", line 193, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/concurrency.py", line 42, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/anyio/to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/anyio/_backends/_asyncio.py", line 2144, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/anyio/_backends/_asyncio.py", line 851, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/telemetry/opentelemetry/__init__.py", line 127, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/auth/fastapi.py", line 241, in wrapped
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/server/fastapi/__init__.py", line 415, in create_collection
+    return self._api.create_collection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/telemetry/opentelemetry/__init__.py", line 127, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/api/segment.py", line 167, in create_collection
+    coll, created = self._sysdb.create_collection(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/telemetry/opentelemetry/__init__.py", line 127, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/db/mixins/sysdb.py", line 225, in create_collection
+    raise UniqueConstraintError(f"Collection {name} already exists")
+chromadb.db.base.UniqueConstraintError: Collection auto-slides already exists
+[32mINFO[0m:     [23-03-2024 14:43:08] ::1:61317 - "POST /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 500
+[32mINFO[0m:     [23-03-2024 14:43:08] ::1:61317 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [23-03-2024 14:43:30] ::1:61333 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [23-03-2024 14:43:30] ::1:61333 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[31mERROR[0m:    [23-03-2024 14:43:30] Collection auto-slides already exists
+Traceback (most recent call last):
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/anyio/streams/memory.py", line 97, in receive
+    return self.receive_nowait()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/anyio/streams/memory.py", line 92, in receive_nowait
+    raise WouldBlock
+anyio.WouldBlock
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 159, in call_next
+    message = await recv_stream.receive()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/anyio/streams/memory.py", line 112, in receive
+    raise EndOfStream
+anyio.EndOfStream
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/server/fastapi/__init__.py", line 82, in catch_exceptions_middleware
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 165, in call_next
+    raise app_exc
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 151, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 189, in __call__
+    with collapse_excgroups():
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6/Frameworks/Python.framework/Versions/3.11/lib/python3.11/contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/_utils.py", line 93, in collapse_excgroups
+    raise exc
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 191, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/server/fastapi/__init__.py", line 96, in check_http_version_middleware
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 165, in call_next
+    raise app_exc
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 151, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/routing.py", line 74, in app
+    response = await func(request)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/fastapi/routing.py", line 278, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/fastapi/routing.py", line 193, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/concurrency.py", line 42, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/anyio/to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/anyio/_backends/_asyncio.py", line 2144, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/anyio/_backends/_asyncio.py", line 851, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/telemetry/opentelemetry/__init__.py", line 127, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/auth/fastapi.py", line 241, in wrapped
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/server/fastapi/__init__.py", line 415, in create_collection
+    return self._api.create_collection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/telemetry/opentelemetry/__init__.py", line 127, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/api/segment.py", line 167, in create_collection
+    coll, created = self._sysdb.create_collection(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/telemetry/opentelemetry/__init__.py", line 127, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/db/mixins/sysdb.py", line 225, in create_collection
+    raise UniqueConstraintError(f"Collection {name} already exists")
+chromadb.db.base.UniqueConstraintError: Collection auto-slides already exists
+[32mINFO[0m:     [23-03-2024 14:43:30] ::1:61334 - "POST /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 500
+[32mINFO[0m:     [23-03-2024 14:43:30] ::1:61334 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [23-03-2024 14:43:40] ::1:61346 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [23-03-2024 14:43:40] ::1:61346 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[31mERROR[0m:    [23-03-2024 14:43:40] Collection auto-slides already exists
+Traceback (most recent call last):
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/anyio/streams/memory.py", line 97, in receive
+    return self.receive_nowait()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/anyio/streams/memory.py", line 92, in receive_nowait
+    raise WouldBlock
+anyio.WouldBlock
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 159, in call_next
+    message = await recv_stream.receive()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/anyio/streams/memory.py", line 112, in receive
+    raise EndOfStream
+anyio.EndOfStream
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/server/fastapi/__init__.py", line 82, in catch_exceptions_middleware
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 165, in call_next
+    raise app_exc
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 151, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 189, in __call__
+    with collapse_excgroups():
+  File "/opt/homebrew/Cellar/python@3.11/3.11.6/Frameworks/Python.framework/Versions/3.11/lib/python3.11/contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/_utils.py", line 93, in collapse_excgroups
+    raise exc
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 191, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/server/fastapi/__init__.py", line 96, in check_http_version_middleware
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 165, in call_next
+    raise app_exc
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/base.py", line 151, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/routing.py", line 74, in app
+    response = await func(request)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/fastapi/routing.py", line 278, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/fastapi/routing.py", line 193, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/starlette/concurrency.py", line 42, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/anyio/to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/anyio/_backends/_asyncio.py", line 2144, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/anyio/_backends/_asyncio.py", line 851, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/telemetry/opentelemetry/__init__.py", line 127, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/auth/fastapi.py", line 241, in wrapped
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/server/fastapi/__init__.py", line 415, in create_collection
+    return self._api.create_collection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/telemetry/opentelemetry/__init__.py", line 127, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/api/segment.py", line 167, in create_collection
+    coll, created = self._sysdb.create_collection(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/telemetry/opentelemetry/__init__.py", line 127, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/Documents/Auto presenter/.env/lib/python3.11/site-packages/chromadb/db/mixins/sysdb.py", line 225, in create_collection
+    raise UniqueConstraintError(f"Collection {name} already exists")
+chromadb.db.base.UniqueConstraintError: Collection auto-slides already exists
+[32mINFO[0m:     [23-03-2024 14:43:40] ::1:61347 - "POST /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 500
+[32mINFO[0m:     [23-03-2024 14:43:40] ::1:61347 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [23-03-2024 14:43:53] ::1:61347 - "GET /api/v1/pre-flight-checks HTTP/1.1" 200
+[36mDEBUG[0m:    [23-03-2024 14:43:53] Starting component PersistentLocalHnswSegment
+[32mINFO[0m:     [23-03-2024 14:43:53] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:43:55] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:43:56] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:43:56] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:43:59] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:00] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:00] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:01] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:02] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:03] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:03] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:04] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:07] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:08] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:09] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:09] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:09] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:11] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:14] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:15] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:16] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:17] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:18] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:18] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:19] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:20] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:22] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:25] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:26] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:26] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:27] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:28] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:28] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:29] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:30] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:32] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:33] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:34] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:35] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:36] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:37] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:38] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:40] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:41] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:43] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:44] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:44] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:44] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:46] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:47] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:48] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:50] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:51] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:51] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:52] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:53] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:54] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:55] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:56] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:57] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:58] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:44:59] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:02] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:04] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:05] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:06] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:07] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:07] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:08] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:08] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:09] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:11] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:13] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:14] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:15] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:15] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:17] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:17] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:18] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:19] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:20] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:21] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:23] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:24] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:25] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:26] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:27] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:27] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:28] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:29] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:30] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:31] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:32] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:33] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:34] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:35] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:36] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:37] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:38] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:39] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:39] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:42] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:43] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:44] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:45] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:45] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:46] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:47] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:50] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:51] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:52] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:53] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:54] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:56] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:58] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:45:59] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:00] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:00] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:02] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:02] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:03] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:03] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:04] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:05] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:06] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:08] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:09] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:10] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:12] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:13] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:14] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:17] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:18] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:19] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:19] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:22] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:24] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:25] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:26] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:27] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:27] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:28] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:30] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:31] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:33] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:33] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:34] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:35] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:37] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:38] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:39] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:40] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:41] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:43] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:45] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:48] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:51] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:52] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:54] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:55] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:56] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:46:59] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:00] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:02] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:03] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:04] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:06] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:06] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:07] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:08] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:09] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:10] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:10] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:11] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:12] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:16] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:17] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:19] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:19] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:20] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:21] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:23] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:23] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:24] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:25] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:26] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:27] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:28] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:29] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:30] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:31] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:32] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:33] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:35] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:35] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:36] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:37] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:39] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:40] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:41] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:42] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:42] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:43] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:44] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:44] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:45] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:47] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:48] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:50] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:51] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:51] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:52] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:53] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:55] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:57] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:59] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:47:59] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:01] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:02] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:02] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:04] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:04] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:09] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:10] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:13] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:14] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:15] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:17] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:17] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:18] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:18] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:19] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:19] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:20] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:20] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:22] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:24] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:30] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:31] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:32] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:32] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:33] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:37] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:38] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:39] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:40] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:41] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:42] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:43] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:43] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:44] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:45] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:45] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:46] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:47] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:47] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:48] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:50] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:51] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:52] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:53] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:54] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:55] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:56] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:57] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:57] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:58] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:48:59] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:00] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:01] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:02] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:03] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:04] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:05] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:07] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:08] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:09] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:09] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:10] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:13] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:18] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:19] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:20] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:21] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:21] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:22] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:24] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:26] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:26] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:27] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:29] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:30] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:31] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:32] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:32] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:33] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:34] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:34] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:35] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:36] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:38] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:38] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:40] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:40] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:41] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:41] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:42] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:42] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:44] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:45] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:45] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:46] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:49:46] ::1:61347 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [23-03-2024 14:52:04] ::1:61763 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [23-03-2024 14:52:04] ::1:61763 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [23-03-2024 14:52:04] ::1:61764 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [23-03-2024 14:54:13] ::1:61886 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
