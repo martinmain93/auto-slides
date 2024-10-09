@@ -987,3 +987,1150 @@ chromadb.db.base.UniqueConstraintError: Collection auto-slides already exists
 [32mINFO[0m:     [23-03-2024 14:52:04] ::1:61763 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
 [32mINFO[0m:     [23-03-2024 14:52:04] ::1:61764 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
 [32mINFO[0m:     [23-03-2024 14:54:13] ::1:61886 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[33mWARNING[0m:  [07-10-2024 23:01:01] chroma_server_nofile is set to 65535, but this is less than current soft limit of 1048575. chroma_server_nofile will not be set.
+[32mINFO[0m:     [07-10-2024 23:01:02] Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[36mDEBUG[0m:    [07-10-2024 23:01:02] Starting component System
+[36mDEBUG[0m:    [07-10-2024 23:01:02] Starting component OpenTelemetryClient
+[36mDEBUG[0m:    [07-10-2024 23:01:02] Starting component SimpleAssignmentPolicy
+[36mDEBUG[0m:    [07-10-2024 23:01:02] Starting component SqliteDB
+[36mDEBUG[0m:    [07-10-2024 23:01:02] Starting component QuotaEnforcer
+[36mDEBUG[0m:    [07-10-2024 23:01:02] Starting component Posthog
+[36mDEBUG[0m:    [07-10-2024 23:01:02] Starting component LocalSegmentManager
+[36mDEBUG[0m:    [07-10-2024 23:01:02] Starting component SegmentAPI
+[32mINFO[0m:     [07-10-2024 23:01:02] Started server process [[36m70937[0m]
+[32mINFO[0m:     [07-10-2024 23:01:02] Waiting for application startup.
+[32mINFO[0m:     [07-10-2024 23:01:02] Application startup complete.
+[32mINFO[0m:     [07-10-2024 23:01:02] Uvicorn running on [1mhttp://localhost:8000[0m (Press CTRL+C to quit)
+[32mINFO[0m:     [07-10-2024 23:01:06] ::1:57630 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:01:06] ::1:57630 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:01:06] ::1:57631 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[36mDEBUG[0m:    [07-10-2024 23:01:16] Starting component PersistentLocalHnswSegment
+[32mINFO[0m:     [07-10-2024 23:01:16] ::1:57631 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:01:22] ::1:57631 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:02:20] ::1:57695 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:02:23] ::1:57695 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:02:41] ::1:57695 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:03:13] ::1:57736 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:03:17] ::1:57736 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:03:20] ::1:57736 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:03:22] ::1:57736 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:03:26] ::1:57745 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:03:26] ::1:57745 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:03:26] ::1:57746 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:03:40] ::1:57746 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:03:47] ::1:57746 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:03:55] ::1:57746 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:03:59] ::1:57746 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:04:15] ::1:57746 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:04:20] ::1:57746 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:04:27] ::1:57746 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:04:30] ::1:57746 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:04:32] ::1:57746 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:04:49] ::1:57808 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:04:49] ::1:57808 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:04:49] ::1:57809 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:04:59] ::1:57809 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:05:03] ::1:57809 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:05:11] ::1:57809 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:05:35] ::1:57809 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:05:48] ::1:57809 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:09:57] ::1:58078 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:09:57] ::1:58078 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:09:57] ::1:58079 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:10:09] ::1:58079 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:10:23] ::1:58105 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:10:23] ::1:58105 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:10:23] ::1:58106 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:10:30] ::1:58106 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:13:21] ::1:58258 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:13:30] ::1:58267 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:13:30] ::1:58267 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:13:30] ::1:58268 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:13:46] ::1:58268 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:13:52] ::1:58268 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:13:56] ::1:58268 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:14:01] ::1:58268 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:14:07] ::1:58268 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:14:09] ::1:58268 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:14:12] ::1:58268 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:14:14] ::1:58268 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:14:18] ::1:58268 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:14:20] ::1:58268 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:14:22] ::1:58268 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:14:27] ::1:58268 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:16:55] ::1:58424 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:16:55] ::1:58424 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:16:55] ::1:58425 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:17:04] ::1:58425 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:17:08] ::1:58425 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:17:16] ::1:58425 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:17:20] ::1:58425 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:17:24] ::1:58425 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:17:29] ::1:58425 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:17:36] ::1:58425 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:17:41] ::1:58425 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:17:44] ::1:58425 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:17:46] ::1:58425 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:17:51] ::1:58425 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:20:16] ::1:58582 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:20:16] ::1:58582 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:20:16] ::1:58583 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:20:24] ::1:58583 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:20:28] ::1:58583 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:20:35] ::1:58583 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:20:46] ::1:58583 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:20:50] ::1:58583 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:20:55] ::1:58583 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:20:58] ::1:58583 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:21:05] ::1:58583 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:21:08] ::1:58583 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:21:10] ::1:58583 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:21:13] ::1:58583 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:21:15] ::1:58583 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:21:18] ::1:58583 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:21:20] ::1:58583 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:21:22] ::1:58583 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:21:25] ::1:58583 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:21:45] ::1:58583 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [07-10-2024 23:22:06] ::1:58583 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[33mWARNING[0m:  [08-10-2024 22:58:08] chroma_server_nofile is set to 65535, but this is less than current soft limit of 1048575. chroma_server_nofile will not be set.
+[32mINFO[0m:     [08-10-2024 22:58:08] Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[36mDEBUG[0m:    [08-10-2024 22:58:08] Starting component System
+[36mDEBUG[0m:    [08-10-2024 22:58:08] Starting component OpenTelemetryClient
+[36mDEBUG[0m:    [08-10-2024 22:58:08] Starting component SimpleAssignmentPolicy
+[36mDEBUG[0m:    [08-10-2024 22:58:08] Starting component SqliteDB
+[36mDEBUG[0m:    [08-10-2024 22:58:08] Starting component QuotaEnforcer
+[36mDEBUG[0m:    [08-10-2024 22:58:08] Starting component Posthog
+[36mDEBUG[0m:    [08-10-2024 22:58:08] Starting component LocalSegmentManager
+[36mDEBUG[0m:    [08-10-2024 22:58:08] Starting component SegmentAPI
+[32mINFO[0m:     [08-10-2024 22:58:08] Started server process [[36m27799[0m]
+[32mINFO[0m:     [08-10-2024 22:58:08] Waiting for application startup.
+[32mINFO[0m:     [08-10-2024 22:58:08] Application startup complete.
+[32mINFO[0m:     [08-10-2024 22:58:08] Uvicorn running on [1mhttp://localhost:8000[0m (Press CTRL+C to quit)
+[32mINFO[0m:     [08-10-2024 22:58:11] ::1:50719 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 22:58:11] ::1:50719 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 22:58:11] ::1:50720 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 22:58:40] ::1:50740 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 22:58:40] ::1:50740 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 22:58:40] ::1:50741 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:00:16] ::1:50804 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:00:16] ::1:50804 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:00:16] ::1:50805 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:00:59] ::1:50841 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:00:59] ::1:50841 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:00:59] ::1:50842 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:01:11] ::1:50853 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:01:11] ::1:50853 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:01:11] ::1:50854 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:01:57] ::1:50895 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:01:57] ::1:50895 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:01:57] ::1:50896 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[36mDEBUG[0m:    [08-10-2024 23:02:03] Starting component PersistentLocalHnswSegment
+[32mINFO[0m:     [08-10-2024 23:02:03] ::1:50896 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:04] ::1:50896 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:04] ::1:50896 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:05] ::1:50896 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:05] ::1:50896 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:06] ::1:50896 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:06] ::1:50896 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:07] ::1:50896 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:07] ::1:50896 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:08] ::1:50896 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:08] ::1:50896 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:09] ::1:50896 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:10] ::1:50896 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:10] ::1:50896 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:11] ::1:50896 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:11] ::1:50896 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:12] ::1:50896 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:13] ::1:50896 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:13] ::1:50896 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:33] ::1:50925 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:33] ::1:50925 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:33] ::1:50926 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:39] ::1:50926 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:40] ::1:50926 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:40] ::1:50926 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:41] ::1:50926 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:41] ::1:50926 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:42] ::1:50926 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:42] ::1:50926 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:43] ::1:50926 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:43] ::1:50926 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:44] ::1:50926 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:44] ::1:50926 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:45] ::1:50926 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:46] ::1:50926 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:46] ::1:50926 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:47] ::1:50926 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:47] ::1:50926 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:48] ::1:50926 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:49] ::1:50926 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:49] ::1:50926 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:50] ::1:50926 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:02:50] ::1:50926 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:04:23] ::1:51009 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:04:23] ::1:51009 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:04:23] ::1:51010 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:04:31] ::1:51010 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:04:32] ::1:51010 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:04:32] ::1:51010 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:04:33] ::1:51010 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:04:33] ::1:51010 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:04:34] ::1:51010 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:04:34] ::1:51010 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:04:35] ::1:51010 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:04:36] ::1:51010 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:04:36] ::1:51010 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:04:37] ::1:51010 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:04:37] ::1:51010 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:04:38] ::1:51010 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:04:38] ::1:51010 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:05:47] ::1:51078 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:05:47] ::1:51078 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:05:47] ::1:51079 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:09:23] ::1:51240 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:09:23] ::1:51240 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:09:23] ::1:51241 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:09:29] ::1:51241 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:09:30] ::1:51241 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:09:30] ::1:51241 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:09:31] ::1:51241 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:09:31] ::1:51241 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:09:32] ::1:51241 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:09:33] ::1:51241 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:09:33] ::1:51241 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:09:34] ::1:51241 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:09:48] ::1:51260 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:09:48] ::1:51260 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:09:48] ::1:51261 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:09:55] ::1:51261 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:09:55] ::1:51261 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:09:56] ::1:51261 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:09:56] ::1:51261 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:09:57] ::1:51261 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:09:58] ::1:51261 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:09:58] ::1:51261 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:09:59] ::1:51261 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:09:59] ::1:51261 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:10:00] ::1:51261 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:10:00] ::1:51261 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:10:01] ::1:51261 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:10:01] ::1:51261 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:10:02] ::1:51261 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:10:02] ::1:51261 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:10:03] ::1:51261 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:10:03] ::1:51261 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:10:04] ::1:51261 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:10:05] ::1:51261 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:10:05] ::1:51261 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:10:06] ::1:51261 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:10:06] ::1:51261 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:10:07] ::1:51261 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:10:07] ::1:51261 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:10:08] ::1:51261 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:12:33] ::1:51390 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:12:33] ::1:51390 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:12:33] ::1:51391 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:12:39] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:12:40] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:12:41] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:12:41] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:12:42] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:12:42] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:12:43] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:12:43] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:12:44] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:12:44] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:12:45] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:12:46] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:12:46] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:12:47] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:12:47] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:12:48] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:12:48] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:12:49] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:12:49] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:12:50] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:12:50] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:12:51] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:12:52] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:12:52] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:12:53] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:12:53] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:12:54] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:12:54] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:12:55] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:12:55] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:12:56] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:12:57] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:12:57] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:12:58] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:12:58] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:12:59] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:12:59] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:00] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:00] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:01] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:02] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:02] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:03] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:03] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:04] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:05] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:05] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:06] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:06] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:07] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:07] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:08] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:08] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:09] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:10] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:10] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:11] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:11] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:12] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:12] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:13] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:14] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:14] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:15] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:15] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:16] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:16] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:17] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:17] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:18] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:19] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:19] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:20] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:20] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:21] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:21] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:22] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:22] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:23] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:24] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:24] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:25] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:25] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:13:26] ::1:51391 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:14:54] ::1:51501 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:14:54] ::1:51501 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:14:54] ::1:51502 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:20] ::1:51516 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:20] ::1:51516 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:20] ::1:51517 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:26] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:26] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:27] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:27] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:28] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:28] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:29] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:30] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:30] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:31] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:31] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:32] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:32] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:33] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:34] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:34] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:35] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:36] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:36] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:37] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:38] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:38] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:39] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:39] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:40] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:41] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:41] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:42] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:43] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:43] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:44] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:45] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:45] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:46] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:47] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:47] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:48] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:49] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:49] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:50] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:51] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:15:51] ::1:51517 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:18:26] ::1:51651 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:18:26] ::1:51651 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:18:26] ::1:51652 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:18:31] ::1:51652 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:18:32] ::1:51652 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:18:32] ::1:51652 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:18:33] ::1:51652 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:18:33] ::1:51652 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:18:34] ::1:51652 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:18:35] ::1:51652 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:18:35] ::1:51652 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:18:36] ::1:51652 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:18:36] ::1:51652 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:18:37] ::1:51652 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:18:37] ::1:51652 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:18:38] ::1:51652 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:18:39] ::1:51652 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:18:39] ::1:51652 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:18:40] ::1:51652 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:18:40] ::1:51652 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:18:41] ::1:51652 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:18:42] ::1:51652 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:18:42] ::1:51652 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:18:43] ::1:51652 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:18:43] ::1:51652 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:18:44] ::1:51652 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:18:45] ::1:51652 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:18:45] ::1:51652 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:18:46] ::1:51652 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:18:46] ::1:51652 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:18:47] ::1:51652 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:18:48] ::1:51652 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:18:48] ::1:51652 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:18:49] ::1:51652 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:28:10] ::1:52119 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:28:10] ::1:52119 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:28:10] ::1:52120 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:28:16] ::1:52120 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:28:56] ::1:52155 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:29:11] ::1:52155 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:32:48] ::1:52328 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:32:48] ::1:52328 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:32:48] ::1:52329 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:32:54] ::1:52329 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:39:15] ::1:52616 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:39:15] ::1:52616 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:39:15] ::1:52617 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:39:21] ::1:52617 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:39:22] ::1:52617 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:39:23] ::1:52617 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:39:24] ::1:52617 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:39:25] ::1:52617 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:39:26] ::1:52617 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:41:47] ::1:52729 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:41:47] ::1:52729 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:41:47] ::1:52730 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:41:55] ::1:52730 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:41:56] ::1:52730 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:41:57] ::1:52730 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:41:58] ::1:52730 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:41:59] ::1:52730 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:41:59] ::1:52730 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:42:00] ::1:52730 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:42:00] ::1:52730 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:42:01] ::1:52730 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:42:02] ::1:52730 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:42:02] ::1:52730 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:42:03] ::1:52730 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:42:03] ::1:52730 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:42:04] ::1:52730 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:42:05] ::1:52730 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:42:05] ::1:52730 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:42:06] ::1:52730 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:42:06] ::1:52730 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:42:07] ::1:52730 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:42:08] ::1:52730 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:42:08] ::1:52730 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:42:09] ::1:52730 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:42:09] ::1:52730 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:42:10] ::1:52730 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:42:11] ::1:52730 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:42:11] ::1:52730 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:42:12] ::1:52730 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:42:12] ::1:52730 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:42:13] ::1:52730 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:42:14] ::1:52730 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:42:14] ::1:52730 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:42:15] ::1:52730 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:42:16] ::1:52730 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:42:16] ::1:52730 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:42:17] ::1:52730 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:42:17] ::1:52730 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:42:18] ::1:52730 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:42:19] ::1:52730 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:42:19] ::1:52730 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:42:20] ::1:52730 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:04] ::1:52782 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:04] ::1:52782 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:04] ::1:52783 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:10] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:11] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:12] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:13] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:14] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:15] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:15] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:16] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:16] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:17] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:17] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:18] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:19] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:19] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:20] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:21] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:21] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:22] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:22] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:23] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:24] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:24] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:25] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:25] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:26] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:27] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:27] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:28] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:28] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:29] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:30] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:30] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:31] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:32] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:32] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:33] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:33] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:34] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:35] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:35] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:36] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:37] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:37] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:38] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:39] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:39] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:40] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:43:41] ::1:52783 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:47:10] ::1:52975 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:47:10] ::1:52975 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:47:10] ::1:52976 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:47:17] ::1:52976 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:47:18] ::1:52976 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:47:19] ::1:52976 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:47:20] ::1:52976 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:47:20] ::1:52976 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:47:21] ::1:52976 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:47:21] ::1:52976 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:47:22] ::1:52976 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:47:22] ::1:52976 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:47:23] ::1:52976 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:47:24] ::1:52976 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:47:24] ::1:52976 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:47:25] ::1:52976 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:47:25] ::1:52976 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:47:26] ::1:52976 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:47:26] ::1:52976 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:47:27] ::1:52976 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:47:28] ::1:52976 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:47:28] ::1:52976 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:47:29] ::1:52976 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:47:30] ::1:52976 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:47:30] ::1:52976 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-10-2024 23:47:31] ::1:52976 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 00:14:53] ::1:54171 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 00:14:53] ::1:54171 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[31mERROR[0m:    [09-10-2024 00:14:53] Collection auto-slides already exists
+Traceback (most recent call last):
+  File "/Users/martinmain/.pyenv/versions/3.12.0/envs/auto_presenter/lib/python3.12/site-packages/anyio/streams/memory.py", line 111, in receive
+    return self.receive_nowait()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/.pyenv/versions/3.12.0/envs/auto_presenter/lib/python3.12/site-packages/anyio/streams/memory.py", line 106, in receive_nowait
+    raise WouldBlock
+anyio.WouldBlock
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/martinmain/.pyenv/versions/3.12.0/envs/auto_presenter/lib/python3.12/site-packages/anyio/streams/memory.py", line 124, in receive
+    return receiver.item
+           ^^^^^^^^^^^^^
+AttributeError: 'MemoryObjectItemReceiver' object has no attribute 'item'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/martinmain/.pyenv/versions/3.12.0/envs/auto_presenter/lib/python3.12/site-packages/starlette/middleware/base.py", line 157, in call_next
+    message = await recv_stream.receive()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/.pyenv/versions/3.12.0/envs/auto_presenter/lib/python3.12/site-packages/anyio/streams/memory.py", line 126, in receive
+    raise EndOfStream
+anyio.EndOfStream
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/martinmain/.pyenv/versions/3.12.0/envs/auto_presenter/lib/python3.12/site-packages/chromadb/server/fastapi/__init__.py", line 82, in catch_exceptions_middleware
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/.pyenv/versions/3.12.0/envs/auto_presenter/lib/python3.12/site-packages/starlette/middleware/base.py", line 163, in call_next
+    raise app_exc
+  File "/Users/martinmain/.pyenv/versions/3.12.0/envs/auto_presenter/lib/python3.12/site-packages/starlette/middleware/base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "/Users/martinmain/.pyenv/versions/3.12.0/envs/auto_presenter/lib/python3.12/site-packages/starlette/middleware/base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "/Users/martinmain/.pyenv/versions/3.12.0/lib/python3.12/contextlib.py", line 155, in __exit__
+    self.gen.throw(value)
+  File "/Users/martinmain/.pyenv/versions/3.12.0/envs/auto_presenter/lib/python3.12/site-packages/starlette/_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "/Users/martinmain/.pyenv/versions/3.12.0/envs/auto_presenter/lib/python3.12/site-packages/starlette/middleware/base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/.pyenv/versions/3.12.0/envs/auto_presenter/lib/python3.12/site-packages/chromadb/server/fastapi/__init__.py", line 96, in check_http_version_middleware
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/.pyenv/versions/3.12.0/envs/auto_presenter/lib/python3.12/site-packages/starlette/middleware/base.py", line 163, in call_next
+    raise app_exc
+  File "/Users/martinmain/.pyenv/versions/3.12.0/envs/auto_presenter/lib/python3.12/site-packages/starlette/middleware/base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "/Users/martinmain/.pyenv/versions/3.12.0/envs/auto_presenter/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/martinmain/.pyenv/versions/3.12.0/envs/auto_presenter/lib/python3.12/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "/Users/martinmain/.pyenv/versions/3.12.0/envs/auto_presenter/lib/python3.12/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/martinmain/.pyenv/versions/3.12.0/envs/auto_presenter/lib/python3.12/site-packages/starlette/routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/martinmain/.pyenv/versions/3.12.0/envs/auto_presenter/lib/python3.12/site-packages/starlette/routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "/Users/martinmain/.pyenv/versions/3.12.0/envs/auto_presenter/lib/python3.12/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/Users/martinmain/.pyenv/versions/3.12.0/envs/auto_presenter/lib/python3.12/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/martinmain/.pyenv/versions/3.12.0/envs/auto_presenter/lib/python3.12/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "/Users/martinmain/.pyenv/versions/3.12.0/envs/auto_presenter/lib/python3.12/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/martinmain/.pyenv/versions/3.12.0/envs/auto_presenter/lib/python3.12/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/.pyenv/versions/3.12.0/envs/auto_presenter/lib/python3.12/site-packages/fastapi/routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/.pyenv/versions/3.12.0/envs/auto_presenter/lib/python3.12/site-packages/fastapi/routing.py", line 214, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/.pyenv/versions/3.12.0/envs/auto_presenter/lib/python3.12/site-packages/starlette/concurrency.py", line 39, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/.pyenv/versions/3.12.0/envs/auto_presenter/lib/python3.12/site-packages/anyio/to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/.pyenv/versions/3.12.0/envs/auto_presenter/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 2405, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/Users/martinmain/.pyenv/versions/3.12.0/envs/auto_presenter/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/.pyenv/versions/3.12.0/envs/auto_presenter/lib/python3.12/site-packages/chromadb/telemetry/opentelemetry/__init__.py", line 127, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/.pyenv/versions/3.12.0/envs/auto_presenter/lib/python3.12/site-packages/chromadb/auth/fastapi.py", line 241, in wrapped
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/.pyenv/versions/3.12.0/envs/auto_presenter/lib/python3.12/site-packages/chromadb/server/fastapi/__init__.py", line 415, in create_collection
+    return self._api.create_collection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/.pyenv/versions/3.12.0/envs/auto_presenter/lib/python3.12/site-packages/chromadb/telemetry/opentelemetry/__init__.py", line 127, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/.pyenv/versions/3.12.0/envs/auto_presenter/lib/python3.12/site-packages/chromadb/api/segment.py", line 167, in create_collection
+    coll, created = self._sysdb.create_collection(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/.pyenv/versions/3.12.0/envs/auto_presenter/lib/python3.12/site-packages/chromadb/telemetry/opentelemetry/__init__.py", line 127, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/martinmain/.pyenv/versions/3.12.0/envs/auto_presenter/lib/python3.12/site-packages/chromadb/db/mixins/sysdb.py", line 225, in create_collection
+    raise UniqueConstraintError(f"Collection {name} already exists")
+chromadb.db.base.UniqueConstraintError: Collection auto-slides already exists
+[32mINFO[0m:     [09-10-2024 00:14:53] ::1:54172 - "POST /api/v1/collections?tenant=default_tenant&database=default_database HTTP/1.1" 500
+[32mINFO[0m:     [09-10-2024 00:14:53] ::1:54172 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 00:14:55] ::1:54172 - "GET /api/v1/pre-flight-checks HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 00:14:55] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:14:57] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:14:58] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:14:58] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:00] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:01] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:02] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:03] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:03] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:04] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:05] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:05] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:08] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:09] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:10] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:10] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:10] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:12] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:14] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:15] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:17] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:17] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:18] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:18] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:19] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:20] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:21] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:23] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:24] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:24] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:25] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:26] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:26] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:27] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:28] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:30] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:31] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:32] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:32] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:33] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:34] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:35] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:37] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:38] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:39] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:40] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:40] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:41] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:42] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:43] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:44] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:45] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:46] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:47] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:48] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:49] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:49] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:50] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:51] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:52] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:53] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:53] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:55] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:57] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:58] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:15:59] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:00] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:00] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:01] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:01] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:01] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:04] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:05] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:06] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:07] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:07] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:09] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:10] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:10] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:11] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:12] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:13] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:15] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:16] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:17] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:17] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:18] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:18] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:19] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:20] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:21] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:22] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:23] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:24] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:25] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:25] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:26] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:27] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:28] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:29] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:29] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:31] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:32] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:33] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:33] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:34] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:34] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:35] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:37] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:38] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:39] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:40] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:41] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:43] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:44] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:45] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:46] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:46] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:47] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:48] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:48] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:49] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:50] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:50] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:51] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:53] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:53] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:54] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:55] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:56] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:57] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:16:59] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:01] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:02] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:02] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:05] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:06] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:07] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:08] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:09] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:09] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:09] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:11] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:12] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:13] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:14] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:15] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:16] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:17] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:18] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:19] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:20] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:20] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:22] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:23] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:26] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:27] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:28] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:30] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:31] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:31] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:34] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:35] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:37] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:38] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:39] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:40] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:41] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:41] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:42] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:43] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:43] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:44] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:45] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:45] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:49] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:50] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:51] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:52] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:53] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:53] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:55] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:56] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:56] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:57] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:58] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:17:59] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:00] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:01] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:01] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:03] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:03] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:05] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:06] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:06] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:07] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:08] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:10] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:10] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:11] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:12] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:12] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:12] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:13] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:14] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:15] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:16] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:17] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:18] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:19] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:19] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:20] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:21] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:22] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:23] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:25] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:25] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:26] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:27] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:27] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:28] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:29] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:32] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:33] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:35] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:36] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:37] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:38] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:39] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:39] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:40] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:40] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:41] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:41] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:42] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:43] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:44] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:49] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:50] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:51] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:51] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:52] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:55] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:56] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:57] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:57] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:58] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:18:59] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:00] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:00] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:01] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:02] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:02] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:03] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:03] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:04] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:05] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:06] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:07] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:07] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:09] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:09] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:10] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:11] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:12] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:12] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:13] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:13] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:14] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:15] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:16] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:16] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:17] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:18] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:20] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:20] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:21] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:21] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:22] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:25] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:29] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:30] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:31] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:31] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:32] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:33] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:34] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:35] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:36] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:37] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:38] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:39] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:40] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:41] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:41] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:42] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:42] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:43] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:43] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:45] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:46] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:46] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:47] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:48] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:48] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:49] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:49] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:50] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:51] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:52] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:52] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:52] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 00:19:53] ::1:54172 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/add HTTP/1.1" 201
+[32mINFO[0m:     [09-10-2024 08:01:06] ::1:64378 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:01:06] ::1:64378 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:01:06] ::1:64379 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:01:12] ::1:64379 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:01:53] ::1:64412 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:03:43] ::1:64508 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:03:43] ::1:64508 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:03:43] ::1:64509 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:03:49] ::1:64509 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:03:51] ::1:64509 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:03:52] ::1:64509 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:05:55] ::1:64608 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:05:55] ::1:64608 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:05:55] ::1:64609 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:06:01] ::1:64609 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:06:02] ::1:64609 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:06:11] ::1:64609 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:06:11] ::1:64609 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:06:12] ::1:64609 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:06:13] ::1:64609 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:06:13] ::1:64609 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:06:14] ::1:64609 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:06:15] ::1:64609 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:06:15] ::1:64609 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:06:16] ::1:64609 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:06:16] ::1:64609 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:06:17] ::1:64609 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:06:18] ::1:64609 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:06:18] ::1:64609 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:06:19] ::1:64609 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:06:20] ::1:64609 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:06:20] ::1:64609 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:06:21] ::1:64609 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:06:22] ::1:64609 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:06:22] ::1:64609 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:06:23] ::1:64609 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:06:23] ::1:64609 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:06:24] ::1:64609 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:06:25] ::1:64609 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:06:25] ::1:64609 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:06:26] ::1:64609 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:06:27] ::1:64609 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:06:27] ::1:64609 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:06:28] ::1:64609 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:06:29] ::1:64609 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:06:29] ::1:64609 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:06:30] ::1:64609 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:06:30] ::1:64609 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:06:31] ::1:64609 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:06:32] ::1:64609 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:06:32] ::1:64609 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:06:33] ::1:64609 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:08:19] ::1:64712 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:08:19] ::1:64712 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:08:19] ::1:64713 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:08:24] ::1:64713 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:08:24] ::1:64713 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:08:39] ::1:64713 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:08:40] ::1:64713 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:08:40] ::1:64713 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:08:41] ::1:64713 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:08:41] ::1:64713 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:08:42] ::1:64713 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:08:43] ::1:64713 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:08:43] ::1:64713 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:08:44] ::1:64713 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:08:45] ::1:64713 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:08:45] ::1:64713 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:08:46] ::1:64713 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:08:46] ::1:64713 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:08:47] ::1:64713 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:08:48] ::1:64713 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:08:48] ::1:64713 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:08:49] ::1:64713 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:08:49] ::1:64713 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:08:50] ::1:64713 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:08:51] ::1:64713 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:08:51] ::1:64713 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:08:52] ::1:64713 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:08:53] ::1:64713 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:08:53] ::1:64713 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:08:54] ::1:64713 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:08:54] ::1:64713 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:08:55] ::1:64713 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:08:56] ::1:64713 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:08:56] ::1:64713 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:08:57] ::1:64713 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:08:57] ::1:64713 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:08:58] ::1:64713 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:08:59] ::1:64713 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:11:04] ::1:64836 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:11:04] ::1:64836 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:11:04] ::1:64837 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:11:10] ::1:64837 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:11:10] ::1:64837 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:11:11] ::1:64837 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:11:12] ::1:64837 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:11:40] ::1:64837 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:11:41] ::1:64837 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:11:49] ::1:64863 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:11:49] ::1:64863 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:11:49] ::1:64864 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:11:57] ::1:64864 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:11:57] ::1:64864 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:12:12] ::1:64864 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:12:13] ::1:64864 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:12:13] ::1:64864 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:16:00] ::1:65044 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:16:00] ::1:65044 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:16:00] ::1:65045 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:16:06] ::1:65045 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:16:57] ::1:65089 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:16:57] ::1:65089 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:16:57] ::1:65090 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:17:02] ::1:65090 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:17:03] ::1:65090 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:24] ::1:65236 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:24] ::1:65236 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:24] ::1:65237 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:30] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:31] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:32] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:33] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:36] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:36] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:37] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:38] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:38] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:39] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:39] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:40] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:41] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:41] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:42] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:43] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:43] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:44] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:44] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:45] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:46] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:46] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:47] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:48] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:48] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:49] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:50] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:50] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:51] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:52] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:52] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:53] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:54] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:54] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:55] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:56] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:56] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:57] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:58] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:58] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:20:59] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:21:00] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:21:00] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:21:01] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:21:02] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:21:02] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [09-10-2024 08:21:03] ::1:65237 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200

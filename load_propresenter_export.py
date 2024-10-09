@@ -36,7 +36,7 @@ def load_propresenter_export(input_file=INPUT_FILE):
         # Add slides to ChromaDB
         collection.add(
             documents=slides,
-            metadatas=[{"song_title": title} for _ in slides],
+            metadatas=[{"song_title": title, "order": order} for order, _ in enumerate(slides)],
             ids=[str(uuid4()) for s in slides]
         )
 

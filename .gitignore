@@ -1,3 +1,4 @@
 .DS_Store
 .env/
+__pycache__/
 whisper-tiny.en.tf_model.h5
