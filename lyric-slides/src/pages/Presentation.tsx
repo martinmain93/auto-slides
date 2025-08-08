@@ -109,20 +109,34 @@ const [controlsVisible, setControlsVisible] = useState(true)
         e.preventDefault()
         goNextSlide()
       } else if (e.key === 'ArrowRight') {
+        e.preventDefault()
         goNextSlide()
       } else if (e.key === 'ArrowLeft') {
+        e.preventDefault()
         goPrevSlide()
       } else if (e.key === 'ArrowUp') {
+        e.preventDefault()
         goPrevSong()
       } else if (e.key === 'ArrowDown') {
+        e.preventDefault()
         goNextSong()
       } else if (e.key === 'Escape') {
+        e.preventDefault()
         navigate('/plan')
       }
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   }, [currentSongId, slideIndex, blankPos])
+
+  // When controls are hidden, blur any focused control to prevent the browser from
+  // attempting to keep a (now offscreen) focused element in view and scrolling the page.
+  useEffect(() => {
+    if (!controlsVisible) {
+      const active = document.activeElement as HTMLElement | null
+      if (active && typeof active.blur === 'function') active.blur()
+    }
+  }, [controlsVisible])
 
   // Auto-center selected pill in slides scroller
   useEffect(() => {
@@ -141,8 +155,22 @@ const [controlsVisible, setControlsVisible] = useState(true)
     if (nearBottom) setControlsVisible(true)
   }
 
+  // Lock page scrolling while in presentation to avoid layout shifts
+  useEffect(() => {
+    const html = document.documentElement
+    const body = document.body
+    const prevHtmlOverflow = html.style.overflow
+    const prevBodyOverflow = body.style.overflow
+    html.style.overflow = 'hidden'
+    body.style.overflow = 'hidden'
+    return () => {
+      html.style.overflow = prevHtmlOverflow
+      body.style.overflow = prevBodyOverflow
+    }
+  }, [])
+
   const overlayStyle: React.CSSProperties = {
-    position: 'absolute',
+    position: 'fixed',
     left: 0,
     right: 0,
     bottom: 0,
@@ -154,13 +182,15 @@ const [controlsVisible, setControlsVisible] = useState(true)
     opacity: controlsVisible ? 1 : 0,
     transition: 'transform 180ms ease, opacity 180ms ease',
     pointerEvents: controlsVisible ? 'auto' : 'none',
+    zIndex: 1000,
+    willChange: 'transform, opacity',
   }
 
   return (
     <Box onMouseMove={onMouseMove} style={{ position: 'relative', height: '100dvh', background: 'black', color: 'white', overflow: 'hidden' }}>
       {/* Centered slide text */}
       <Box style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center' }}>
-<Box style={{ fontSize: '5vw', lineHeight: 1.2, whiteSpace: 'pre-wrap', textAlign: 'center' }}>
+<Box style={{ fontSize: '5vw', lineHeight: 1.2, whiteSpace: 'pre-wrap', textAlign: 'center', fontWeight: 700, fontFamily: 'Helvetica Neue, Helvetica, Arial, sans-serif' }}>
           {blankPos ? '' : currentSong.slides[slideIndex].text}
         </Box>
         <Text size="sm" c="dimmed" style={{ position: 'absolute', right: 8, bottom: 4, pointerEvents: 'none' }}>
@@ -191,8 +221,9 @@ const [controlsVisible, setControlsVisible] = useState(true)
           <Button variant="light" onClick={() => setControlsVisible(false)} style={{ justifySelf: 'end' }}>Hide ▾</Button>
         </Box>
         {/* bottom row: slides */}
-        <Group style={{ maxWidth: '100%' }} ref={slidesScrollerRef}>
+        <Box style={{ justifySelf: 'center', maxWidth: 1100, width: '100%', overflow: 'hidden' }} ref={slidesScrollerRef}>
           <HorizontalPicker
+            className="no-scrollbar"
             items={[
               { key: 'blank-start', label: '—', active: blankPos === 'start', onClick: () => setBlankPos('start') },
               ...currentSong.slides.map((sl, i) => ({
@@ -205,7 +236,7 @@ const [controlsVisible, setControlsVisible] = useState(true)
             ]}
             activeIndex={blankPos === 'start' ? 0 : blankPos === 'end' ? currentSong.slides.length + 1 : (slideIndex + 1)}
           />
-        </Group>
+        </Box>
       </Paper>
     </Box>
   )

@@ -1,6 +1,6 @@
 * { box-sizing: border-box }
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Outfit, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
   line-height: 1.5;
   font-weight: 400;
   font-synthesis: none;
@@ -27,3 +27,15 @@ a:hover { text-decoration: underline }
 .no-scrollbar::-webkit-scrollbar {
   display: none; /* Safari and Chrome */
 }
+
+/* HorizontalPicker fade edges */
+.hp-fade {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 28px;
+  pointer-events: none;
+  transition: opacity 150ms ease;
+}
+.hp-left { left: 0; background: linear-gradient(90deg, rgba(0,0,0,0.7), rgba(0,0,0,0)); }
+.hp-right { right: 0; background: linear-gradient(270deg, rgba(0,0,0,0.7), rgba(0,0,0,0)); }
