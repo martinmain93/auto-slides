@@ -6,23 +6,32 @@ import { useAppState } from '../state/AppStateContext'
 
 function SongSearch({ library, onPick, selectedIds }: { library: Song[]; onPick: (song: Song) => void; selectedIds: string[] }) {
   const [q, setQ] = useState('')
-  const results = useMemo(() => library.filter(s => s.title.toLowerCase().includes(q.toLowerCase())), [library, q])
+  const [focused, setFocused] = useState(false)
+  const base = useMemo(() => [...library].sort((a, b) => a.title.localeCompare(b.title)), [library])
+  const results = useMemo(() => {
+    if (focused && !q.trim()) return base.slice(0, 8)
+    return base.filter(s => s.title.toLowerCase().includes(q.toLowerCase()))
+  }, [base, q, focused])
   const handlePick = (s: Song) => {
     if (selectedIds.includes(s.id)) return
     onPick(s)
     setQ('')
   }
   return (
-    <Stack gap="xs" style={{ position: 'relative' }}>
+    <Stack gap="md" style={{ position: 'relative', marginTop: 32, marginBottom: 16 }}>
       <TextInput
         value={q}
         onChange={e => setQ(e.currentTarget.value)}
         placeholder="Search songs..."
+        size="xl"
         label="What songs are we singing today?"
+        labelProps={{ style: { fontSize: 24, marginBottom: 8 } }}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setTimeout(() => setFocused(false), 100)}
         data-autofocus
       />
-      {q && (
-        <Paper withBorder shadow="sm" radius="md" style={{ position: 'absolute', top: 70, left: 0, right: 0, zIndex: 10, maxHeight: 240, overflow: 'auto' }}>
+      {(focused || q) && (
+        <Paper withBorder shadow="md" radius="md" style={{ position: 'absolute', top: 94, left: 0, right: 0, zIndex: 10, maxHeight: 300, overflow: 'auto' }}>
           <Stack gap={0}>
             {results.map(s => {
               const added = selectedIds.includes(s.id)
@@ -91,15 +100,26 @@ export default function Planner() {
         </Button>
         <Title order={3} mt="md">Queue</Title>
         <Stack gap="xs" mt="xs">
-          {state.queue.map(id => {
+{state.queue.map(id => {
             const s = state.library.find(x => x.id === id)!
             const selected = id === state.currentSongId
             return (
-              <Group key={id} gap="xs" align="center">
-                <Button variant={selected ? 'light' : 'filled'} color={selected ? 'dark' : 'gray'} style={{ flex: 1 }} onClick={() => selectSong(id)}>
+              <Group key={id} gap="xs" align="center" style={{ position: 'relative' }}>
+                <Button
+                  variant={selected ? 'light' : 'default'}
+                  style={{ width: '100%', justifyContent: 'flex-start', border: selected ? '2px solid var(--mantine-color-blue-5)' : undefined }}
+                  onClick={() => selectSong(id)}
+                >
                   {s.title}
                 </Button>
-                <Button variant="light" color="red" aria-label="remove" onClick={() => removeFromQueue(id)}>
+                <Button
+                  variant="subtle"
+                  color="gray"
+                  size="compact-xs"
+                  aria-label="remove"
+                  onClick={() => removeFromQueue(id)}
+                  style={{ position: 'absolute', top: 2, right: 2 }}
+                >
                   ×
                 </Button>
               </Group>
@@ -147,8 +167,17 @@ export default function Planner() {
           <Box mt="xs" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 12 }}>
             {state.recents.filter(id => !state.queue.includes(id)).map(id => {
               const s = state.library.find(x => x.id === id)!
-              return (
-                <Card key={id} withBorder radius="md" p="sm" style={{ cursor: 'pointer' }} onClick={() => onPick(s)}>
+return (
+                <Card
+                  key={id}
+                  withBorder
+                  radius="md"
+                  p="sm"
+                  style={{ cursor: 'pointer', transition: 'background-color 120ms ease' }}
+                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--mantine-color-dark-5)')}
+                  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '')}
+                  onClick={() => onPick(s)}
+                >
                   <Text fw={600}>{s.title}</Text>
                 </Card>
               )
