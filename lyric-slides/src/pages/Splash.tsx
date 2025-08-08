@@ -15,7 +15,7 @@ export default function Splash() {
         </Stack>
       </Center>
       <Text size="sm" c="dimmed" style={{ position: 'absolute', bottom: 8, left: 0, right: 0, textAlign: 'center' }}>
-        Made with <span role="img" aria-label="heart">❤️</span> by Martin — <a href="https://patreon.com/placeholder" target="_blank" rel="noreferrer">Support on Patreon</a>
+        <a href="https://patreon.com/placeholder" target="_blank" rel="noreferrer">Made with <span role="img" aria-label="heart">❤️</span> by Martin</a>
       </Text>
     </Container>
   )
