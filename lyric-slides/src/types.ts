@@ -1,6 +1,9 @@
+export type SongSection = 'verse' | 'chorus' | 'bridge' | 'pre-chorus' | 'intro' | 'outro' | 'tag' | 'instrumental' | 'other'
+
 export type Slide = {
   id: string
   text: string
+  section?: SongSection
 }
 
 export type Song = {

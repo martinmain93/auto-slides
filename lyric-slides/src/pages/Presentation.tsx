@@ -212,11 +212,13 @@ const [controlsVisible, setControlsVisible] = useState(true)
               className="no-scrollbar"
               items={queue.map((id) => {
                 const s = state.library.find((x) => x.id === id)!
+                const active = id === currentSongId
                 return {
                   key: id,
                   label: s.title,
-                  active: id === currentSongId,
+                  active,
                   onClick: () => { setBlankPos(null); goSong(id) },
+                  color: 'gray',
                 }
               })}
               activeIndex={Math.max(0, queue.indexOf(currentSongId))}
@@ -230,12 +232,32 @@ const [controlsVisible, setControlsVisible] = useState(true)
             className="no-scrollbar"
             items={[
               { key: 'blank-start', label: '—', active: blankPos === 'start', onClick: () => setBlankPos('start') },
-              ...currentSong.slides.map((sl, i) => ({
-                key: sl.id,
-                label: firstWords(sl.text, 5),
-                active: i === slideIndex && !blankPos,
-                onClick: () => { setBlankPos(null); setState((s) => ({ ...s, currentSlideIndex: i })) },
-              })),
+              ...currentSong.slides.map((sl, i) => {
+                const section = sl.section
+                const color = section === 'chorus' ? 'grape' : section === 'verse' ? 'blue' : section === 'bridge' ? 'teal' : section === 'pre-chorus' ? 'cyan' : section === 'instrumental' ? 'green' : section === 'tag' ? 'pink' : section === 'intro' ? 'yellow' : section === 'outro' ? 'orange' : 'gray'
+                const active = i === slideIndex && !blankPos
+                // Subtle RGBA overlays on top of dark background
+                const rgba = (hex: string, a: number) => {
+                  const m = /^#?([\da-f]{2})([\da-f]{2})([\da-f]{2})$/i.exec(hex)
+                  if (!m) return `rgba(255,255,255,${a})`
+                  const r = parseInt(m[1], 16), g = parseInt(m[2], 16), b = parseInt(m[3], 16)
+                  return `rgba(${r}, ${g}, ${b}, ${a})`
+                }
+                // Map Mantine color names to representative hex for overlay
+                const baseHex: Record<string,string> = {
+                  grape: '#ab4eaa', blue: '#228be6', teal: '#12b886', cyan: '#15aabf', green: '#40c057', pink: '#e64980', yellow: '#fab005', orange: '#fd7e14', gray: '#868e96'
+                }
+                const bg = active ? rgba(baseHex[color] || '#868e96', 0.35) : rgba(baseHex[color] || '#868e96', 0.2)
+                return ({
+                  key: sl.id,
+                  label: firstWords(sl.text, 5),
+                  active,
+                  onClick: () => { setBlankPos(null); setState((s) => ({ ...s, currentSlideIndex: i })) },
+                  variant: 'filled',
+                  color,
+                  style: { backgroundColor: bg, color: 'white' },
+                })
+              }),
               { key: 'blank-end', label: '—', active: blankPos === 'end', onClick: () => setBlankPos('end') },
             ]}
             activeIndex={blankPos === 'start' ? 0 : blankPos === 'end' ? currentSong.slides.length + 1 : (slideIndex + 1)}

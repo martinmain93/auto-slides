@@ -34,9 +34,10 @@ function SongSearch({ library, onPick, selectedIds }: { library: Song[]; onPick:
         onFocus={() => setFocused(true)}
         onBlur={() => setTimeout(() => setFocused(false), 100)}
         data-autofocus
+        styles={{ input: { backgroundColor: 'white', color: 'black' }, root: { width: '60vw', maxWidth: '900px' } }}
       />
       {(focused || q) && (
-        <Paper withBorder shadow="md" radius="md" style={{ position: 'absolute', top: 94, left: 0, right: 0, zIndex: 10, maxHeight: 300, overflow: 'auto' }}>
+        <Paper withBorder shadow="md" radius="md" style={{ position: 'absolute', top: 104, left: 0, right: 0, zIndex: 10, maxHeight: 300, overflow: 'auto' }}>
           <Stack gap={0}>
             {results.map(s => {
               const added = selectedIds.includes(s.id)
@@ -251,10 +252,27 @@ return (
           {currentSong ? (
             <Box mt="sm">
               <ScrollArea type="hover">
-                <Group wrap="nowrap" gap="sm" pr="sm">
-{currentSong.slides.map((sl) => (
-                    <SlidePreview key={sl.id} text={sl.text} credits={currentSong.credits} />
-                  ))}
+                <Group wrap="nowrap" gap="sm" pr="sm" style={{ flexWrap: 'nowrap', overflowX: 'auto' }}>
+{currentSong.slides.map((sl, i) => {
+                    const section = sl.section
+                    const color = section === 'chorus' ? 'grape' : section === 'verse' ? 'blue' : section === 'bridge' ? 'teal' : section === 'pre-chorus' ? 'cyan' : section === 'instrumental' ? 'green' : section === 'tag' ? 'pink' : section === 'intro' ? 'yellow' : section === 'outro' ? 'orange' : 'gray'
+                    const border = `4px solid var(--mantine-color-${color}-4)`
+                    return (
+                      <Box key={sl.id} style={{ background: 'black', color: 'white', borderRadius: 6, width: 250, height: 160, position: 'relative', overflow: 'hidden', borderTop: border, flex: '0 0 auto' }}>
+                        <div style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center' }}>
+                          <div style={{ fontSize: 14, lineHeight: 1.2, whiteSpace: 'pre-wrap', textAlign: 'center', fontWeight: 700, fontFamily: 'Helvetica Neue, Helvetica, Arial, sans-serif', padding: 6 }}>{sl.text}</div>
+                        </div>
+                        {currentSong.credits && (
+                          <div style={{ position: 'absolute', right: 6, bottom: 4, fontSize: 10, opacity: 0.7 }}>{currentSong.credits}</div>
+                        )}
+                        {section && (
+                          <div style={{ position: 'absolute', left: 0, right: 0, top: 2, textAlign: 'center', fontSize: 10, opacity: 0.6 }}>
+                            {section.charAt(0).toUpperCase() + section.slice(1)}
+                          </div>
+                        )}
+                      </Box>
+                    )
+                  })}
                 </Group>
               </ScrollArea>
             </Box>

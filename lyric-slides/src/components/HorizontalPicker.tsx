@@ -6,6 +6,9 @@ export type PickerItem = {
   label: React.ReactNode
   active: boolean
   onClick: () => void
+  color?: string
+  variant?: 'light' | 'filled' | 'outline' | 'subtle' | 'default'
+  style?: React.CSSProperties
 }
 
 type Props = {
@@ -63,9 +66,9 @@ export default function HorizontalPicker({ items, activeIndex, className }: Prop
             key={it.key}
             ref={(el) => (itemRefs.current[idx] = el)}
             onClick={it.onClick}
-            variant={it.active ? 'light' : 'filled'}
-            color={it.active ? 'dark' : 'gray'}
-            style={{ textAlign: 'left', flex: '0 0 auto' }}
+            variant={it.variant ?? (it.active ? 'outline' : 'light')}
+            color={(it.color ?? (it.active ? 'blue' : 'gray')) as any}
+            style={{ textAlign: 'left', flex: '0 0 auto', borderWidth: it.active ? 2 : undefined, ...(it.style || {}) }}
           >
             {it.label}
           </Button>

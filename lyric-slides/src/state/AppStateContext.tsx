@@ -9,6 +9,7 @@ export type AppActions = {
   removeFromQueue: (songId: string) => void
   clearQueue: () => void
   upsertSong: (song: import('../types').Song) => void
+  enqueue: (songId: string) => void
   nextSlide: () => void
   prevSlide: () => void
   moveNextSong: () => void
@@ -67,6 +68,8 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
           const library = idx >= 0 ? [...s.library.slice(0, idx), song, ...s.library.slice(idx + 1)] : [song, ...s.library]
           return { ...s, library }
         }),
+      enqueue: (songId: string) =>
+        setState((s) => (s.queue.includes(songId) ? s : { ...s, queue: [...s.queue, songId] })),
       nextSlide: () =>
         setState((s) => {
           const song = s.library.find((x) => x.id === s.currentSongId)
