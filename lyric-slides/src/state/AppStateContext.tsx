@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import type { AppState } from '../types'
 import { demoLibrary } from '../types'
@@ -28,7 +29,9 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
       try {
         const parsed = JSON.parse(raw) as AppState
         if (Array.isArray(parsed.library) && Array.isArray(parsed.queue)) return parsed
-      } catch {}
+      } catch {
+        // Ignore invalid persisted state
+      }
     }
     return {
       library: demoLibrary,

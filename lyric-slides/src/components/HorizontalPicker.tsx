@@ -59,7 +59,7 @@ export default function HorizontalPicker({ items, activeIndex, className }: Prop
         gap="xs"
         wrap="nowrap"
         className={'no-scrollbar'}
-        style={{ overflowX: 'auto', maxWidth: '100%', whiteSpace: 'nowrap', scrollbarWidth: 'none' as any }}
+        style={{ overflowX: 'auto', maxWidth: '100%', whiteSpace: 'nowrap' }}
       >
         {items.map((it, idx) => (
           <Button
@@ -67,7 +67,7 @@ export default function HorizontalPicker({ items, activeIndex, className }: Prop
             ref={(el) => (itemRefs.current[idx] = el)}
             onClick={it.onClick}
             variant={it.variant ?? (it.active ? 'outline' : 'light')}
-            color={(it.color ?? (it.active ? 'blue' : 'gray')) as any}
+            color={it.color ?? (it.active ? 'blue' : 'gray')}
             style={{ textAlign: 'left', flex: '0 0 auto', borderWidth: it.active ? 2 : undefined, ...(it.style || {}) }}
           >
             {it.label}

@@ -1,69 +1,68 @@
-# React + TypeScript + Vite
+# Auto Presenter (Lyric Slides)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Plan, edit, and present song lyrics from your browser. Built with React, TypeScript, Vite, and Mantine.
 
-Currently, two official plugins are available:
+Features
+- Plan a set: search your library, queue songs, and reorder with drag-and-drop
+- Edit songs inline: separate slides by blank lines, with automatic section detection (Verse, Chorus, Bridge, etc.)
+- Present mode: keyboard-driven navigation with start/end blank slides for smooth transitions
+- Quick access: recent picks and live slide preview
+- Import: parse ProPresenter .txt exports into your library
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Getting Started
+Requirements
+- Node >= 18.18
 
-## Expanding the ESLint configuration
+Install
+- npm install
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Development
+- npm run dev
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Build & Preview
+- npm run build
+- npm run preview
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+Tests
+- Unit tests: npm run test
+- Watch mode: npm run test:watch
+- E2E tests: npm run test:e2e
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Linting & Formatting
+- Lint: npm run lint
+- Format: npm run format
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Keyboard Shortcuts (Present mode)
+- Space or Right Arrow: Next slide
+- Left Arrow: Previous slide
+- Down Arrow: Next song
+- Up Arrow: Previous song
+- Esc: Return to planner
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Import Format (ProPresenter .txt)
+The importer expects blocks separated by blank lines following a Title header.
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Example:
+Title: Amazing Grace
+
+Amazing grace! how sweet the sound
+That saved a wretch like me!
+
+I once was lost, but now am found;
+Was blind, but now I see.
+
+Notes
+- Each blank-line-separated block becomes a slide
+- Multiple songs can exist in a single file by repeating `Title: <Name>` headers
+
+State Persistence
+- App state (library, recents, queue, current slide) is stored in localStorage under `lyric-slides:app-state`
+- To reset, clear browser storage or remove that key
+
+Contributing
+- Code style is enforced by ESLint and Prettier
+- Prefer strict TypeScript types; avoid any
+- Add unit tests for utilities and complex view logic
+
+License
+- MIT

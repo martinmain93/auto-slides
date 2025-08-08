@@ -1,14 +1,9 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Box, Button, Group, Paper, Text } from '@mantine/core'
+import { Box, Button, Paper, Text } from '@mantine/core'
 import { useAppState } from '../state/AppStateContext'
 import HorizontalPicker from '../components/HorizontalPicker'
-
-function firstWords(text: string, count = 5) {
-  const words = text.replace(/\n/g, ' ').trim().split(/\s+/)
-  const snippet = words.slice(0, count).join(' ')
-  return words.length > count ? snippet + '…' : snippet || '—'
-}
+import { firstWords, rgbaFromMantine, sectionToColor } from '../utils/sections'
 
 export default function Presentation() {
   const navigate = useNavigate()
@@ -25,17 +20,14 @@ const [controlsVisible, setControlsVisible] = useState(true)
   const endBlankRef = useRef<HTMLButtonElement | null>(null)
   const slidesScrollerRef = useRef<HTMLDivElement | null>(null)
 
-  if (!currentSong) {
-    return (
-      <Box style={{ position: 'relative', height: '100dvh', background: 'black', color: 'white', display: 'grid', placeItems: 'center' }}>
-        <Button variant="light" onClick={() => navigate('/plan')}>Go back to planner</Button>
-      </Box>
-    )
-  }
+  const hasSong = Boolean(currentSong)
 
-  const goPrevSlide = () => {
+  const goSong = useCallback((id: string) => {
+    setState((s) => ({ ...s, currentSongId: id, currentSlideIndex: 0 }))
+  }, [setState])
+
+  const goPrevSlide = useCallback(() => {
     if (blankPos === 'start') {
-      // go to previous song end blank
       const idx = queue.indexOf(currentSongId)
       const prevId = queue[idx - 1]
       if (prevId) {
@@ -45,12 +37,10 @@ const [controlsVisible, setControlsVisible] = useState(true)
       return
     }
     if (blankPos === 'end') {
-      // leave end blank to last slide
       setBlankPos(null)
       return
     }
     if (slideIndex <= 0) {
-      // at first real slide — go to previous song (end blank)
       const idx = queue.indexOf(currentSongId)
       const prevId = queue[idx - 1]
       if (prevId) {
@@ -62,10 +52,10 @@ const [controlsVisible, setControlsVisible] = useState(true)
       return
     }
     setState((s) => ({ ...s, currentSlideIndex: Math.max(0, s.currentSlideIndex - 1) }))
-  }
-  const goNextSlide = () => {
+  }, [blankPos, queue, currentSongId, slideIndex, goSong, setState])
+
+  const goNextSlide = useCallback(() => {
     if (blankPos === 'end') {
-      // at trailing blank, go to next song start blank cleared
       const idx = queue.indexOf(currentSongId)
       const nextId = queue[idx + 1]
       if (nextId) {
@@ -75,10 +65,10 @@ const [controlsVisible, setControlsVisible] = useState(true)
       return
     }
     if (blankPos === 'start') {
-      // leave start blank to first slide
       setBlankPos(null)
       return
     }
+    if (!currentSong) return
     if (slideIndex >= currentSong.slides.length - 1) {
       const idx = queue.indexOf(currentSongId)
       const nextId = queue[idx + 1]
@@ -91,17 +81,17 @@ const [controlsVisible, setControlsVisible] = useState(true)
       return
     }
     setState((s) => ({ ...s, currentSlideIndex: Math.min(currentSong.slides.length - 1, s.currentSlideIndex + 1) }))
-  }
+  }, [blankPos, currentSong, queue, currentSongId, setState, slideIndex, goSong])
 
-  const goSong = (id: string) => setState((s) => ({ ...s, currentSongId: id, currentSlideIndex: 0 }))
-  const goPrevSong = () => {
+  const goPrevSong = useCallback(() => {
     const idx = queue.indexOf(currentSongId)
     if (idx > 0) goSong(queue[idx - 1])
-  }
-  const goNextSong = () => {
+  }, [currentSongId, queue, goSong])
+
+  const goNextSong = useCallback(() => {
     const idx = queue.indexOf(currentSongId)
     if (idx >= 0 && idx < queue.length - 1) goSong(queue[idx + 1])
-  }
+  }, [currentSongId, queue, goSong])
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -122,12 +112,12 @@ const [controlsVisible, setControlsVisible] = useState(true)
         goNextSong()
       } else if (e.key === 'Escape') {
         e.preventDefault()
-        navigate('/plan')
+        void navigate('/plan')
       }
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [currentSongId, slideIndex, blankPos])
+  }, [currentSongId, slideIndex, blankPos, goNextSlide, goPrevSlide, goNextSong, goPrevSong, navigate])
 
   // When controls are hidden, blur any focused control to prevent the browser from
   // attempting to keep a (now offscreen) focused element in view and scrolling the page.
@@ -190,23 +180,29 @@ const [controlsVisible, setControlsVisible] = useState(true)
     <Box onMouseMove={onMouseMove} style={{ position: 'relative', height: '100dvh', background: 'black', color: 'white', overflow: 'hidden' }}>
       {/* Centered slide text */}
       <Box style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center' }}>
-<Box
-          key={`${currentSongId}-${blankPos ?? slideIndex}`}
-          className="slide-fade-in"
-          style={{ fontSize: '5vw', lineHeight: 1.2, whiteSpace: 'pre-wrap', textAlign: 'center', fontWeight: 700, fontFamily: 'Helvetica Neue, Helvetica, Arial, sans-serif' }}
-        >
-          {blankPos ? '' : currentSong.slides[slideIndex].text}
-        </Box>
-        <Text size="sm" c="dimmed" style={{ position: 'absolute', right: 8, bottom: 4, pointerEvents: 'none' }}>
-          {currentSong.title}
-        </Text>
+{hasSong ? (
+        <>
+          <Box
+            key={`${currentSongId}-${blankPos ?? slideIndex}`}
+            className="slide-fade-in"
+            style={{ fontSize: '5vw', lineHeight: 1.2, whiteSpace: 'pre-wrap', textAlign: 'center', fontWeight: 700, fontFamily: 'Helvetica Neue, Helvetica, Arial, sans-serif' }}
+          >
+            {blankPos ? '' : currentSong!.slides[slideIndex].text}
+          </Box>
+          <Text size="sm" c="dimmed" style={{ position: 'absolute', right: 8, bottom: 4, pointerEvents: 'none' }}>
+            {currentSong!.title}
+          </Text>
+        </>
+      ) : (
+        <Button variant="light" onClick={() => { void navigate('/plan') }}>Go back to planner</Button>
+      )}
       </Box>
 
       {/* Controls overlay (two rows) */}
       <Paper style={overlayStyle}>
         {/* top row: back | songs centered | hide */}
         <Box style={{ display: 'grid', gridTemplateColumns: 'auto 1fr auto', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-          <Button variant="light" onClick={() => navigate('/plan')}>← Planner</Button>
+          <Button variant="light" onClick={() => { void navigate('/plan') }}>← Planner</Button>
           <Box style={{ justifySelf: 'center', maxWidth: 1100, width: '100%' }}>
             <HorizontalPicker
               className="no-scrollbar"
@@ -230,24 +226,13 @@ const [controlsVisible, setControlsVisible] = useState(true)
         <Box style={{ justifySelf: 'center', maxWidth: 1100, width: '100%', overflow: 'hidden' }} ref={slidesScrollerRef}>
           <HorizontalPicker
             className="no-scrollbar"
-            items={[
+            items={hasSong ? [
               { key: 'blank-start', label: '—', active: blankPos === 'start', onClick: () => setBlankPos('start') },
-              ...currentSong.slides.map((sl, i) => {
+              ...currentSong!.slides.map((sl, i) => {
                 const section = sl.section
-                const color = section === 'chorus' ? 'grape' : section === 'verse' ? 'blue' : section === 'bridge' ? 'teal' : section === 'pre-chorus' ? 'cyan' : section === 'instrumental' ? 'green' : section === 'tag' ? 'pink' : section === 'intro' ? 'yellow' : section === 'outro' ? 'orange' : 'gray'
+                const color = sectionToColor(section)
                 const active = i === slideIndex && !blankPos
-                // Subtle RGBA overlays on top of dark background
-                const rgba = (hex: string, a: number) => {
-                  const m = /^#?([\da-f]{2})([\da-f]{2})([\da-f]{2})$/i.exec(hex)
-                  if (!m) return `rgba(255,255,255,${a})`
-                  const r = parseInt(m[1], 16), g = parseInt(m[2], 16), b = parseInt(m[3], 16)
-                  return `rgba(${r}, ${g}, ${b}, ${a})`
-                }
-                // Map Mantine color names to representative hex for overlay
-                const baseHex: Record<string,string> = {
-                  grape: '#ab4eaa', blue: '#228be6', teal: '#12b886', cyan: '#15aabf', green: '#40c057', pink: '#e64980', yellow: '#fab005', orange: '#fd7e14', gray: '#868e96'
-                }
-                const bg = active ? rgba(baseHex[color] || '#868e96', 0.35) : rgba(baseHex[color] || '#868e96', 0.2)
+                const bg = active ? rgbaFromMantine(color, 0.35) : rgbaFromMantine(color, 0.2)
                 return ({
                   key: sl.id,
                   label: firstWords(sl.text, 5),
@@ -259,8 +244,8 @@ const [controlsVisible, setControlsVisible] = useState(true)
                 })
               }),
               { key: 'blank-end', label: '—', active: blankPos === 'end', onClick: () => setBlankPos('end') },
-            ]}
-            activeIndex={blankPos === 'start' ? 0 : blankPos === 'end' ? currentSong.slides.length + 1 : (slideIndex + 1)}
+            ] : []}
+            activeIndex={hasSong ? (blankPos === 'start' ? 0 : blankPos === 'end' ? currentSong!.slides.length + 1 : (slideIndex + 1)) : 0}
           />
         </Box>
       </Paper>

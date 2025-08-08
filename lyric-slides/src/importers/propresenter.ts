@@ -9,11 +9,6 @@ function slugify(input: string) {
     .replace(/-+/g, '-')
 }
 
-function newId(prefix: string) {
-  // Simple unique id using prefix + random segment
-  return `${prefix}-${Math.random().toString(36).slice(2, 8)}`
-}
-
 // Parse a ProPresenter text export similar to load_propresenter_export.py
 // The format is:
 //   Title: <Song Title>\n\n

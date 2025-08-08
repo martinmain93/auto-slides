@@ -1,0 +1,9 @@
+# Prettier config for consistent formatting
+{
+  "printWidth": 100,
+  "singleQuote": true,
+  "semi": false,
+  "trailingComma": "all",
+  "arrowParens": "always"
+}
+

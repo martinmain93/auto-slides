@@ -1,13 +1,13 @@
 import { useMemo, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import type { Song } from '../types'
-import { Button, TextInput, Group, Stack, Paper, Title, Anchor, Box, ScrollArea, Divider, Badge, Card, Text, AppShell, FileButton, Modal } from '@mantine/core'
+import { Button, TextInput, Group, Stack, Paper, Title, Box, ScrollArea, Divider, Badge, Card, Text, AppShell, FileButton, Modal } from '@mantine/core'
 import { DndContext, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'
 import type { DragEndEvent } from '@dnd-kit/core'
 import { SortableContext, useSortable, arrayMove, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { useAppState } from '../state/AppStateContext'
-import SlidePreview from '../components/SlidePreview'
+import { sectionToColor } from '../utils/sections'
 
 function SongSearch({ library, onPick, selectedIds }: { library: Song[]; onPick: (song: Song) => void; selectedIds: string[] }) {
   const [q, setQ] = useState('')
@@ -154,7 +154,7 @@ export default function Planner() {
     <AppShell padding="md" withBorder={false} navbar={{ width: 320, breakpoint: 'sm' }}>
       <AppShell.Navbar p="md">
       <Paper withBorder p="md" radius={0} style={{ borderRight: '1px solid var(--mantine-color-dark-5)', background: 'var(--mantine-color-dark-8)' }}>
-        <Button fullWidth size="md" onClick={() => navigate('/present')}>
+        <Button fullWidth size="md" onClick={() => { void navigate('/present') }}>
           Start Presentation
         </Button>
         <Group justify="space-between" mt="md" mb="xs">
@@ -208,10 +208,10 @@ export default function Planner() {
           <Group justify="space-between" mb="sm">
             <SongSearch library={state.library} onPick={onPick} selectedIds={state.queue} />
             <Stack gap={6} align="end">
-              <FileButton onChange={file => file && onImport(file)} accept=".txt">
+              <FileButton onChange={file => { if (file) void onImport(file) }} accept=".txt">
                 {(props) => <Button {...props} variant="light">Import ProPresenter .txt</Button>}
               </FileButton>
-              <Button variant="default" onClick={() => navigate('/edit?new=1')}>Add New Song</Button>
+              <Button variant="default" onClick={() => { void navigate('/edit?new=1') }}>Add New Song</Button>
             </Stack>
           </Group>
         </Box>
@@ -247,15 +247,15 @@ return (
         <Box>
           <Group justify="space-between">
             <Title order={3}>Song Preview</Title>
-            <Button variant="default" onClick={() => navigate('/edit')} disabled={!currentSong}>Edit Song</Button>
+            <Button variant="default" onClick={() => { void navigate('/edit') }} disabled={!currentSong}>Edit Song</Button>
           </Group>
           {currentSong ? (
             <Box mt="sm">
               <ScrollArea type="hover">
                 <Group wrap="nowrap" gap="sm" pr="sm" style={{ flexWrap: 'nowrap', overflowX: 'auto' }}>
-{currentSong.slides.map((sl, i) => {
+{currentSong.slides.map((sl) => {
                     const section = sl.section
-                    const color = section === 'chorus' ? 'grape' : section === 'verse' ? 'blue' : section === 'bridge' ? 'teal' : section === 'pre-chorus' ? 'cyan' : section === 'instrumental' ? 'green' : section === 'tag' ? 'pink' : section === 'intro' ? 'yellow' : section === 'outro' ? 'orange' : 'gray'
+                    const color = sectionToColor(section)
                     const border = `4px solid var(--mantine-color-${color}-4)`
                     return (
                       <Box key={sl.id} style={{ background: 'black', color: 'white', borderRadius: 6, width: 250, height: 160, position: 'relative', overflow: 'hidden', borderTop: border, flex: '0 0 auto' }}>

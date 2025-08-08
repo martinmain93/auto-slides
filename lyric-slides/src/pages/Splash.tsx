@@ -9,7 +9,7 @@ export default function Splash() {
         <Stack gap="sm" align="center">
           <Title order={1} size={56} ta="center">Auto Presenter</Title>
           <Text c="dimmed" ta="center">Plan, edit and present lyrics with ease.</Text>
-          <Button size="lg" mt="sm" onClick={() => navigate('/plan')}>
+          <Button size="lg" mt="sm" onClick={() => { void navigate('/plan') }}>
             Let's Sing!
           </Button>
         </Stack>

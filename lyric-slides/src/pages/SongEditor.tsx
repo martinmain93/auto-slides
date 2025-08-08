@@ -3,6 +3,9 @@ import { Box, Button, Group, Stack, Text, Textarea, TextInput, Title, Paper, Scr
 import { useAppState } from '../state/AppStateContext'
 import type { Song, SongSection } from '../types'
 import { useNavigate, useSearchParams } from 'react-router-dom'
+import { sectionLabel, sectionToColor } from '../utils/sections'
+
+type DraftSlide = { text: string; section?: SongSection }
 
 export default function SongEditor() {
   const { state, upsertSong, selectSong, enqueue } = useAppState()
@@ -17,7 +20,7 @@ export default function SongEditor() {
   const [content, setContent] = useState(existing ? existing.slides.map(s => s.text).join('\n\n') : '')
   const [credits, setCredits] = useState(existing?.credits ?? '')
 
-  const slides = useMemo(() => {
+  const slides: DraftSlide[] = useMemo(() => {
     const blocks = content.split(/\n{2,}/).map((b) => b.trim()).filter(Boolean)
     const detect = (line: string): SongSection | undefined => {
       const l = line.toLowerCase().replace(/[^a-z\- ]+/g, '').trim()
@@ -36,7 +39,7 @@ export default function SongEditor() {
       const maybe = detect(lines[0])
       if (maybe) {
         const text = lines.slice(1).join('\n').trim() || block
-        return { text, section: maybe as SongSection }
+        return { text, section: maybe }
       }
       return { text: block }
     })
@@ -47,20 +50,20 @@ export default function SongEditor() {
     const song: Song = {
       id,
       title: title || 'Untitled Song',
-      slides: slides.map((s: any, i: number) => ({ id: `${id}-${i+1}`, text: s.text, section: s.section })),
+      slides: slides.map((s, i) => ({ id: `${id}-${i+1}`, text: s.text, section: s.section })),
       credits: credits.trim() || undefined,
     }
     upsertSong(song)
     selectSong(song.id)
     if (!existing) enqueue(song.id)
-    navigate('/plan')
+    void navigate('/plan')
   }
 
   return (
     <Box p="md" style={{ display: 'grid', gridTemplateColumns: '1fr 200px', gap: 12, height: '100dvh' }}>
       <Paper withBorder p="md" radius="md" style={{ fontSize: 16, height: '100%', display: 'grid', gridTemplateRows: 'auto auto 1fr auto', gap: 12 }}>
         <Group justify="space-between">
-          <Button variant="default" onClick={() => navigate('/plan')}>Back</Button>
+          Button variant="default" onClick={() => { void navigate('/plan') }}Back/Button
           <Button onClick={save}>Save</Button>
         </Group>
 
@@ -103,10 +106,10 @@ export default function SongEditor() {
             {slides.length === 0 ? (
               <Text c="dimmed" ta="center">No slides yet</Text>
             ) : (
-              slides.map((s: any, i: number) => {
-                const text = s.text as string
-                const section = s.section as SongSection | undefined
-                const color = section === 'chorus' ? 'grape' : section === 'verse' ? 'blue' : section === 'bridge' ? 'teal' : section === 'pre-chorus' ? 'cyan' : section === 'instrumental' ? 'green' : section === 'tag' ? 'pink' : section === 'intro' ? 'yellow' : section === 'outro' ? 'orange' : 'gray'
+              slides.map((s, i) => {
+                const text = s.text
+                const section = s.section
+                const color = sectionToColor(section)
                 const border = `4px solid var(--mantine-color-${color}-4)`
                 return (
                   <Box key={i} style={{ background: 'black', color: 'white', borderRadius: 6, width: '100%', height: 112, position: 'relative', overflow: 'hidden', borderTop: border }}>
@@ -116,7 +119,7 @@ export default function SongEditor() {
                     {credits && <div style={{ position: 'absolute', right: 6, bottom: 4, fontSize: 10, opacity: 0.7 }}>{credits}</div>}
                     {section && (
                       <div style={{ position: 'absolute', left: 0, right: 0, top: 2, textAlign: 'center', fontSize: 10, opacity: 0.6 }}>
-                        {section.charAt(0).toUpperCase() + section.slice(1)}
+                        {sectionLabel(section)}
                       </div>
                     )}
                   </Box>
