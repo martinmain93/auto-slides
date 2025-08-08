@@ -2,7 +2,12 @@ import { useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import type { Song } from '../types'
 import { Button, TextInput, Group, Stack, Paper, Title, Anchor, Box, ScrollArea, Divider, Badge, Card, Text, AppShell, FileButton, Modal } from '@mantine/core'
+import { DndContext, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'
+import type { DragEndEvent } from '@dnd-kit/core'
+import { SortableContext, useSortable, arrayMove, verticalListSortingStrategy } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
 import { useAppState } from '../state/AppStateContext'
+import SlidePreview from '../components/SlidePreview'
 
 function SongSearch({ library, onPick, selectedIds }: { library: Song[]; onPick: (song: Song) => void; selectedIds: string[] }) {
   const [q, setQ] = useState('')
@@ -50,13 +55,66 @@ function SongSearch({ library, onPick, selectedIds }: { library: Song[]; onPick:
   )
 }
 
+type SortableQueueItemProps = {
+  id: string
+  title: string
+  selected: boolean
+  onSelect: () => void
+  onRemove: () => void
+}
+
+function SortableQueueItem({ id, title, selected, onSelect, onRemove }: SortableQueueItemProps) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id })
+  const style: React.CSSProperties = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.6 : 1,
+    position: 'relative',
+  }
+  return (
+    <Box ref={setNodeRef} style={style} {...attributes} {...listeners}>
+      <Button
+        variant={selected ? 'light' : 'default'}
+        style={{ width: '100%', justifyContent: 'flex-start', border: selected ? '2px solid var(--mantine-color-blue-5)' : undefined }}
+        onClick={onSelect}
+      >
+        {title}
+      </Button>
+      <Button
+        variant="filled"
+        color="gray"
+        size="compact-sm"
+        aria-label="remove"
+        onClick={onRemove}
+        style={{ position: 'absolute', top: -6, right: -6, width: 22, height: 22, borderRadius: 999, padding: 0, lineHeight: 1, display: 'grid', placeItems: 'center' }}
+      >
+        ×
+      </Button>
+    </Box>
+  )
+}
+
 export default function Planner() {
   const navigate = useNavigate()
-  const { state, setState, addToQueue, addRecent, selectSong, removeFromQueue } = useAppState()
+  const { state, setState, addToQueue, addRecent, selectSong, removeFromQueue, clearQueue } = useAppState()
   const currentSong = state.library.find(s => s.id === state.currentSongId)
 
   const [importOpen, setImportOpen] = useState(false)
   const [importPreview, setImportPreview] = useState<Song[] | null>(null)
+
+  // dnd-kit sensors
+  const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 6 } }))
+
+  const onDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event
+    if (!over || active.id === over.id) return
+    setState(s => {
+      const oldIndex = s.queue.indexOf(String(active.id))
+      const newIndex = s.queue.indexOf(String(over.id))
+      if (oldIndex === -1 || newIndex === -1) return s
+      return { ...s, queue: arrayMove(s.queue, oldIndex, newIndex) }
+    })
+  }
 
   const onPick = (song: Song) => {
     addToQueue(song.id)
@@ -98,35 +156,27 @@ export default function Planner() {
         <Button fullWidth size="md" onClick={() => navigate('/present')}>
           Start Presentation
         </Button>
-        <Title order={3} mt="md">Queue</Title>
-        <Stack gap="xs" mt="xs">
-{state.queue.map(id => {
-            const s = state.library.find(x => x.id === id)!
-            const selected = id === state.currentSongId
-            return (
-              <Group key={id} gap="xs" align="center" style={{ position: 'relative' }}>
-                <Button
-                  variant={selected ? 'light' : 'default'}
-                  style={{ width: '100%', justifyContent: 'flex-start', border: selected ? '2px solid var(--mantine-color-blue-5)' : undefined }}
-                  onClick={() => selectSong(id)}
-                >
-                  {s.title}
-                </Button>
-                <Button
-                  variant="subtle"
-                  color="gray"
-                  size="compact-xs"
-                  aria-label="remove"
-                  onClick={() => removeFromQueue(id)}
-                  style={{ position: 'absolute', top: 2, right: 2 }}
-                >
-                  ×
-                </Button>
-              </Group>
-            )
-          })}
-          {state.queue.length === 0 && <Box style={{ opacity: 0.7 }}>No songs yet</Box>}
-        </Stack>
+        <Group justify="space-between" mt="md" mb="xs">
+          <Title order={3} m={0}>Queue</Title>
+          <Button size="xs" variant="subtle" color="gray" onClick={() => clearQueue()} disabled={state.queue.length === 0}>Clear</Button>
+        </Group>
+        <DndContext sensors={sensors} onDragEnd={onDragEnd}>
+          <SortableContext items={state.queue} strategy={verticalListSortingStrategy}>
+            <Stack gap="xs">
+              {state.queue.map((id) => (
+                <SortableQueueItem
+                  key={id}
+                  id={id}
+                  title={state.library.find(x => x.id === id)?.title || id}
+                  selected={id === state.currentSongId}
+                  onSelect={() => selectSong(id)}
+                  onRemove={() => removeFromQueue(id)}
+                />
+              ))}
+              {state.queue.length === 0 && <Box style={{ opacity: 0.7 }}>No songs yet</Box>}
+            </Stack>
+          </SortableContext>
+        </DndContext>
       </Paper>
       </AppShell.Navbar>
 
@@ -156,9 +206,12 @@ export default function Planner() {
         <Box style={{ position: 'relative' }}>
           <Group justify="space-between" mb="sm">
             <SongSearch library={state.library} onPick={onPick} selectedIds={state.queue} />
-            <FileButton onChange={file => file && onImport(file)} accept=".txt">
-              {(props) => <Button {...props} variant="light">Import ProPresenter .txt</Button>}
-            </FileButton>
+            <Stack gap={6} align="end">
+              <FileButton onChange={file => file && onImport(file)} accept=".txt">
+                {(props) => <Button {...props} variant="light">Import ProPresenter .txt</Button>}
+              </FileButton>
+              <Button variant="default" onClick={() => navigate('/edit?new=1')}>Add New Song</Button>
+            </Stack>
           </Group>
         </Box>
 
@@ -191,26 +244,22 @@ return (
         <Divider my="md" />
 
         <Box>
-          <Title order={3}>Song editor (skeleton)</Title>
+          <Group justify="space-between">
+            <Title order={3}>Song Preview</Title>
+            <Button variant="default" onClick={() => navigate('/edit')} disabled={!currentSong}>Edit Song</Button>
+          </Group>
           {currentSong ? (
-            <Box mt="sm" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-              <Paper withBorder p="sm" radius="md">
-                <Title order={4} mt={0}>{currentSong.title}</Title>
-                <ul style={{ margin: 0, paddingLeft: 16 }}>
-                  {currentSong.slides.map((sl, i) => (
-                    <li key={sl.id} style={{ marginBottom: 8, whiteSpace: 'pre-wrap' }}>
-                      <strong>Slide {i + 1}:</strong>
-                      <div>{sl.text}</div>
-                    </li>
+            <Box mt="sm">
+              <ScrollArea type="hover">
+                <Group wrap="nowrap" gap="sm" pr="sm">
+{currentSong.slides.map((sl) => (
+                    <SlidePreview key={sl.id} text={sl.text} credits={currentSong.credits} />
                   ))}
-                </ul>
-              </Paper>
-              <Paper withBorder p="sm" radius="md">
-                <em>Editor controls will go here.</em>
-              </Paper>
+                </Group>
+              </ScrollArea>
             </Box>
           ) : (
-            <Box style={{ opacity: 0.7 }}>Select a song from the queue to edit.</Box>
+            <Box style={{ opacity: 0.7 }}>Select a song from the queue to preview.</Box>
           )}
         </Box>
         </Box>

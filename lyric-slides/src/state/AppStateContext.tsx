@@ -7,6 +7,8 @@ export type AppActions = {
   addRecent: (songId: string) => void
   selectSong: (songId: string) => void
   removeFromQueue: (songId: string) => void
+  clearQueue: () => void
+  upsertSong: (song: import('../types').Song) => void
   nextSlide: () => void
   prevSlide: () => void
   moveNextSong: () => void
@@ -57,6 +59,14 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
           queue: s.queue.filter((id) => id !== songId),
           currentSongId: s.currentSongId === songId ? undefined : s.currentSongId,
         })),
+      clearQueue: () =>
+        setState((s) => ({ ...s, queue: [], currentSongId: undefined, currentSlideIndex: 0 })),
+      upsertSong: (song) =>
+        setState((s) => {
+          const idx = s.library.findIndex((x) => x.id === song.id)
+          const library = idx >= 0 ? [...s.library.slice(0, idx), song, ...s.library.slice(idx + 1)] : [song, ...s.library]
+          return { ...s, library }
+        }),
       nextSlide: () =>
         setState((s) => {
           const song = s.library.find((x) => x.id === s.currentSongId)

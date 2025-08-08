@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Splash from './pages/Splash'
 import Planner from './pages/Planner'
 import Presentation from './pages/Presentation'
+import SongEditor from './pages/SongEditor'
 import { MantineProvider } from '@mantine/core'
 import { AppStateProvider } from './state/AppStateContext'
 
@@ -13,6 +14,7 @@ const router = createBrowserRouter([
   { path: '/', element: <Splash /> },
   { path: '/plan', element: <Planner /> },
   { path: '/present', element: <Presentation /> },
+  { path: '/edit', element: <SongEditor /> },
 ])
 
 createRoot(document.getElementById('root')!).render(

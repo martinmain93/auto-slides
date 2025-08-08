@@ -7,6 +7,7 @@ export type Song = {
   id: string
   title: string
   slides: Slide[]
+  credits?: string
 }
 
 export type PlanItem = {
