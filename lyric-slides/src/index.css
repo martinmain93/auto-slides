@@ -20,11 +20,12 @@ body {
 a { text-decoration: none }
 a:hover { text-decoration: underline }
 
-/* Hide scrollbars for custom pickers */
-.no-scrollbar {
+/* Hide scrollbars for custom pickers and gutters */
+.no-scrollbar, .hide-scrollbar {
   scrollbar-width: none; /* Firefox */
 }
-.no-scrollbar::-webkit-scrollbar {
+.no-scrollbar::-webkit-scrollbar,
+.hide-scrollbar::-webkit-scrollbar {
   display: none; /* Safari and Chrome */
 }
 
