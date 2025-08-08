@@ -7,6 +7,7 @@ import Splash from './pages/Splash'
 import Planner from './pages/Planner'
 import Presentation from './pages/Presentation'
 import { MantineProvider } from '@mantine/core'
+import { AppStateProvider } from './state/AppStateContext'
 
 const router = createBrowserRouter([
   { path: '/', element: <Splash /> },
@@ -17,7 +18,9 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <MantineProvider defaultColorScheme="dark">
-      <RouterProvider router={router} />
+      <AppStateProvider>
+        <RouterProvider router={router} />
+      </AppStateProvider>
     </MantineProvider>
   </StrictMode>,
 )

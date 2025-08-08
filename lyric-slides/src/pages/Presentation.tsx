@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { demoLibrary } from '../types'
 import { Box, Button, Group, Paper } from '@mantine/core'
+import { useAppState } from '../state/AppStateContext'
 
 function firstWords(text: string, count = 5) {
   const words = text.replace(/\n/g, ' ').trim().split(/\s+/)
@@ -11,19 +11,25 @@ function firstWords(text: string, count = 5) {
 
 export default function Presentation() {
   const navigate = useNavigate()
-  const [queue] = useState(demoLibrary.map(s => s.id))
-  const [currentSongId, setCurrentSongId] = useState(queue[0])
-  const currentSong = useMemo(() => demoLibrary.find(s => s.id === currentSongId)!, [currentSongId])
-  const [slideIndex, setSlideIndex] = useState(0)
+  const { state, setState } = useAppState()
+  const queue = state.queue.length ? state.queue : state.library.map((s) => s.id)
+  const currentSongId = state.currentSongId ?? queue[0]
+  const currentSong = state.library.find((s) => s.id === currentSongId)
+  const slideIndex = state.currentSlideIndex
   const [controlsVisible, setControlsVisible] = useState(true)
 
-  const goPrevSlide = () => setSlideIndex(i => Math.max(0, i - 1))
-  const goNextSlide = () => setSlideIndex(i => Math.min(currentSong.slides.length - 1, i + 1))
-
-  const goSong = (id: string) => {
-    setCurrentSongId(id)
-    setSlideIndex(0)
+  if (!currentSong) {
+    return (
+      <Box style={{ position: 'relative', height: '100dvh', background: 'black', color: 'white', display: 'grid', placeItems: 'center' }}>
+        <Button variant="light" onClick={() => navigate('/plan')}>Go back to planner</Button>
+      </Box>
+    )
   }
+
+  const goPrevSlide = () => setState((s) => ({ ...s, currentSlideIndex: Math.max(0, s.currentSlideIndex - 1) }))
+  const goNextSlide = () => setState((s) => ({ ...s, currentSlideIndex: Math.min(currentSong.slides.length - 1, s.currentSlideIndex + 1) }))
+
+  const goSong = (id: string) => setState((s) => ({ ...s, currentSongId: id, currentSlideIndex: 0 }))
   const goPrevSong = () => {
     const idx = queue.indexOf(currentSongId)
     if (idx > 0) goSong(queue[idx - 1])
@@ -89,8 +95,8 @@ export default function Presentation() {
         <Group gap="xs" align="center" style={{ marginBottom: 8 }}>
           <Button variant="light" onClick={() => navigate('/plan')}>← Planner</Button>
           <Group gap="xs" style={{ overflowX: 'auto', paddingBottom: 4, flex: 1 }}>
-            {queue.map(id => {
-              const s = demoLibrary.find(x => x.id === id)!
+            {queue.map((id) => {
+              const s = state.library.find((x) => x.id === id)!
               const active = id === currentSongId
               return (
                 <Button key={id} onClick={() => goSong(id)} variant={active ? 'light' : 'filled'} color={active ? 'dark' : 'gray'}>
@@ -104,7 +110,7 @@ export default function Presentation() {
         {/* bottom row: slides */}
         <Group gap="xs" style={{ overflowX: 'auto' }}>
           {currentSong.slides.map((sl, i) => (
-            <Button key={sl.id} onClick={() => setSlideIndex(i)} variant={i === slideIndex ? 'light' : 'filled'} color={i === slideIndex ? 'dark' : 'gray'} style={{ textAlign: 'left' }}>
+            <Button key={sl.id} onClick={() => setState((s) => ({ ...s, currentSlideIndex: i }))} variant={i === slideIndex ? 'light' : 'filled'} color={i === slideIndex ? 'dark' : 'gray'} style={{ textAlign: 'left' }}>
               {firstWords(sl.text, 5)}
             </Button>
           ))}

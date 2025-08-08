@@ -1,66 +1,8 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import type { AppState, Song } from '../types'
-import { demoLibrary } from '../types'
-import { Button, TextInput, Group, Stack, Paper, Title, Anchor, Box, ScrollArea, Divider, Badge, Card, Text, AppShell } from '@mantine/core'
-
-function useAppState() {
-  const [state, setState] = useState<AppState>(() => {
-    const recents = JSON.parse(localStorage.getItem('recents') || '[]') as string[]
-    return {
-      library: demoLibrary,
-      recents,
-      queue: [],
-      currentSlideIndex: 0,
-    }
-  })
-
-  useEffect(() => {
-    localStorage.setItem('recents', JSON.stringify(state.recents))
-  }, [state.recents])
-
-  const addToQueue = (songId: string) =>
-    setState(s => {
-      if (s.queue.includes(songId)) {
-        return { ...s, currentSongId: s.currentSongId ?? songId }
-      }
-      return {
-        ...s,
-        queue: [...s.queue, songId],
-        currentSongId: s.currentSongId ?? songId,
-      }
-    })
-
-  const addRecent = (songId: string) =>
-    setState(s => ({ ...s, recents: [songId, ...s.recents.filter(id => id !== songId)].slice(0, 12) }))
-
-  const selectSong = (songId: string) => setState(s => ({ ...s, currentSongId: songId, currentSlideIndex: 0 }))
-
-  const removeFromQueue = (songId: string) =>
-    setState(s => ({ ...s, queue: s.queue.filter(id => id !== songId), currentSongId: s.currentSongId === songId ? undefined : s.currentSongId }))
-
-  const nextSlide = () =>
-    setState(s => {
-      const song = s.library.find(x => x.id === s.currentSongId)
-      if (!song) return s
-      const next = Math.min(s.currentSlideIndex + 1, song.slides.length - 1)
-      return { ...s, currentSlideIndex: next }
-    })
-
-  const prevSlide = () =>
-    setState(s => ({ ...s, currentSlideIndex: Math.max(0, s.currentSlideIndex - 1) }))
-
-  const moveNextSong = () =>
-    setState(s => {
-      if (!s.currentSongId) return s
-      const idx = s.queue.indexOf(s.currentSongId)
-      const nextSongId = s.queue[idx + 1]
-      if (!nextSongId) return s
-      return { ...s, currentSongId: nextSongId, currentSlideIndex: 0 }
-    })
-
-  return { state, setState, addToQueue, addRecent, selectSong, removeFromQueue, nextSlide, prevSlide, moveNextSong }
-}
+import type { Song } from '../types'
+import { Button, TextInput, Group, Stack, Paper, Title, Anchor, Box, ScrollArea, Divider, Badge, Card, Text, AppShell, FileButton, Modal } from '@mantine/core'
+import { useAppState } from '../state/AppStateContext'
 
 function SongSearch({ library, onPick, selectedIds }: { library: Song[]; onPick: (song: Song) => void; selectedIds: string[] }) {
   const [q, setQ] = useState('')
@@ -101,13 +43,43 @@ function SongSearch({ library, onPick, selectedIds }: { library: Song[]; onPick:
 
 export default function Planner() {
   const navigate = useNavigate()
-  const { state, addToQueue, addRecent, selectSong, removeFromQueue } = useAppState()
+  const { state, setState, addToQueue, addRecent, selectSong, removeFromQueue } = useAppState()
   const currentSong = state.library.find(s => s.id === state.currentSongId)
+
+  const [importOpen, setImportOpen] = useState(false)
+  const [importPreview, setImportPreview] = useState<Song[] | null>(null)
 
   const onPick = (song: Song) => {
     addToQueue(song.id)
     addRecent(song.id)
     selectSong(song.id)
+  }
+
+  const onImport = async (file: File) => {
+    const text = await file.text()
+    const { parseProPresenterExport } = await import('../importers/propresenter')
+    const imported = parseProPresenterExport(text)
+    setImportPreview(imported)
+    setImportOpen(true)
+  }
+
+  const confirmImport = () => {
+    if (!importPreview || importPreview.length === 0) {
+      setImportOpen(false)
+      setImportPreview(null)
+      return
+    }
+    // Merge into library with basic id de-duplication
+    const existingIds = new Set(state.library.map(s => s.id))
+    const merged = importPreview.map(s => {
+      let id = s.id
+      while (existingIds.has(id)) id = `${id}-${Math.random().toString(36).slice(2,5)}`
+      existingIds.add(id)
+      return id === s.id ? s : { ...s, id }
+    })
+    setState(prev => ({ ...prev, library: [...merged, ...prev.library], recents: [...merged.map(x => x.id), ...prev.recents].slice(0, 12) }))
+    setImportOpen(false)
+    setImportPreview(null)
   }
 
   return (
@@ -139,9 +111,35 @@ export default function Planner() {
       </AppShell.Navbar>
 
       <AppShell.Main>
+        <Modal opened={importOpen} onClose={() => setImportOpen(false)} title="Import preview">
+          {importPreview && importPreview.length > 0 ? (
+            <Stack>
+              <Text>Found {importPreview.length} songs. The first few:</Text>
+              <Stack gap="xs" style={{ maxHeight: 280, overflow: 'auto' }}>
+                {importPreview.slice(0, 8).map(s => (
+                  <Paper key={s.id} withBorder p="xs">
+                    <Text fw={600}>{s.title}</Text>
+                    <Text size="sm" c="dimmed">{s.slides.length} slides</Text>
+                  </Paper>
+                ))}
+              </Stack>
+              <Group justify="flex-end">
+                <Button variant="default" onClick={() => { setImportOpen(false); setImportPreview(null) }}>Cancel</Button>
+                <Button onClick={confirmImport}>Import</Button>
+              </Group>
+            </Stack>
+          ) : (
+            <Text c="dimmed">No songs detected.</Text>
+          )}
+        </Modal>
         <Box p="md" style={{ position: 'relative' }}>
         <Box style={{ position: 'relative' }}>
-          <SongSearch library={state.library} onPick={onPick} selectedIds={state.queue} />
+          <Group justify="space-between" mb="sm">
+            <SongSearch library={state.library} onPick={onPick} selectedIds={state.queue} />
+            <FileButton onChange={file => file && onImport(file)} accept=".txt">
+              {(props) => <Button {...props} variant="light">Import ProPresenter .txt</Button>}
+            </FileButton>
+          </Group>
         </Box>
 
         <Box mt="md">
