@@ -190,7 +190,11 @@ const [controlsVisible, setControlsVisible] = useState(true)
     <Box onMouseMove={onMouseMove} style={{ position: 'relative', height: '100dvh', background: 'black', color: 'white', overflow: 'hidden' }}>
       {/* Centered slide text */}
       <Box style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center' }}>
-<Box style={{ fontSize: '5vw', lineHeight: 1.2, whiteSpace: 'pre-wrap', textAlign: 'center', fontWeight: 700, fontFamily: 'Helvetica Neue, Helvetica, Arial, sans-serif' }}>
+<Box
+          key={`${currentSongId}-${blankPos ?? slideIndex}`}
+          className="slide-fade-in"
+          style={{ fontSize: '5vw', lineHeight: 1.2, whiteSpace: 'pre-wrap', textAlign: 'center', fontWeight: 700, fontFamily: 'Helvetica Neue, Helvetica, Arial, sans-serif' }}
+        >
           {blankPos ? '' : currentSong.slides[slideIndex].text}
         </Box>
         <Text size="sm" c="dimmed" style={{ position: 'absolute', right: 8, bottom: 4, pointerEvents: 'none' }}>

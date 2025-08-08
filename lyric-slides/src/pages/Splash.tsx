@@ -7,10 +7,10 @@ export default function Splash() {
     <Container size={560} mih="100dvh">
       <Center mih="100dvh">
         <Stack gap="sm" align="center">
-          <Title order={1} size={56} ta="center">Lyric Slides</Title>
+          <Title order={1} size={56} ta="center">Auto Presenter</Title>
           <Text c="dimmed" ta="center">Plan, edit and present lyrics with ease.</Text>
           <Button size="lg" mt="sm" onClick={() => navigate('/plan')}>
-            Get Started
+            Let's Sing!
           </Button>
         </Stack>
       </Center>

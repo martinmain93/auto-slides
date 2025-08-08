@@ -24,7 +24,7 @@ function SongSearch({ library, onPick, selectedIds }: { library: Song[]; onPick:
         onChange={e => setQ(e.currentTarget.value)}
         placeholder="Search songs..."
         size="xl"
-        label="What songs are we singing today?"
+        label="What are we singing today?"
         labelProps={{ style: { fontSize: 24, marginBottom: 8 } }}
         onFocus={() => setFocused(true)}
         onBlur={() => setTimeout(() => setFocused(false), 100)}
