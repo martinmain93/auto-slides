@@ -7,6 +7,7 @@ import { firstWords, rgbaFromMantine, sectionToColor } from '../utils/sections'
 import { useSpeechTranscript } from '../ai/useSpeechTranscript'
 import { useSemanticIndex } from '../ai/useSemanticIndex'
 import { useWeightedSlideMatch } from '../ai/useWeightedSlideMatch'
+import { useAutoAdvancePrediction } from '../ai/useAutoAdvancePrediction'
 
 const DEBUG_MATCH = true
 
@@ -31,7 +32,7 @@ export default function Presentation() {
   const [lastScore, setLastScore] = useState<number | null>(null)
 
   // Speech / mic state
-  const { isListening, partial, finals, toggleMic } = useSpeechTranscript()
+  const { isListening, partial, finals, toggleMic, resetTranscript, avgWps, estLatencyMs } = useSpeechTranscript()
 
   // Pre-index slides for current song
   const { indexPct, indexed } = useSemanticIndex(currentSong)
@@ -43,13 +44,18 @@ export default function Presentation() {
     if (!currentSong) return
     if ((decision.action === 'advance' || decision.action === 'update') && typeof decision.targetIndex === 'number') {
       const idx = decision.targetIndex
-      setBlankPos(null)
-      setState((s) => ({ ...s, currentSlideIndex: idx }))
-      setLastScore(decision.best?.score ?? null)
+      if (idx !== slideIndex) {
+        setBlankPos(null)
+        setState((s) => ({ ...s, currentSlideIndex: idx }))
+        setLastScore(decision.best?.score ?? null)
+        // Clear transcript to get a fresh prediction for the next slide
+        // Give it a short delay to allow last words to flush
+        window.setTimeout(() => resetTranscript(), 100)
+      }
     } else if (decision.best) {
       setLastScore(decision.best.score)
     }
-  }, [decision.action, decision.targetIndex, decision.best, currentSong, setState])
+  }, [decision.action, decision.targetIndex, decision.best, currentSong, setState, resetTranscript])
 
   const goSong = useCallback((id: string) => {
     setState((s) => ({ ...s, currentSongId: id, currentSlideIndex: 0 }))
@@ -173,6 +179,27 @@ export default function Presentation() {
     const nearBottom = window.innerHeight - e.clientY <= 30
     if (nearBottom) setControlsVisible(true)
   }
+
+  // Auto-advance prediction based on speaking rate and latency
+  useAutoAdvancePrediction({
+    currentSlideText: currentSong?.slides[slideIndex]?.text,
+    transcriptWindow,
+    avgWps,
+    estLatencyMs,
+    onPredictedAdvance: () => {
+      // Only advance if we are on a real slide and not at blanks
+      if (!currentSong || blankPos) return
+      const isLast = slideIndex >= currentSong.slides.length - 1
+      if (isLast) return
+      // Guard: do not re-set the same index
+      setState((s) => {
+        const next = Math.min(currentSong.slides.length - 1, s.currentSlideIndex + 1)
+        if (next === s.currentSlideIndex) return s
+        window.setTimeout(() => resetTranscript(), 80)
+        return { ...s, currentSlideIndex: next }
+      })
+    },
+  })
 
   // Lock page scrolling while in presentation to avoid layout shifts
   useEffect(() => {

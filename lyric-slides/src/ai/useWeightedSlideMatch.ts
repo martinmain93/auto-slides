@@ -46,19 +46,45 @@ export function useWeightedSlideMatch(
 
           const nextIdx = Math.min(song.slides.length - 1, slideIndex + 1)
           const nextId = song.slides[nextIdx]?.id
-          const inSongIds = new Set(song.slides.map((s) => s.id))
+        const inSongIds = new Set(song.slides.map((s) => s.id))
 
-          const weightFor = (id: string): number => {
-            if (id === nextId) return 1.25
-            if (inSongIds.has(id)) return 1.0
-            return 0.8
-          }
+        // quick normalizer
+        const norm = (x: string) => x.toLowerCase().replace(/[^\p{L}\p{N}\s]/gu, ' ').replace(/\s+/g, ' ').trim()
 
-          let chosen = { slideId: candidates[0].slideId, score: 0 }
-          for (const c of candidates) {
-            const weighted = c.score * weightFor(c.slideId)
-            if (weighted > chosen.score) chosen = { slideId: c.slideId, score: weighted }
+        // Precompute prefix tokens for slides
+        const slidePrefixTokens = new Map<string, string[]>()
+        for (const sl of song.slides) {
+          const toks = norm(sl.text).split(' ').slice(0, 6)
+          slidePrefixTokens.set(sl.id, toks)
+        }
+        const tTokens = norm(transcriptWindow).split(' ')
+
+        const prefixBoost = (id: string) => {
+          const first = slidePrefixTokens.get(id) || []
+          if (first.length === 0 || tTokens.length === 0) return 0
+          // count how many leading slide words match the beginning of transcript
+          let match = 0
+          for (let i = 0; i < Math.min(first.length, tTokens.length); i++) {
+            if (first[i] === tTokens[i]) match++
+            else break
           }
+          // return a boost in [0, 0.3]
+          return (match / Math.max(3, first.length)) * 0.3
+        }
+
+        const weightFor = (id: string): number => {
+          if (id === nextId) return 1.25
+          if (inSongIds.has(id)) return 1.0
+          return 0.8
+        }
+
+        let chosen = { slideId: candidates[0].slideId, score: 0 }
+        for (const c of candidates) {
+          const w = weightFor(c.slideId)
+          const bonus = prefixBoost(c.slideId)
+          const weighted = c.score * w + bonus
+          if (weighted > chosen.score) chosen = { slideId: c.slideId, score: weighted }
+        }
           if (!abort) setBest(chosen)
         } catch {
           if (!abort) setBest(null)
