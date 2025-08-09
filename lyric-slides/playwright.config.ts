@@ -23,7 +23,6 @@ export default defineConfig({
   webServer: {
     command: 'vite preview --strictPort --port 4173',
     url: 'http://localhost:4173',
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     reuseExistingServer: !process.env.CI,
   },
 })

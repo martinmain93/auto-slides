@@ -1,9 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Box, Button, Paper, Text } from '@mantine/core'
+import { Box, Button, Paper, Text, Loader } from '@mantine/core'
 import { useAppState } from '../state/AppStateContext'
 import HorizontalPicker from '../components/HorizontalPicker'
 import { firstWords, rgbaFromMantine, sectionToColor } from '../utils/sections'
+import { useSpeechTranscript } from '../ai/useSpeechTranscript'
+import { useSemanticIndex } from '../ai/useSemanticIndex'
+import { useWeightedSlideMatch } from '../ai/useWeightedSlideMatch'
+
+const DEBUG_MATCH = true
 
 export default function Presentation() {
   const navigate = useNavigate()
@@ -12,7 +17,7 @@ export default function Presentation() {
   const currentSongId = state.currentSongId ?? queue[0]
   const currentSong = state.library.find((s) => s.id === currentSongId)
   const slideIndex = state.currentSlideIndex
-const [controlsVisible, setControlsVisible] = useState(true)
+  const [controlsVisible, setControlsVisible] = useState(true)
   // null = showing a real slide, 'start' or 'end' = showing a blank
   const [blankPos, setBlankPos] = useState<null | 'start' | 'end'>(null)
   const slidePillRefs = useRef<(HTMLButtonElement | null)[]>([])
@@ -21,6 +26,30 @@ const [controlsVisible, setControlsVisible] = useState(true)
   const slidesScrollerRef = useRef<HTMLDivElement | null>(null)
 
   const hasSong = Boolean(currentSong)
+
+  // Pre-index progress and last match score (debug)
+  const [lastScore, setLastScore] = useState<number | null>(null)
+
+  // Speech / mic state
+  const { isListening, partial, finals, toggleMic } = useSpeechTranscript()
+
+  // Pre-index slides for current song
+  const { indexPct, indexed } = useSemanticIndex(currentSong)
+  useEffect(() => { setLastScore(null) }, [currentSongId])
+
+  // Weighted matching and decision
+  const { transcriptWindow, decision } = useWeightedSlideMatch(currentSong, finals, partial, slideIndex)
+  useEffect(() => {
+    if (!currentSong) return
+    if ((decision.action === 'advance' || decision.action === 'update') && typeof decision.targetIndex === 'number') {
+      const idx = decision.targetIndex
+      setBlankPos(null)
+      setState((s) => ({ ...s, currentSlideIndex: idx }))
+      setLastScore(decision.best?.score ?? null)
+    } else if (decision.best) {
+      setLastScore(decision.best.score)
+    }
+  }, [decision.action, decision.targetIndex, decision.best, currentSong, setState])
 
   const goSong = useCallback((id: string) => {
     setState((s) => ({ ...s, currentSongId: id, currentSlideIndex: 0 }))
@@ -220,7 +249,43 @@ const [controlsVisible, setControlsVisible] = useState(true)
               activeIndex={Math.max(0, queue.indexOf(currentSongId))}
             />
           </Box>
-          <Button variant="light" onClick={() => setControlsVisible(false)} style={{ justifySelf: 'end' }}>Hide ▾</Button>
+          <Box style={{ display: 'flex', alignItems: 'center', gap: 12, justifySelf: 'end' }}>
+            {/* Indexing status */}
+            {!indexed ? (
+              <Box style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: '#bbb' }}>
+                <Loader size="xs" color="gray" />
+                <Text size="sm" c="dimmed">Indexing {indexPct}%</Text>
+              </Box>
+            ) : (
+              <Box style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: 'limegreen' }}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 16.2l-3.5-3.5L4 14.2 9 19l11-11-1.5-1.5z"/></svg>
+                <Text size="sm" c="green">Indexed</Text>
+              </Box>
+            )}
+            {DEBUG_MATCH && lastScore != null && (
+              <Text size="sm" c="dimmed">score {lastScore.toFixed(2)}</Text>
+            )}
+            {DEBUG_MATCH && transcriptWindow && (
+              <Text size="sm" c="dimmed" style={{ maxWidth: 360, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                “{transcriptWindow}”
+              </Text>
+            )}
+            <Button
+              variant={isListening ? 'filled' : 'light'}
+              color={isListening ? 'red' : 'blue'}
+              onClick={toggleMic}
+              aria-pressed={isListening}
+              title={isListening ? 'Stop listening' : 'Start listening'}
+            >
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M12 14a3 3 0 0 0 3-3V7a3 3 0 1 0-6 0v4a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-3.08A7 7 0 0 0 19 11h-2z"/>
+                </svg>
+                {isListening ? 'Listening…' : 'Mic'}
+              </span>
+            </Button>
+            <Button variant="light" onClick={() => setControlsVisible(false)} style={{ justifySelf: 'end' }}>Hide ▾</Button>
+          </Box>
         </Box>
         {/* bottom row: slides */}
         <Box style={{ justifySelf: 'center', maxWidth: 1100, width: '100%', overflow: 'hidden' }} ref={slidesScrollerRef}>

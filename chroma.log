@@ -2464,3 +2464,33 @@ chromadb.db.base.UniqueConstraintError: Collection auto-slides already exists
 [32mINFO[0m:     [29-01-2025 09:41:46] ::1:50732 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
 [32mINFO[0m:     [29-01-2025 09:41:53] ::1:50732 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
 [32mINFO[0m:     [29-01-2025 09:42:01] ::1:50732 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[33mWARNING[0m:  [08-08-2025 21:33:31] chroma_server_nofile is set to 65535, but this is less than current soft limit of 1048575. chroma_server_nofile will not be set.
+[32mINFO[0m:     [08-08-2025 21:33:31] Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[36mDEBUG[0m:    [08-08-2025 21:33:31] Starting component System
+[36mDEBUG[0m:    [08-08-2025 21:33:31] Starting component OpenTelemetryClient
+[36mDEBUG[0m:    [08-08-2025 21:33:31] Starting component SimpleAssignmentPolicy
+[36mDEBUG[0m:    [08-08-2025 21:33:31] Starting component SqliteDB
+[36mDEBUG[0m:    [08-08-2025 21:33:31] Starting component QuotaEnforcer
+[36mDEBUG[0m:    [08-08-2025 21:33:31] Starting component Posthog
+[36mDEBUG[0m:    [08-08-2025 21:33:31] Starting component LocalSegmentManager
+[36mDEBUG[0m:    [08-08-2025 21:33:31] Starting component SegmentAPI
+[32mINFO[0m:     [08-08-2025 21:33:31] Started server process [[36m11141[0m]
+[32mINFO[0m:     [08-08-2025 21:33:31] Waiting for application startup.
+[32mINFO[0m:     [08-08-2025 21:33:31] Application startup complete.
+[32mINFO[0m:     [08-08-2025 21:33:31] Uvicorn running on [1mhttp://localhost:8000[0m (Press CTRL+C to quit)
+[32mINFO[0m:     [08-08-2025 21:33:33] ::1:49600 - "GET /api/v1/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-08-2025 21:33:33] ::1:49600 - "GET /api/v1/databases/default_database?tenant=default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [08-08-2025 21:33:33] ::1:49601 - "GET /api/v1/collections/auto-slides?tenant=default_tenant&database=default_database HTTP/1.1" 200
+[36mDEBUG[0m:    [08-08-2025 21:33:52] Starting component PersistentLocalHnswSegment
+[32mINFO[0m:     [08-08-2025 21:33:52] ::1:49601 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-08-2025 21:33:53] ::1:49601 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-08-2025 21:33:56] ::1:49601 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-08-2025 21:33:56] ::1:49601 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-08-2025 21:33:59] ::1:49601 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-08-2025 21:34:00] ::1:49601 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-08-2025 21:34:01] ::1:49601 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-08-2025 21:34:01] ::1:49601 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-08-2025 21:34:02] ::1:49601 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-08-2025 21:34:03] ::1:49601 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-08-2025 21:34:03] ::1:49601 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200
+[32mINFO[0m:     [08-08-2025 21:34:04] ::1:49601 - "POST /api/v1/collections/0b24c18f-fca1-446a-b781-a3caf51fdd08/query HTTP/1.1" 200

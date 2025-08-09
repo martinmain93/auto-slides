@@ -25,7 +25,6 @@ export default function SongEditor() {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null)
   const gutterRef = useRef<HTMLDivElement | null>(null)
   const [taSizes, setTaSizes] = useState<{ scrollHeight: number; clientHeight: number }>({ scrollHeight: 0, clientHeight: 0 })
-  const [scrollTop, setScrollTop] = useState(0)
 
   const slides: DraftSlide[] = useMemo(() => {
     const blocks = content.split(/\n{2,}/).map((b) => b.trim()).filter(Boolean)
@@ -96,7 +95,6 @@ export default function SongEditor() {
     const update = () => setTaSizes({ scrollHeight: ta.scrollHeight, clientHeight: ta.clientHeight })
     update()
     const onScroll = () => {
-      setScrollTop(ta.scrollTop)
       if (gutterRef.current) gutterRef.current.scrollTop = ta.scrollTop
     }
     ta.addEventListener('scroll', onScroll)
