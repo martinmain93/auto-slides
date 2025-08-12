@@ -1,5 +1,5 @@
 import type { Song } from '../types'
-import { buildPhoneticIndex, phoneticBestMatchAcross } from './phonetics'
+import { buildPhoneticIndex, phoneticBestMatchAcross, phoneticTokens } from './phonetics'
 
 export type PhoneticDecision =
   | { action: 'none'; best: { songId: string; slideId: string; score: number } | null; transcriptWindow: string }
@@ -17,9 +17,15 @@ export function decideSlidePhonetic(params: {
   acceptAnyThreshold: number
   blankThreshold: number
   crossSongThreshold: number
+  minAdvanceTokens?: number // require at least N words before auto-advancing to next slide
+  minUpdateTokens?: number // require at least N words before switching to a non-next slide
+  allowEarlyNextAdoption?: boolean // allow switching to next slide before tail-end
 }): PhoneticDecision {
   const { currentSong, library, queue, transcriptWindow, slideIndex } = params
   const { acceptNextThreshold, acceptAnyThreshold, blankThreshold, crossSongThreshold } = params
+  const minAdvanceTokens = params.minAdvanceTokens ?? 2
+  const minUpdateTokens = params.minUpdateTokens ?? 2
+  const allowEarlyNextAdoption = params.allowEarlyNextAdoption ?? true
   const songIndexes = params.songIndexes ?? buildIndexes(library)
 
   if (!currentSong || !transcriptWindow) return { action: 'none', best: null, transcriptWindow }
@@ -30,6 +36,8 @@ export function decideSlidePhonetic(params: {
   const currentIdx = slideIndex
   const nextIdx = Math.min(currentSong.slides.length - 1, currentIdx + 1)
   const nextSlideId = currentSong.slides[nextIdx]?.id
+  const wordCount = transcriptWindow.trim() ? transcriptWindow.trim().split(/\s+/).length : 0
+  const qTokens = phoneticTokens(transcriptWindow)
 
   const inOrderSongIds = queue.length ? queue : library.map(s => s.id)
   let isAtEnd = currentIdx >= currentSong.slides.length - 1
@@ -49,6 +57,23 @@ export function decideSlidePhonetic(params: {
     inOrderSongIds,
   })
 
+  // Detect if transcript matches the tail (end) of the current slide
+  const curTokens = songIndexes[currentSong.id]?.slideTokens[currentSong.slides[currentIdx].id] || []
+  const tailEndMatch = (() => {
+    if (qTokens.length === 0 || curTokens.length === 0) return false
+    const start = curTokens.length - qTokens.length
+    if (start < 0) return false
+    for (let i = 0; i < qTokens.length; i++) {
+      if (qTokens[i] !== curTokens[start + i]) return false
+    }
+    return true
+  })()
+
+  // If we've clearly reached the end of current slide, advance regardless of best
+  if (tailEndMatch && wordCount >= minAdvanceTokens && nextSlideId && nextIdx !== currentIdx) {
+    return { action: 'advance', targetIndex: nextIdx, best: best ?? null, transcriptWindow }
+  }
+
   if (!best || best.score < blankThreshold) {
     const isAtEnd2 = currentIdx >= currentSong.slides.length - 1
     return { action: 'blank', blankPos: isAtEnd2 ? 'end' : 'start', best, transcriptWindow }
@@ -59,10 +84,41 @@ export function decideSlidePhonetic(params: {
     if (targetIndex < 0) return { action: 'none', best, transcriptWindow }
 
     const isNext = best.slideId === nextSlideId
-    if (isNext && best.score >= acceptNextThreshold && targetIndex !== currentIdx) {
+    // End-of-slide auto-advance
+    if (isNext && targetIndex !== currentIdx && wordCount >= minAdvanceTokens && tailEndMatch && best.score >= acceptNextThreshold) {
       return { action: 'advance', targetIndex, best, transcriptWindow }
     }
-    if (!isNext && best.score >= acceptAnyThreshold && targetIndex !== currentIdx) {
+
+    // Compute how many head tokens of the current slide we've spoken consecutively at the end of the window
+    const headStreak = (() => {
+      if (qTokens.length === 0 || curTokens.length === 0) return 0
+      const maxCheck = Math.min(qTokens.length, curTokens.length)
+      let len = 0
+      for (let i = 1; i <= maxCheck; i++) {
+        // compare suffix of qTokens with prefix of curTokens of length i
+        let ok = true
+        for (let j = 0; j < i; j++) {
+          if (qTokens[qTokens.length - i + j] !== curTokens[j]) { ok = false; break }
+        }
+        if (ok) len = i
+      }
+      return len
+    })()
+
+    // Early next-slide adoption when singer starts next slide strongly
+    // Guard: if we've just started the CURRENT slide (spoken some, but fewer than minAdvanceTokens head tokens), do not early-adopt yet
+    if (
+      allowEarlyNextAdoption &&
+      isNext &&
+      targetIndex !== currentIdx &&
+      wordCount >= minUpdateTokens &&
+      best.score >= acceptAnyThreshold &&
+      !(headStreak > 0 && headStreak < minAdvanceTokens)
+    ) {
+      return { action: 'advance', targetIndex, best, transcriptWindow }
+    }
+    // Non-next slide switch within song (e.g., skipping ahead)
+    if (!isNext && best.score >= acceptAnyThreshold && targetIndex !== currentIdx && wordCount >= minUpdateTokens) {
       return { action: 'update', targetIndex, best, transcriptWindow }
     }
     return { action: 'none', best, transcriptWindow }

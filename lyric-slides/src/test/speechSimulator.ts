@@ -39,9 +39,8 @@ export class SpeechSimulator {
     this.isRunning = true
     
     const sortedEvents = [...speechEvents].sort((a, b) => a.timestamp - b.timestamp)
-    const startTime = Date.now()
     
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve) => {
       let eventIndex = 0
       
       const scheduleNextEvent = () => {

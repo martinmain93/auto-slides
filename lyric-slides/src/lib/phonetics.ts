@@ -60,29 +60,28 @@ export function buildPhoneticIndex(song: Song): PhoneticIndex {
   return { songId: song.id, slideTokens }
 }
 
-function prefixMatchScore(a: string[], b: string[]): number {
-  // Phonetic prefix confidence mapping:
-  // 1st word match => ~0.60, 2 words => ~0.85, 3 words => ~0.95, then approach 1.0.
-  // Only drop confidence if an early mismatch occurs.
+function anywherePrefixMatchScore(a: string[], b: string[]): number {
+  // Allow aligning the transcript prefix anywhere within the slide tokens (continuation within a slide).
   if (a.length === 0 || b.length === 0) return 0
-  const n = Math.min(a.length, b.length)
-  let k = 0 // leading matches count
-  for (let i = 0; i < n; i++) {
-    if (a[i] === b[i]) k++
-    else break
+  let best = 0
+  let bestPos = -1
+  for (let j = 0; j < b.length; j++) {
+    let k = 0
+    for (let i = 0; i < a.length && j + i < b.length; i++) {
+      if (a[i] === b[j + i]) k++
+      else break
+    }
+    if (k > best) { best = k; bestPos = j }
   }
   let base = 0
-  if (k === 0) base = 0
-  else if (k === 1) base = 0.60
-  else if (k === 2) base = 0.85
-  else if (k === 3) base = 0.95
-  else base = Math.min(1, 0.98 + Math.min(0.02, 0.005 * (k - 3)))
-
-  // Apply a small penalty if the next token after the matched prefix is a mismatch
-  // Earlier mismatches penalize a bit more than later ones.
-  if (k < n) {
-    const penalty = Math.max(0, 0.15 - 0.04 * (k - 1)) // 0.15, 0.11, 0.07, ...
-    base = Math.max(0, base - penalty)
+  if (best === 0) base = 0
+  else if (best === 1) base = 0.60
+  else if (best === 2) base = 0.85
+  else if (best === 3) base = 0.95
+  else base = Math.min(1, 0.98 + Math.min(0.02, 0.005 * (best - 3)))
+  if (bestPos > 0) {
+    const posPenalty = Math.min(0.15, bestPos * 0.03)
+    base = Math.max(0, base - posPenalty)
   }
   return Math.max(0, Math.min(1, base))
 }
@@ -113,7 +112,7 @@ export function phoneticBestMatchAcross(params: {
 
     for (const sl of song.slides) {
       const sTokens = idx.slideTokens[sl.id] || []
-      const base = prefixMatchScore(qTokens, sTokens)
+      const base = anywherePrefixMatchScore(qTokens, sTokens)
       const nextBonus = sl.id === preferNextSlideId ? 1.2 : 1.0
       const score = base * songWeight * nextBonus * listBias
       if (!best || score > best.score) best = { songId: song.id, slideId: sl.id, score }
@@ -145,7 +144,7 @@ export function phoneticScoresForSongs(params: {
     for (let i = 0; i < song.slides.length; i++) {
       const sl = song.slides[i]
       const sTokens = idx.slideTokens[sl.id] || []
-      const base = prefixMatchScore(qTokens, sTokens)
+      const base = anywherePrefixMatchScore(qTokens, sTokens)
       const nextBonus = sl.id === preferNextSlideId ? 1.2 : 1.0
       const score = base * songWeight * nextBonus * listBias
       out.push({ songId: song.id, slideId: sl.id, score })
