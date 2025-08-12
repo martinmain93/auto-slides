@@ -1,7 +1,9 @@
 import React, { useMemo } from 'react'
-import { Box, Paper, Title, Text, Slider, Group, Divider, ScrollArea, Badge } from '@mantine/core'
+import { Box, Paper, Title, Text, Slider, Group, Divider, ScrollArea, Badge, Switch, SegmentedControl, Loader, ThemeIcon } from '@mantine/core'
 import type { Song } from '../types'
 import { phoneticTokens, phoneticScoresForSongs, buildPhoneticIndex } from '../lib/phonetics'
+import { useAppState } from '../state/AppStateContext'
+import { getPhonemeDictionaryVersion } from '../lib/phonemeDict'
 
 export type DevPanelProps = {
   library: Song[]
@@ -24,15 +26,19 @@ export type DevPanelProps = {
 
 export function DevPanel(props: DevPanelProps) {
   const { library, queue, currentSongId, transcript, currentSong, slideIndex, thresholds } = props
+  const app = useAppState()
   const { acceptNextThreshold, setAcceptNextThreshold, acceptAnyThreshold, setAcceptAnyThreshold, blankThreshold, setBlankThreshold, crossSongThreshold, setCrossSongThreshold } = thresholds
 
   const ph = useMemo(() => phoneticTokens(transcript), [transcript])
 
+  const dictVersion = getPhonemeDictionaryVersion()
   const indexes = useMemo(() => {
+    // touch dictVersion to establish dependency for ESLint without suppressions
+    void dictVersion
     const map: Record<string, ReturnType<typeof buildPhoneticIndex>> = {}
     for (const s of library) map[s.id] = buildPhoneticIndex(s)
     return map
-  }, [library])
+  }, [library, dictVersion])
 
   const preferNextSlideId = currentSong ? currentSong.slides[Math.min(currentSong.slides.length - 1, slideIndex + 1)]?.id : undefined
 
@@ -55,6 +61,34 @@ export function DevPanel(props: DevPanelProps) {
         <Text size="sm" c="dimmed" mt={4}>Phonetic</Text>
         <Text style={{ wordBreak: 'break-word' }}>{ph.join(' ') || '—'}</Text>
       </Box>
+
+      <Divider my="xs" />
+      <Title order={5} mb={4}>Dictionary</Title>
+      <Group mb="sm" justify="space-between">
+        <Text size="sm">Use phoneme dictionary</Text>
+        <Switch
+          checked={!!app.state.usePhonemeDict}
+          onChange={(e) => app.setUsePhonemeDict(e.currentTarget.checked)}
+          size="sm"
+        />
+      </Group>
+      <Group mb="sm" justify="space-between">
+        <Text size="sm">Source</Text>
+        <SegmentedControl
+          value={app.state.phonemeSource}
+          onChange={(v) => app.setPhonemeSource(v as 'local' | 'remote')}
+          data={[{ label: 'Local', value: 'local' }, { label: 'Remote', value: 'remote' }]}
+          size="xs"
+          disabled={!app.state.usePhonemeDict}
+        />
+      </Group>
+      <Group mb="sm" gap={8}>
+        {app.state.phonemeStatus === 'loading' && <Loader size="xs" />}
+        {app.state.phonemeStatus === 'ready' && (
+          <ThemeIcon color="green" size="sm" variant="light">✓</ThemeIcon>
+        )}
+        <Text size="sm" c="dimmed">Status: {app.state.phonemeStatus}</Text>
+      </Group>
 
       <Divider my="xs" />
       <Title order={5} mb={4}>Thresholds</Title>

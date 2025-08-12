@@ -23,6 +23,9 @@ export type AppState = {
   queue: string[] // song ids in order
   currentSongId?: string
   currentSlideIndex: number
+  usePhonemeDict: boolean
+  phonemeSource: 'local' | 'remote'
+  phonemeStatus: 'idle' | 'loading' | 'ready' | 'error'
 }
 
 export const demoLibrary: Song[] = [

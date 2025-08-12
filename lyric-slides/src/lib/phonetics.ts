@@ -4,6 +4,7 @@
 // This favors prefix continuity and next-slide bias without semantic embeddings.
 
 import type { Song } from '../types'
+import { getPhonemes } from './phonemeDict'
 
 export type PhoneticIndex = {
   songId: string
@@ -17,7 +18,28 @@ function normalize(text: string): string {
   return text.toLowerCase().replace(/[^\p{L}\p{N}\s]/gu, ' ').replace(/\s+/g, ' ').trim()
 }
 
-// Very small metaphone-like codec. Not a perfect double-metaphone but adequate for rough phonetic prefix matching.
+// Convert an ARPAbet phoneme sequence to a compact consonant-centric code string.
+// We strip stress markers (digits) and drop vowels to emphasize consonant skeletons
+// to better match the existing scorer's behavior. Duplicate consecutive symbols are collapsed.
+function phonemesToCode(arpas: string[]): string {
+  const VOWELS = new Set(['AA','AE','AH','AO','AW','AY','EH','ER','EY','IH','IY','OW','OY','UH','UW'])
+  const cleaned: string[] = []
+  for (const p of arpas) {
+    const base = p.replace(/[0-2]$/,'')
+    if (!VOWELS.has(base)) cleaned.push(base)
+  }
+  if (cleaned.length === 0) return ''
+  const out: string[] = []
+  for (const c of cleaned) {
+    const prev = out[out.length - 1]
+    if (c === prev) continue
+    out.push(c)
+  }
+  // Join without separator to keep tokens compact; equality comparison remains exact
+  return out.join('')
+}
+
+// Very small metaphone-like codec fallback for words not present in the dictionary.
 function simplePhonetic(word: string): string {
   let w = word.toLowerCase().replace(/[^a-z]/g, '')
   if (!w) return ''
@@ -49,7 +71,17 @@ function simplePhonetic(word: string): string {
 
 export function phoneticTokens(text: string): string[] {
   const words = normalize(text).split(' ').slice(0, WORD_LIMIT)
-  return words.map(simplePhonetic).filter(Boolean)
+  const tokens: string[] = []
+  for (const w of words) {
+    const dict = getPhonemes(w)
+    if (dict && dict.length) {
+      const code = phonemesToCode(dict)
+      if (code) { tokens.push(code); continue }
+    }
+    const fallback = simplePhonetic(w)
+    if (fallback) tokens.push(fallback)
+  }
+  return tokens
 }
 
 export function buildPhoneticIndex(song: Song): PhoneticIndex {

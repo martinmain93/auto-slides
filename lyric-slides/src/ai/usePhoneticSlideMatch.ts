@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import type { Song } from '../types'
 import { buildPhoneticIndex } from '../lib/phonetics'
+import { getPhonemeDictionaryVersion } from '../lib/phonemeDict'
 import { decideSlidePhonetic, type PhoneticDecision } from '../lib/decidePhonetic'
 
 export function usePhoneticSlideMatch(params: {
@@ -26,11 +27,13 @@ export function usePhoneticSlideMatch(params: {
 
   // Prebuild phonetic indexes for songs (cheap in-browser)
   const [songIndexes, setSongIndexes] = useState<Record<string, ReturnType<typeof buildPhoneticIndex>>>({})
+  const dictVersion = getPhonemeDictionaryVersion()
+
   useEffect(() => {
     const map: Record<string, ReturnType<typeof buildPhoneticIndex>> = {}
     for (const s of library) map[s.id] = buildPhoneticIndex(s)
     setSongIndexes(map)
-  }, [library])
+  }, [library, dictVersion])
 
   const decision: PhoneticDecision = useMemo(() => decideSlidePhonetic({
     currentSong,

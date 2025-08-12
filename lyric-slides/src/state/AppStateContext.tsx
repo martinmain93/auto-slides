@@ -2,6 +2,8 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import type { AppState } from '../types'
 import { demoLibrary } from '../types'
+import { setPhonemeDictionary } from '../lib/phonemeDict'
+import { loadCmudictFromUrl } from '../lib/phonemeLoader'
 
 export type AppActions = {
   addToQueue: (songId: string) => void
@@ -14,6 +16,8 @@ export type AppActions = {
   nextSlide: () => void
   prevSlide: () => void
   moveNextSong: () => void
+  setUsePhonemeDict: (enabled: boolean) => void
+  setPhonemeSource: (src: 'local' | 'remote') => void
 }
 
 type Ctx = { state: AppState; setState: React.Dispatch<React.SetStateAction<AppState>> } & AppActions
@@ -38,12 +42,52 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
       recents: [],
       queue: [],
       currentSlideIndex: 0,
+      usePhonemeDict: true,
+      phonemeSource: 'local',
+      phonemeStatus: 'idle',
     }
   })
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state))
   }, [state])
+
+  // Load/clear phoneme dictionary whenever the toggle changes.
+  useEffect(() => {
+    let cancelled = false
+    async function load() {
+      if (!state.usePhonemeDict) {
+        setPhonemeDictionary({})
+        setState(s => ({ ...s, phonemeStatus: 'idle' }))
+        return
+      }
+      setState(s => ({ ...s, phonemeStatus: 'loading' }))
+      try {
+        if (state.phonemeSource === 'remote') {
+          await loadCmudictFromUrl()
+        } else {
+          // local JSON subset for tests/dev
+          const res = await fetch('/phonemes.json', { cache: 'no-store' })
+          if (!res.ok) throw new Error(`Failed local dict: ${res.status}`)
+          const obj: unknown = await res.json()
+          if (obj && typeof obj === 'object') {
+            const map: Record<string, unknown> = obj as Record<string, unknown>
+            const valid = Object.entries(map).every(([k, v]) => typeof k === 'string' && (typeof v === 'string' || (Array.isArray(v) && v.every((p) => typeof p === 'string'))))
+            if (valid) setPhonemeDictionary(obj as Record<string, string | string[]>)
+            else throw new Error('Invalid local phoneme map shape')
+          } else {
+            throw new Error('Local phoneme JSON is not an object')
+          }
+        }
+        if (!cancelled) setState(s => ({ ...s, phonemeStatus: 'ready' }))
+      } catch (e) {
+        console.warn('Phoneme load failed', e)
+        if (!cancelled) setState(s => ({ ...s, phonemeStatus: 'error' }))
+      }
+    }
+    void load()
+    return () => { cancelled = true }
+  }, [state.usePhonemeDict, state.phonemeSource])
 
   const actions = useMemo<AppActions>(
     () => ({
@@ -89,6 +133,10 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
           if (!nextSongId) return s
           return { ...s, currentSongId: nextSongId, currentSlideIndex: 0 }
         }),
+      setUsePhonemeDict: (enabled: boolean) =>
+        setState((s) => ({ ...s, usePhonemeDict: enabled })),
+      setPhonemeSource: (src: 'local' | 'remote') =>
+        setState((s) => ({ ...s, phonemeSource: src })),
     }),
     [],
   )
