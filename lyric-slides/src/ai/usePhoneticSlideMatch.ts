@@ -17,15 +17,13 @@ export function usePhoneticSlideMatch(params: {
   // thresholds
   acceptNextThreshold?: number // confidence to stick with next slide
   acceptAnyThreshold?: number // threshold to switch within song
-  acceptOtherSlideThreshold?: number // threshold to switch to non-next slide (same or other song)
   blankThreshold?: number // under this, blank
   crossSongThreshold?: number // high threshold required to jump songs
 }): { transcriptWindow: string; decision: PhoneticDecision } {
   const { currentSong, library, queue, finals, partial, slideIndex } = params
   const acceptNextThreshold = params.acceptNextThreshold ?? 0.7
   const acceptAnyThreshold = params.acceptAnyThreshold ?? 0.6
-  const acceptOtherSlideThreshold = params.acceptOtherSlideThreshold ?? 0.7
-  const blankThreshold = params.blankThreshold ?? 0.2
+  const blankThreshold = params.blankThreshold ?? 0.45
   const crossSongThreshold = params.crossSongThreshold ?? 0.8
 
   const transcriptWindow = useMemo(() => [...finals.slice(-2), partial].join(' ').trim(), [finals, partial])
@@ -52,7 +50,7 @@ export function usePhoneticSlideMatch(params: {
 
     // Evaluate matches across: next slide (priority), same song, all queued songs
     const inOrderSongIds = queue.length ? queue : library.map(s => s.id)
-    var isAtEnd = currentIdx >= currentSong.slides.length - 1
+    let isAtEnd = currentIdx >= currentSong.slides.length - 1
     const nextSongId = (() => {
       if (!isAtEnd) return undefined
       const idx = inOrderSongIds.indexOf(currentSong.id)
@@ -109,7 +107,7 @@ export function usePhoneticSlideMatch(params: {
     // Otherwise blank and keep listening
     isAtEnd = currentIdx >= currentSong.slides.length - 1
     return { action: 'blank', blankPos: isAtEnd ? 'end' : 'start', best, transcriptWindow }
-  }, [currentSong, library, queue, songIndexes, transcriptWindow, slideIndex, acceptNextThreshold, acceptAnyThreshold, acceptOtherSlideThreshold, blankThreshold, crossSongThreshold])
+  }, [currentSong, library, queue, songIndexes, transcriptWindow, slideIndex, acceptNextThreshold, acceptAnyThreshold, blankThreshold, crossSongThreshold])
 
   return { transcriptWindow, decision }
 }

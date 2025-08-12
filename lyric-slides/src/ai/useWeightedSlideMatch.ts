@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import type { Song } from '../types'
-// Deprecated: semantic/keyword matcher kept for reference. Replaced by phonetic matcher.
+// Deprecated: semantic/keyword matcher replaced by phonetic matcher. This stub remains to satisfy legacy imports.
 
 export type UseWeightedMatchOpts = {
   windowFinals?: number
@@ -17,100 +17,14 @@ export function useWeightedSlideMatch(
   opts: UseWeightedMatchOpts = {}
 ) {
   const WINDOW_FINALS = opts.windowFinals ?? 2
-  const k = opts.k ?? 5
-  const autoAdvanceThreshold = opts.autoAdvanceThreshold ?? 0.55
-  const acceptThreshold = opts.acceptThreshold ?? 0.4
-
   const transcriptWindow = useMemo(
     () => [...finals.slice(-WINDOW_FINALS), partial].join(' ').trim(),
     [finals, partial, WINDOW_FINALS]
   )
 
-  const [best, setBest] = useState<{ slideId: string; score: number } | null>(null)
-
-  useEffect(() => {
-    let abort = false
-    if (!song || !transcriptWindow) {
-      setBest(null)
-      return
-    }
-
-    const t = setTimeout(() => {
-      void (async () => {
-        try {
-          const candidates = await matchSongSemanticCandidates(song, transcriptWindow, { k }).catch(() => [])
-          const kw = matchSong(song, transcriptWindow, { minScore: 0.12 })
-          if (kw) candidates.push(kw)
-          if (abort || candidates.length === 0) return
-
-          const nextIdx = Math.min(song.slides.length - 1, slideIndex + 1)
-          const nextId = song.slides[nextIdx]?.id
-        const inSongIds = new Set(song.slides.map((s) => s.id))
-
-        // quick normalizer
-        const norm = (x: string) => x.toLowerCase().replace(/[^\p{L}\p{N}\s]/gu, ' ').replace(/\s+/g, ' ').trim()
-
-        // Precompute prefix tokens for slides
-        const slidePrefixTokens = new Map<string, string[]>()
-        for (const sl of song.slides) {
-          const toks = norm(sl.text).split(' ').slice(0, 6)
-          slidePrefixTokens.set(sl.id, toks)
-        }
-        const tTokens = norm(transcriptWindow).split(' ')
-
-        const prefixBoost = (id: string) => {
-          const first = slidePrefixTokens.get(id) || []
-          if (first.length === 0 || tTokens.length === 0) return 0
-          // count how many leading slide words match the beginning of transcript
-          let match = 0
-          for (let i = 0; i < Math.min(first.length, tTokens.length); i++) {
-            if (first[i] === tTokens[i]) match++
-            else break
-          }
-          // return a boost in [0, 0.3]
-          return (match / Math.max(3, first.length)) * 0.3
-        }
-
-        const weightFor = (id: string): number => {
-          if (id === nextId) return 1.25
-          if (inSongIds.has(id)) return 1.0
-          return 0.8
-        }
-
-        let chosen = { slideId: candidates[0].slideId, score: 0 }
-        for (const c of candidates) {
-          const w = weightFor(c.slideId)
-          const bonus = prefixBoost(c.slideId)
-          const weighted = c.score * w + bonus
-          if (weighted > chosen.score) chosen = { slideId: c.slideId, score: weighted }
-        }
-          if (!abort) setBest(chosen)
-        } catch {
-          if (!abort) setBest(null)
-        }
-      })()
-    }, 600)
-
-    return () => { abort = true; clearTimeout(t) }
-  }, [song, transcriptWindow, slideIndex, k])
-
-  // Provide decisions to caller
-  const decision = useMemo(() => {
-    if (!song || !best) return { best, action: 'none' as const }
-    const nextIdx = Math.min(song.slides.length - 1, slideIndex + 1)
-    const nextId = song.slides[nextIdx]?.id
-    const bestIdx = song.slides.findIndex((s) => s.id === best.slideId)
-    if (bestIdx < 0) return { best, action: 'none' as const }
-    const isNext = best.slideId === nextId
-    if (isNext && best.score >= autoAdvanceThreshold && bestIdx !== slideIndex) {
-      return { best, action: 'advance' as const, targetIndex: bestIdx }
-    }
-    if (best.score >= acceptThreshold && bestIdx !== slideIndex) {
-      return { best, action: 'update' as const, targetIndex: bestIdx }
-    }
-    return { best, action: 'none' as const }
-  }, [song, best, slideIndex, autoAdvanceThreshold, acceptThreshold])
-
+  // Always return no decision; prefer usePhoneticSlideMatch instead.
+  const best = null
+  const decision = { best, action: 'none' as const }
   return { transcriptWindow, best, decision }
 }
 
