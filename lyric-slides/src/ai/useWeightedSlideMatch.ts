@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import type { Song } from '../types'
-import { matchSong } from '../lib/matcher'
-import { matchSongSemanticCandidates } from '../lib/semanticMatcher'
+// Deprecated: semantic/keyword matcher kept for reference. Replaced by phonetic matcher.
 
 export type UseWeightedMatchOpts = {
   windowFinals?: number

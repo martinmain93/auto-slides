@@ -1,13 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Box, Button, Paper, Text, Loader } from '@mantine/core'
+import { Box, Button, Paper, Text } from '@mantine/core'
 import { useAppState } from '../state/AppStateContext'
 import HorizontalPicker from '../components/HorizontalPicker'
 import { firstWords, rgbaFromMantine, sectionToColor } from '../utils/sections'
 import { useSpeechTranscript } from '../ai/useSpeechTranscript'
-import { useSemanticIndex } from '../ai/useSemanticIndex'
-import { useWeightedSlideMatch } from '../ai/useWeightedSlideMatch'
-import { useAutoAdvancePrediction } from '../ai/useAutoAdvancePrediction'
+import { usePhoneticSlideMatch } from '../ai/usePhoneticSlideMatch'
 
 const DEBUG_MATCH = true
 
@@ -32,30 +30,58 @@ export default function Presentation() {
   const [lastScore, setLastScore] = useState<number | null>(null)
 
   // Speech / mic state
-  const { isListening, partial, finals, toggleMic, resetTranscript, avgWps, estLatencyMs } = useSpeechTranscript()
+  const { isListening, partial, finals, toggleMic, resetTranscript } = useSpeechTranscript()
 
-  // Pre-index slides for current song
-  const { indexPct, indexed } = useSemanticIndex(currentSong)
+  // Reset debug score when song changes
   useEffect(() => { setLastScore(null) }, [currentSongId])
 
-  // Weighted matching and decision
-  const { transcriptWindow, decision } = useWeightedSlideMatch(currentSong, finals, partial, slideIndex)
+  // Phonetic matching and navigation decision
+  const { transcriptWindow, decision } = usePhoneticSlideMatch({
+    currentSong,
+    library: state.library,
+    queue,
+    finals,
+    partial,
+    slideIndex,
+  })
   useEffect(() => {
     if (!currentSong) return
+
+    // If we're blanked and the confidence for the CURRENT slide is now decent, unblank.
+    if (blankPos && decision.best && decision.best.songId === currentSong.id) {
+      const currentId = currentSong.slides[slideIndex]?.id
+      const bestIsCurrent = decision.best.slideId === currentId
+      const strongForCurrent = decision.best.score >= 0.55 // threshold to unblank for the current slide
+      if (bestIsCurrent && strongForCurrent) {
+        setBlankPos(null)
+      }
+    }
+
+    if (decision.action === 'blank') {
+      setBlankPos(decision.blankPos ?? null)
+      setLastScore(decision.best?.score ?? null)
+      return
+    }
     if ((decision.action === 'advance' || decision.action === 'update') && typeof decision.targetIndex === 'number') {
       const idx = decision.targetIndex
+      const targetSongId = decision.targetSongId ?? currentSongId
+      if (targetSongId !== currentSongId) {
+        setBlankPos(null)
+        setState((s) => ({ ...s, currentSongId: targetSongId, currentSlideIndex: idx }))
+        setLastScore(decision.best?.score ?? null)
+        window.setTimeout(() => resetTranscript(), 100)
+        return
+      }
       if (idx !== slideIndex) {
         setBlankPos(null)
         setState((s) => ({ ...s, currentSlideIndex: idx }))
         setLastScore(decision.best?.score ?? null)
-        // Clear transcript to get a fresh prediction for the next slide
-        // Give it a short delay to allow last words to flush
         window.setTimeout(() => resetTranscript(), 100)
       }
     } else if (decision.best) {
       setLastScore(decision.best.score)
     }
-  }, [decision.action, decision.targetIndex, decision.best, currentSong, setState, resetTranscript])
+  }, [decision.action, decision.targetIndex, decision.targetSongId, decision.blankPos, decision.best, currentSong, currentSongId, slideIndex, setState, resetTranscript, blankPos])
 
   const goSong = useCallback((id: string) => {
     setState((s) => ({ ...s, currentSongId: id, currentSlideIndex: 0 }))
@@ -180,26 +206,6 @@ export default function Presentation() {
     if (nearBottom) setControlsVisible(true)
   }
 
-  // Auto-advance prediction based on speaking rate and latency
-  useAutoAdvancePrediction({
-    currentSlideText: currentSong?.slides[slideIndex]?.text,
-    transcriptWindow,
-    avgWps,
-    estLatencyMs,
-    onPredictedAdvance: () => {
-      // Only advance if we are on a real slide and not at blanks
-      if (!currentSong || blankPos) return
-      const isLast = slideIndex >= currentSong.slides.length - 1
-      if (isLast) return
-      // Guard: do not re-set the same index
-      setState((s) => {
-        const next = Math.min(currentSong.slides.length - 1, s.currentSlideIndex + 1)
-        if (next === s.currentSlideIndex) return s
-        window.setTimeout(() => resetTranscript(), 80)
-        return { ...s, currentSlideIndex: next }
-      })
-    },
-  })
 
   // Lock page scrolling while in presentation to avoid layout shifts
   useEffect(() => {
@@ -277,18 +283,6 @@ export default function Presentation() {
             />
           </Box>
           <Box style={{ display: 'flex', alignItems: 'center', gap: 12, justifySelf: 'end' }}>
-            {/* Indexing status */}
-            {!indexed ? (
-              <Box style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: '#bbb' }}>
-                <Loader size="xs" color="gray" />
-                <Text size="sm" c="dimmed">Indexing {indexPct}%</Text>
-              </Box>
-            ) : (
-              <Box style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: 'limegreen' }}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 16.2l-3.5-3.5L4 14.2 9 19l11-11-1.5-1.5z"/></svg>
-                <Text size="sm" c="green">Indexed</Text>
-              </Box>
-            )}
             {DEBUG_MATCH && lastScore != null && (
               <Text size="sm" c="dimmed">score {lastScore.toFixed(2)}</Text>
             )}
