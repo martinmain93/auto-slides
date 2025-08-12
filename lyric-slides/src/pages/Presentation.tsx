@@ -6,6 +6,7 @@ import { useSpeechTranscript } from '../ai/useSpeechTranscript'
 import { usePhoneticSlideMatch } from '../ai/usePhoneticSlideMatch'
 import { useNavigation } from '../presentation/useNavigation'
 import { ControlsOverlay } from '../presentation/ControlsOverlay'
+import { DevPanel } from '../presentation/DevPanel'
 
 const DEBUG_MATCH = true
 
@@ -15,6 +16,7 @@ export default function Presentation() {
   const nav = useNavigation({ state, setState, onExit: () => { void navigate('/plan') } })
   const { queue, currentSongId, currentSong, slideIndex, setSlideIndex, blankPos, setBlankPos, goSong } = nav
   const [controlsVisible, setControlsVisible] = useState(true)
+  const [devVisible, setDevVisible] = useState(true)
   const slidesScrollerRef = useRef<HTMLDivElement | null>(null)
 
   const hasSong = Boolean(currentSong)
@@ -29,6 +31,11 @@ export default function Presentation() {
   useEffect(() => { setLastScore(null) }, [currentSongId])
 
   // Phonetic matching and navigation decision
+  const [acceptNextThreshold, setAcceptNextThreshold] = useState(0.7)
+  const [acceptAnyThreshold, setAcceptAnyThreshold] = useState(0.6)
+  const [blankThreshold, setBlankThreshold] = useState(0.45)
+  const [crossSongThreshold, setCrossSongThreshold] = useState(0.8)
+
   const { transcriptWindow, decision } = usePhoneticSlideMatch({
     currentSong,
     library: state.library,
@@ -36,6 +43,10 @@ export default function Presentation() {
     finals,
     partial,
     slideIndex,
+    acceptNextThreshold,
+    acceptAnyThreshold,
+    blankThreshold,
+    crossSongThreshold,
   })
   useEffect(() => {
     if (!currentSong) return
@@ -98,6 +109,21 @@ export default function Presentation() {
   }
 
 
+  // Hotkey: toggle Dev Panel with "D"
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement | null
+      const isTyping = target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)
+      if (isTyping) return
+      if (!e.ctrlKey && !e.metaKey && !e.altKey && e.key.toLowerCase() === 'd') {
+        e.preventDefault()
+        setDevVisible(v => !v)
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [])
+
   // Lock page scrolling while in presentation to avoid layout shifts
   useEffect(() => {
     const html = document.documentElement
@@ -133,6 +159,27 @@ export default function Presentation() {
         <Button variant="light" onClick={() => { void navigate('/plan') }}>Go back to planner</Button>
       )}
       </Box>
+
+      {devVisible && (
+        <DevPanel
+          library={state.library}
+          currentSongId={currentSongId}
+          queue={queue}
+          transcript={transcriptWindow}
+          currentSong={currentSong}
+          slideIndex={slideIndex}
+          thresholds={{
+            acceptNextThreshold,
+            setAcceptNextThreshold,
+            acceptAnyThreshold,
+            setAcceptAnyThreshold,
+            blankThreshold,
+            setBlankThreshold,
+            crossSongThreshold,
+            setCrossSongThreshold,
+          }}
+        />
+      )}
 
       <ControlsOverlay
         queue={queue}

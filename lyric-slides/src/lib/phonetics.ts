@@ -47,7 +47,7 @@ function simplePhonetic(word: string): string {
   return keep.join('')
 }
 
-function phoneticTokens(text: string): string[] {
+export function phoneticTokens(text: string): string[] {
   const words = normalize(text).split(' ').slice(0, WORD_LIMIT)
   return words.map(simplePhonetic).filter(Boolean)
 }
@@ -121,5 +121,37 @@ export function phoneticBestMatchAcross(params: {
   }
 
   return best
+}
+
+export function phoneticScoresForSongs(params: {
+  library: Song[]
+  songIndexes?: Record<string, PhoneticIndex>
+  query: string
+  preferSongId?: string
+  equalWeightSongIds?: string[]
+  preferNextSlideId?: string
+  inOrderSongIds?: string[]
+}): { songId: string; slideId: string; score: number }[] {
+  const { library, songIndexes = {}, query, preferSongId, equalWeightSongIds, preferNextSlideId, inOrderSongIds } = params
+  const qTokens = phoneticTokens(query)
+  if (qTokens.length === 0) return []
+  const order = inOrderSongIds ?? library.map(s => s.id)
+  const orderIndex = new Map<string, number>(order.map((id, i) => [id, i]))
+  const out: { songId: string; slideId: string; score: number }[] = []
+  for (const song of library) {
+    const idx = songIndexes[song.id] || buildPhoneticIndex(song)
+    const songWeight = equalWeightSongIds?.includes(song.id) ? 1.15 : (song.id === preferSongId ? 1.15 : 1.0)
+    const listBias = 1 + (0.05 * (order.length - 1 - (orderIndex.get(song.id) ?? 0)))
+    for (let i = 0; i < song.slides.length; i++) {
+      const sl = song.slides[i]
+      const sTokens = idx.slideTokens[sl.id] || []
+      const base = prefixMatchScore(qTokens, sTokens)
+      const nextBonus = sl.id === preferNextSlideId ? 1.2 : 1.0
+      const score = base * songWeight * nextBonus * listBias
+      out.push({ songId: song.id, slideId: sl.id, score })
+    }
+  }
+  out.sort((a, b) => b.score - a.score)
+  return out
 }
 
