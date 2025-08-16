@@ -64,7 +64,7 @@ export default function HorizontalPicker({ items, activeIndex, className }: Prop
         {items.map((it, idx) => (
           <Button
             key={it.key}
-            ref={(el) => (itemRefs.current[idx] = el)}
+            ref={(el) => { itemRefs.current[idx] = el }}
             onClick={it.onClick}
             variant={it.variant ?? (it.active ? 'outline' : 'light')}
             color={it.color ?? (it.active ? 'blue' : 'gray')}

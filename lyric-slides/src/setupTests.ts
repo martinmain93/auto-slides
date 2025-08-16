@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom/vitest'
 import { afterAll, afterEach, beforeAll } from 'vitest'
+import { loadPhonemeDictFromUrl } from './lib/phonemeLoader'
 
 // MSW setup for tests in Node/jsdom using request interception
 import { setupServer } from 'msw/node'
@@ -10,8 +11,7 @@ const server = setupServer(...handlers)
 // Minimal matchMedia polyfill for Mantine/use-media-query in JSDOM
 if (typeof window !== 'undefined') {
   if (!window.matchMedia) {
-    // @ts-expect-error - define on window
-    window.matchMedia = (query: string) => {
+    ;(window as any).matchMedia = (query: string) => {
       return {
         matches: false,
         media: query,
@@ -26,8 +26,7 @@ if (typeof window !== 'undefined') {
   }
   if (!('ResizeObserver' in window)) {
     // Simple ResizeObserver polyfill for tests
-    // @ts-expect-error - define on window
-    window.ResizeObserver = class {
+    ;(window as any).ResizeObserver = class {
       observe() {}
       unobserve() {}
       disconnect() {}
@@ -35,7 +34,11 @@ if (typeof window !== 'undefined') {
   }
 }
 
-beforeAll(() => server.listen({ onUnhandledRequest: 'bypass' }))
+beforeAll(async () => {
+  server.listen({ onUnhandledRequest: 'bypass' })
+  // Load a small local phoneme dictionary subset for deterministic tests
+  await loadPhonemeDictFromUrl('/phonemes.json')
+})
 afterEach(() => server.resetHandlers())
 afterAll(() => server.close())
 

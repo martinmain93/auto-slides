@@ -20,7 +20,7 @@ export function ControlsOverlay(props: {
   debugScore: number | null
   controlsVisible: boolean
   setControlsVisible: (v: boolean) => void
-  slidesScrollerRef: React.RefObject<HTMLDivElement>
+  slidesScrollerRef: React.RefObject<HTMLDivElement | null>
 }) {
   const { queue, library, currentSongId, slideIndex, onSelectSlide, blankPos, setBlankPos, goSong, navigateToPlanner, isListening, toggleMic, transcriptWindow, debugScore, controlsVisible, setControlsVisible, slidesScrollerRef } = props
 
@@ -60,7 +60,7 @@ export function ControlsOverlay(props: {
                 active,
                 onClick: () => { setBlankPos(null); goSong(id) },
                 color: 'gray',
-              }
+              } as import('../components/HorizontalPicker').PickerItem
             })}
             activeIndex={Math.max(0, queue.indexOf(currentSongId))}
           />
@@ -95,8 +95,8 @@ export function ControlsOverlay(props: {
       <Box style={{ justifySelf: 'center', maxWidth: 1100, width: '100%', overflow: 'hidden' }} ref={slidesScrollerRef}>
         <HorizontalPicker
           className="no-scrollbar"
-          items={hasSong ? [
-            { key: 'blank-start', label: '—', active: blankPos === 'start', onClick: () => setBlankPos('start') },
+          items={hasSong ? ([
+            { key: 'blank-start', label: '—', active: blankPos === 'start', onClick: () => setBlankPos('start') } as import('../components/HorizontalPicker').PickerItem,
             ...currentSong!.slides.map((sl, i) => {
               const section = sl.section
               const color = sectionToColor(section)
@@ -107,13 +107,13 @@ export function ControlsOverlay(props: {
                   label: firstWords(sl.text, 5),
                   active,
                   onClick: () => { setBlankPos(null); onSelectSlide(i) },
-                  variant: 'filled',
+                  variant: 'filled' as const,
                   color,
                   style: { backgroundColor: bg, color: 'white' },
-                })
+                } as import('../components/HorizontalPicker').PickerItem)
             }),
-            { key: 'blank-end', label: '—', active: blankPos === 'end', onClick: () => setBlankPos('end') },
-          ] : []}
+            { key: 'blank-end', label: '—', active: blankPos === 'end', onClick: () => setBlankPos('end') } as import('../components/HorizontalPicker').PickerItem,
+          ] as import('../components/HorizontalPicker').PickerItem[]) : []}
           activeIndex={hasSong ? (blankPos === 'start' ? 0 : blankPos === 'end' ? currentSong!.slides.length + 1 : (slideIndex + 1)) : 0}
         />
       </Box>

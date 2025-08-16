@@ -12,8 +12,6 @@ export type PhoneticIndex = {
   slideTokens: Record<string, string[]>
 }
 
-const WORD_LIMIT = 12 // consider first N words per slide for matching prefixes
-
 function normalize(text: string): string {
   return text.toLowerCase().replace(/[^\p{L}\p{N}\s]/gu, ' ').replace(/\s+/g, ' ').trim()
 }
@@ -35,8 +33,8 @@ function phonemesToCode(arpas: string[]): string {
     if (c === prev) continue
     out.push(c)
   }
-  // Join without separator to keep tokens compact; equality comparison remains exact
-  return out.join('')
+  // Join without separator to keep tokens compact; normalize to lowercase to align with fallback tokens
+  return out.join('').toLowerCase()
 }
 
 // Very small metaphone-like codec fallback for words not present in the dictionary.
@@ -70,7 +68,7 @@ function simplePhonetic(word: string): string {
 }
 
 export function phoneticTokens(text: string): string[] {
-  const words = normalize(text).split(' ').slice(0, WORD_LIMIT)
+  const words = normalize(text).split(' ')
   const tokens: string[] = []
   for (const w of words) {
     const dict = getPhonemes(w)
@@ -128,30 +126,30 @@ export function phoneticBestMatchAcross(params: {
   inOrderSongIds?: string[]
 }): { songId: string; slideId: string; score: number } | null {
   const { library, songIndexes, query, preferSongId, equalWeightSongIds, preferNextSlideId, inOrderSongIds } = params
-  const qTokens = phoneticTokens(query)
-  if (qTokens.length === 0) return null
+  // const qTokens = phoneticTokens(query)
+  // if (qTokens.length === 0) return null
 
-  // weight helpers
-  const order = inOrderSongIds ?? library.map(s => s.id)
-  const orderIndex = new Map<string, number>(order.map((id, i) => [id, i]))
+  // // weight helpers
+  // const order = inOrderSongIds ?? library.map(s => s.id)
+  // const orderIndex = new Map<string, number>(order.map((id, i) => [id, i]))
 
-  let best: { songId: string; slideId: string; score: number } | null = null
+  // let best: { songId: string; slideId: string; score: number } | null = null
 
-  for (const song of library) {
-    const idx = songIndexes[song.id] || buildPhoneticIndex(song)
-    const songWeight = equalWeightSongIds?.includes(song.id) ? 1.15 : (song.id === preferSongId ? 1.15 : 1.0)
-    const listBias = 1 + (0.05 * (order.length - 1 - (orderIndex.get(song.id) ?? 0))) // slight bias to earlier in queue
+  // for (const song of library) {
+  //   const idx = songIndexes[song.id] || buildPhoneticIndex(song)
+  //   const songWeight = equalWeightSongIds?.includes(song.id) ? 1.15 : (song.id === preferSongId ? 1.15 : 1.0)
+  //   const listBias = 1 + (0.05 * (order.length - 1 - (orderIndex.get(song.id) ?? 0))) // slight bias to earlier in queue
 
-    for (const sl of song.slides) {
-      const sTokens = idx.slideTokens[sl.id] || []
-      const base = anywherePrefixMatchScore(qTokens, sTokens)
-      const nextBonus = sl.id === preferNextSlideId ? 1.2 : 1.0
-      const score = base * songWeight * nextBonus * listBias
-      if (!best || score > best.score) best = { songId: song.id, slideId: sl.id, score }
-    }
-  }
+  //   for (const sl of song.slides) {
+  //     const sTokens = idx.slideTokens[sl.id] || []
+  //     const base = anywherePrefixMatchScore(qTokens, sTokens)
+  //     const nextBonus = sl.id === preferNextSlideId ? 1.2 : 1.0
+  //     const score = base * songWeight * nextBonus * listBias
+  //     if (!best || score > best.score) best = { songId: song.id, slideId: sl.id, score }
+  //   }
+  // }
 
-  return best
+  // return best
 }
 
 export function phoneticScoresForSongs(params: {
@@ -163,26 +161,26 @@ export function phoneticScoresForSongs(params: {
   preferNextSlideId?: string
   inOrderSongIds?: string[]
 }): { songId: string; slideId: string; score: number }[] {
-  const { library, songIndexes = {}, query, preferSongId, equalWeightSongIds, preferNextSlideId, inOrderSongIds } = params
-  const qTokens = phoneticTokens(query)
-  if (qTokens.length === 0) return []
-  const order = inOrderSongIds ?? library.map(s => s.id)
-  const orderIndex = new Map<string, number>(order.map((id, i) => [id, i]))
-  const out: { songId: string; slideId: string; score: number }[] = []
-  for (const song of library) {
-    const idx = songIndexes[song.id] || buildPhoneticIndex(song)
-    const songWeight = equalWeightSongIds?.includes(song.id) ? 1.15 : (song.id === preferSongId ? 1.15 : 1.0)
-    const listBias = 1 + (0.05 * (order.length - 1 - (orderIndex.get(song.id) ?? 0)))
-    for (let i = 0; i < song.slides.length; i++) {
-      const sl = song.slides[i]
-      const sTokens = idx.slideTokens[sl.id] || []
-      const base = anywherePrefixMatchScore(qTokens, sTokens)
-      const nextBonus = sl.id === preferNextSlideId ? 1.2 : 1.0
-      const score = base * songWeight * nextBonus * listBias
-      out.push({ songId: song.id, slideId: sl.id, score })
-    }
-  }
-  out.sort((a, b) => b.score - a.score)
-  return out
+  // const { library, songIndexes = {}, query, preferSongId, equalWeightSongIds, preferNextSlideId, inOrderSongIds } = params
+  // const qTokens = phoneticTokens(query)
+  // if (qTokens.length === 0) return []
+  // const order = inOrderSongIds ?? library.map(s => s.id)
+  // const orderIndex = new Map<string, number>(order.map((id, i) => [id, i]))
+  // const out: { songId: string; slideId: string; score: number }[] = []
+  // for (const song of library) {
+  //   const idx = songIndexes[song.id] || buildPhoneticIndex(song)
+  //   const songWeight = equalWeightSongIds?.includes(song.id) ? 1.15 : (song.id === preferSongId ? 1.15 : 1.0)
+  //   const listBias = 1 + (0.05 * (order.length - 1 - (orderIndex.get(song.id) ?? 0)))
+  //   for (let i = 0; i < song.slides.length; i++) {
+  //     const sl = song.slides[i]
+  //     const sTokens = idx.slideTokens[sl.id] || []
+  //     const base = anywherePrefixMatchScore(qTokens, sTokens)
+  //     const nextBonus = sl.id === preferNextSlideId ? 1.2 : 1.0
+  //     const score = base * songWeight * nextBonus * listBias
+  //     out.push({ songId: song.id, slideId: sl.id, score })
+  //   }
+  // }
+  // out.sort((a, b) => b.score - a.score)
+  // return out
 }
 

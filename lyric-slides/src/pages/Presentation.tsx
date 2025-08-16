@@ -30,12 +30,7 @@ export default function Presentation() {
   // Reset debug score when song changes
   useEffect(() => { setLastScore(null) }, [currentSongId])
 
-  // Phonetic matching and navigation decision
-  const [acceptNextThreshold, setAcceptNextThreshold] = useState(0.7)
-  const [acceptAnyThreshold, setAcceptAnyThreshold] = useState(0.6)
-  const [blankThreshold, setBlankThreshold] = useState(0.45)
-  const [crossSongThreshold, setCrossSongThreshold] = useState(0.8)
-
+  // Matching disabled: use minimal hook for transcript window only
   const { transcriptWindow, decision } = usePhoneticSlideMatch({
     currentSong,
     library: state.library,
@@ -43,50 +38,13 @@ export default function Presentation() {
     finals,
     partial,
     slideIndex,
-    acceptNextThreshold,
-    acceptAnyThreshold,
-    blankThreshold,
-    crossSongThreshold,
   })
+
   useEffect(() => {
-    if (!currentSong) return
-
-    // If we're blanked and the confidence for the CURRENT slide is now decent, unblank.
-    if (blankPos && decision.best && decision.best.songId === currentSong.id) {
-      const currentId = currentSong.slides[slideIndex]?.id
-      const bestIsCurrent = decision.best.slideId === currentId
-      const strongForCurrent = decision.best.score >= 0.55 // threshold to unblank for the current slide
-      if (bestIsCurrent && strongForCurrent) {
-        setBlankPos(null)
-      }
+    if (decision.action == 'blank') {
+      setBlankPos(decision.blankPos)
     }
-
-    if (decision.action === 'blank') {
-      setBlankPos(decision.blankPos ?? null)
-      setLastScore(decision.best?.score ?? null)
-      return
-    }
-    if ((decision.action === 'advance' || decision.action === 'update') && typeof decision.targetIndex === 'number') {
-      const idx = decision.targetIndex
-      const targetSongId = decision.targetSongId ?? currentSongId
-      if (targetSongId !== currentSongId) {
-        setBlankPos(null)
-        setState((s) => ({ ...s, currentSongId: targetSongId, currentSlideIndex: idx }))
-        setLastScore(decision.best?.score ?? null)
-        window.setTimeout(() => resetTranscript(), 100)
-        return
-      }
-      if (idx !== slideIndex) {
-        setBlankPos(null)
-        setState((s) => ({ ...s, currentSlideIndex: idx }))
-        setLastScore(decision.best?.score ?? null)
-        window.setTimeout(() => resetTranscript(), 100)
-      }
-    } else if (decision.best) {
-      setLastScore(decision.best.score)
-    }
-  }, [decision.action, decision.targetIndex, decision.targetSongId, decision.blankPos, decision.best, currentSong, currentSongId, slideIndex, setState, resetTranscript, blankPos, setBlankPos])
-
+  }, [decision])
 
   // When controls are hidden, blur any focused control to prevent the browser from
   // attempting to keep a (now offscreen) focused element in view and scrolling the page.
@@ -168,16 +126,7 @@ export default function Presentation() {
           transcript={transcriptWindow}
           currentSong={currentSong}
           slideIndex={slideIndex}
-          thresholds={{
-            acceptNextThreshold,
-            setAcceptNextThreshold,
-            acceptAnyThreshold,
-            setAcceptAnyThreshold,
-            blankThreshold,
-            setBlankThreshold,
-            crossSongThreshold,
-            setCrossSongThreshold,
-          }}
+          decision={decision}
         />
       )}
 
