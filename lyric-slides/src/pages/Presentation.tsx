@@ -25,18 +25,17 @@ export default function Presentation() {
   const [lastScore, setLastScore] = useState<number | null>(null)
 
   // Speech / mic state
-  const { isListening, partial, finals, toggleMic, resetTranscript } = useSpeechTranscript()
+  const { isListening, transcriptWindow, toggleMic, resetTranscript } = useSpeechTranscript()
 
   // Reset debug score when song changes
   useEffect(() => { setLastScore(null) }, [currentSongId])
 
   // Matching disabled: use minimal hook for transcript window only
-  const { transcriptWindow, decision } = usePhoneticSlideMatch({
+  const { decision } = usePhoneticSlideMatch({
     currentSong,
     library: state.library,
     queue,
-    finals,
-    partial,
+    transcriptWindow,
     slideIndex,
   })
 

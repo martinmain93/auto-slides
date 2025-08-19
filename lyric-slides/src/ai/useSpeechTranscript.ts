@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from 'react'
+import { useEffect, useRef, useState, useCallback, useMemo } from 'react'
 import { createSpeechController } from '../lib/speech'
 
 export function useSpeechTranscript() {
@@ -6,6 +6,7 @@ export function useSpeechTranscript() {
   const [partial, setPartial] = useState('')
   const [finals, setFinals] = useState<string[]>([])
   const speechRef = useRef<ReturnType<typeof createSpeechController> | null>(null)
+
 
   // Stats
   const [avgWps, setAvgWps] = useState(2.5) // default speaking ~150 wpm
@@ -20,7 +21,10 @@ export function useSpeechTranscript() {
         lastPartialAtRef.current = Date.now()
       },
       onFinal: (t) => {
+        // Keep finals only for stats; ignore for transcriptWindow
         setFinals((arr) => [...arr, t])
+        // Keep partial across pauses; do not clear it
+
         const now = Date.now()
         // Update WPS estimate based on time between final chunks
         const prev = lastFinalAtRef.current
@@ -64,6 +68,9 @@ export function useSpeechTranscript() {
     lastPartialAtRef.current = null
   }, [])
 
-  return { isListening, partial, finals, toggleMic, resetTranscript, avgWps, estLatencyMs }
+  // Simplified transcript window: use only the live partial text
+  const transcriptWindow = useMemo(() => (partial || '').trim(), [partial])
+
+  return { isListening, transcriptWindow, toggleMic, resetTranscript, avgWps, estLatencyMs }
 }
 

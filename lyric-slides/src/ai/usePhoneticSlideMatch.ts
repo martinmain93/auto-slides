@@ -4,20 +4,12 @@ import { buildPhoneticIndex } from '../lib/phonetics'
 import { getPhonemeDictionaryVersion } from '../lib/phonemeDict'
 import { decideSlidePhonetic, type PhoneticDecision } from '../lib/decidePhonetic'
 
-
-function computeTranscriptWindow(finals: string[], partial: string): string {
-  // Combine last two finals and the current partial into a transcript window
-  return useMemo(() => [...finals.slice(-2), partial].join(' ').trim(), [finals, partial])
-}
-
-
-// Minimal skeleton matcher: computes transcript window and emits no navigation decision.
+// Minimal skeleton matcher: takes transcriptWindow and emits no navigation decision.
 export function usePhoneticSlideMatch(params: {
   currentSong: Song | undefined
   library: Song[]
   queue: string[]
-  finals: string[]
-  partial: string
+  transcriptWindow: string
   slideIndex: number
   // thresholds
   acceptNextThreshold?: number // confidence to stick with next slide
@@ -25,12 +17,11 @@ export function usePhoneticSlideMatch(params: {
   blankThreshold?: number // under this, blank
   crossSongThreshold?: number // high threshold required to jump songs
 }): { transcriptWindow: string; decision: PhoneticDecision } {
-  const { currentSong, library, queue, finals, partial, slideIndex } = params
+  const { currentSong, library, queue, transcriptWindow, slideIndex } = params
   const acceptNextThreshold = params.acceptNextThreshold ?? 0.7
   const acceptAnyThreshold = params.acceptAnyThreshold ?? 0.6
   const blankThreshold = params.blankThreshold ?? 0.45
   const crossSongThreshold = params.crossSongThreshold ?? 0.8
-  const transcriptWindow = computeTranscriptWindow(finals, partial)
 
   // Prebuild phonetic indexes for songs (cheap in-browser)
   const [songIndexes, setSongIndexes] = useState<Record<string, ReturnType<typeof buildPhoneticIndex>>>({})
