@@ -41,9 +41,9 @@ export default function Presentation() {
   })
 
   useEffect(() => {
-    if (decision.action == 'blank') {
-      setBlankPos(decision.blankPos)
-    }
+    // if (decision.action == 'blank') {
+    //   setBlankPos(decision.blankPos)
+    // }
   }, [decision])
 
   // When controls are hidden, blur any focused control to prevent the browser from
