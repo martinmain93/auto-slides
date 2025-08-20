@@ -39,7 +39,7 @@ export function DevPanel(props: DevPanelProps) {
       <Text size="sm" c="dimmed">
         Vector Results:
         <Box>
-          {vectorResults.map((result, index) => (
+          {vectorResults.slice(0, 10).map((result, index) => (
             <Text key={index} size="xs" style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
               Slide ID: {result.slideId}, Best Pos: {result.bestPos}, Score: {result.score}
             </Text>

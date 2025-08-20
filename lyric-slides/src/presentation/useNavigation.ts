@@ -133,3 +133,51 @@ export function useNavigation(params: {
   return { queue, currentSongId, currentSong, slideIndex, setSlideIndex, blankPos, setBlankPos, goSong, goPrevSlide, goNextSlide, goPrevSong, goNextSong }
 }
 
+
+export function navigateFromDecision(
+  decision: { action: 'none' | 'update' | 'advance' | 'blank'; targetIndex?: number; targetSongId?: string; best: { songId: string; slideId: string; score: number } | null; transcriptWindow: string },
+  params: {
+    slideIndex: number
+    currentSongId: string
+    setSlideIndex: (i: number) => void
+    setBlankPos: React.Dispatch<React.SetStateAction<null | 'start' | 'end'>>
+    setLastScore: React.Dispatch<React.SetStateAction<number | null>>
+    blankPos: null | 'start' | 'end'
+    currentSong?: Song
+    queue: string[]
+  }
+) {
+  const { slideIndex, currentSongId, setSlideIndex, setBlankPos, setLastScore, blankPos, currentSong, queue } = params
+  if (decision.action === 'none') {
+    // Do nothing
+    return
+  } else if (decision.action === 'update') {
+    if (decision.targetIndex != null && decision.targetIndex !== slideIndex) {
+      setSlideIndex(decision.targetIndex)
+      setBlankPos(null)
+    }
+    if (decision.best) {
+      setLastScore(decision.best.score)
+    }
+  } else if (decision.action === 'advance') {
+    if (decision.targetSongId && decision.targetSongId !== currentSongId) {
+      // Advance to a new song at its first slide
+      // Only do this if the targetSongId is different from the currentSongId to avoid unnecessary updates
+      const idx = queue.indexOf(decision.targetSongId)
+      if (idx !== -1) {
+        // Valid song in queue
+        // Note: In a real app, you'd likely have a goSong function to handle this
+        // Here we just simulate by setting slide index to 0 and assuming parent handles song change
+        setSlideIndex(0)
+        setBlankPos(null)
+      }
+    } else if (currentSong && slideIndex < currentSong.slides.length - 1) {
+      // Advance to next slide in current song
+      setSlideIndex(slideIndex + 1)
+      setBlankPos(null)
+    } else {
+      // At end of current song, move to blank end state
+      setBlankPos('end')
+    }
+  }
+}

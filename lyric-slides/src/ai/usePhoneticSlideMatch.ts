@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
 import type { Song } from '../types'
-import { buildPhoneticIndex } from '../lib/phonetics'
 import { getPhonemeDictionaryVersion } from '../lib/phonemeDict'
 import { decideSlidePhonetic, type PhoneticDecision } from '../lib/decidePhonetic'
 import { buildSongPhonemeIndex, scoreQueryAgainstSong, type SongPhonemeIndex } from '../vectorize/vectorizer'
@@ -26,20 +25,14 @@ export function usePhoneticSlideMatch(params: {
   // const crossSongThreshold = params.crossSongThreshold ?? 0.8
 
   // Prebuild phonetic indexes for songs (cheap in-browser)
-  // const [songIndexes, setSongIndexes] = useState<Record<string, ReturnType<typeof buildPhoneticIndex>>>({})
   const dictVersion = getPhonemeDictionaryVersion()
-
-  // useEffect(() => {
-  //   const map: Record<string, ReturnType<typeof buildPhoneticIndex>> = {}
-  //   for (const s of library) map[s.id] = buildPhoneticIndex(s)
-  //   setSongIndexes(map)
-  // }, [library, dictVersion])
 
   // Build phoneme-vector index per song for vector-space matching (separate from legacy phonetic index)
   const [songVectorIndexes, setSongVectorIndexes] = useState<Record<string, SongPhonemeIndex>>({})
   useEffect(() => {
     const map: Record<string, SongPhonemeIndex> = {}
     for (const s of library) map[s.id] = buildSongPhonemeIndex(s, { window: 3, decay: 0.85 })
+    console.log("Rebuilding phoneme index")
     setSongVectorIndexes(map)
   }, [library, dictVersion])
 

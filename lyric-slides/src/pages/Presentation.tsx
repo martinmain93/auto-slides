@@ -4,7 +4,7 @@ import { Box, Button, Text } from '@mantine/core'
 import { useAppState } from '../state/AppStateContext'
 import { useSpeechTranscript } from '../ai/useSpeechTranscript'
 import { usePhoneticSlideMatch } from '../ai/usePhoneticSlideMatch'
-import { useNavigation } from '../presentation/useNavigation'
+import { useNavigation, navigateFromDecision } from '../presentation/useNavigation'
 import { ControlsOverlay } from '../presentation/ControlsOverlay'
 import { DevPanel } from '../presentation/DevPanel'
 
@@ -44,6 +44,16 @@ export default function Presentation() {
     // if (decision.action == 'blank') {
     //   setBlankPos(decision.blankPos)
     // }
+    navigateFromDecision(decision, {
+      slideIndex,
+      currentSongId,
+      setSlideIndex,
+      setBlankPos,
+      setLastScore,
+      blankPos,
+      currentSong,
+      queue,
+    })
   }, [decision])
 
   // When controls are hidden, blur any focused control to prevent the browser from
