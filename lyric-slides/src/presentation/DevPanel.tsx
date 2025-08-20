@@ -1,5 +1,4 @@
 import { Box, Paper, Title, Text, Divider } from '@mantine/core'
-import { useEffect } from 'react'
 import type { Song } from '../types'
 
 export type DevPanelProps = {
@@ -8,6 +7,7 @@ export type DevPanelProps = {
   queue: string[]
   transcript: string
   phoneticTranscript: string[]
+  vectorResults: { slideId: string; bestPos: number; score: number }[]
   currentSong?: Song
   slideIndex: number
   decision?: Object
@@ -15,7 +15,7 @@ export type DevPanelProps = {
 
 // Minimal Dev Panel showing transcript and current context. Matching telemetry removed.
 export function DevPanel(props: DevPanelProps) {
-  const { transcript, phoneticTranscript, currentSong, slideIndex } = props
+  const { transcript, phoneticTranscript, currentSong, slideIndex, vectorResults } = props
 
   const displayPhoneticTranscript = phoneticTranscript.join(' ')
 
@@ -36,7 +36,16 @@ export function DevPanel(props: DevPanelProps) {
       </Box>
 
       <Divider my="xs" />
-      <Text size="sm" c="dimmed">Matching is disabled. Skeleton mode active.</Text>
+      <Text size="sm" c="dimmed">
+        Vector Results:
+        <Box>
+          {vectorResults.map((result, index) => (
+            <Text key={index} size="xs" style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
+              Slide ID: {result.slideId}, Best Pos: {result.bestPos}, Score: {result.score}
+            </Text>
+          ))}
+        </Box>
+      </Text>
       <Divider my="xs" />
       {/* Show the raw decision info */}
       <Text size="sm" c="dimmed">Decision</Text>
