@@ -10,6 +10,7 @@ export function usePhoneticSlideMatch(params: {
   library: Song[]
   queue: string[]
   transcriptWindow: string
+  phoneticTranscript: string[]
   slideIndex: number
   // thresholds
   acceptNextThreshold?: number // confidence to stick with next slide

@@ -19,23 +19,23 @@ function normalize(text: string): string {
 // Convert an ARPAbet phoneme sequence to a compact consonant-centric code string.
 // We strip stress markers (digits) and drop vowels to emphasize consonant skeletons
 // to better match the existing scorer's behavior. Duplicate consecutive symbols are collapsed.
-function phonemesToCode(arpas: string[]): string {
-  const VOWELS = new Set(['AA','AE','AH','AO','AW','AY','EH','ER','EY','IH','IY','OW','OY','UH','UW'])
-  const cleaned: string[] = []
-  for (const p of arpas) {
-    const base = p.replace(/[0-2]$/,'')
-    if (!VOWELS.has(base)) cleaned.push(base)
-  }
-  if (cleaned.length === 0) return ''
-  const out: string[] = []
-  for (const c of cleaned) {
-    const prev = out[out.length - 1]
-    if (c === prev) continue
-    out.push(c)
-  }
-  // Join without separator to keep tokens compact; normalize to lowercase to align with fallback tokens
-  return out.join('').toLowerCase()
-}
+// function phonemesToCode(arpas: string[]): string {
+//   const VOWELS = new Set(['AA','AE','AH','AO','AW','AY','EH','ER','EY','IH','IY','OW','OY','UH','UW'])
+//   const cleaned: string[] = []
+//   for (const p of arpas) {
+//     const base = p.replace(/[0-2]$/,'')
+//     if (!VOWELS.has(base)) cleaned.push(base)
+//   }
+//   if (cleaned.length === 0) return ''
+//   const out: string[] = []
+//   for (const c of cleaned) {
+//     const prev = out[out.length - 1]
+//     if (c === prev) continue
+//     out.push(c)
+//   }
+//   // Join without separator to keep tokens compact; normalize to lowercase to align with fallback tokens
+//   return out.join('').toLowerCase()
+// }
 
 // Very small metaphone-like codec fallback for words not present in the dictionary.
 function simplePhonetic(word: string): string {
@@ -69,12 +69,12 @@ function simplePhonetic(word: string): string {
 
 export function phoneticTokens(text: string): string[] {
   const words = normalize(text).split(' ')
-  const tokens: string[] = []
+  let tokens: string[] = []
   for (const w of words) {
     const dict = getPhonemes(w)
     if (dict && dict.length) {
-      const code = phonemesToCode(dict)
-      if (code) { tokens.push(code); continue }
+      const code = dict.map((a) => a.replace(/[0-9]/g, '').toLowerCase())
+      if (code) { tokens = tokens.concat(code); continue }
     }
     const fallback = simplePhonetic(w)
     if (fallback) tokens.push(fallback)
@@ -90,42 +90,42 @@ export function buildPhoneticIndex(song: Song): PhoneticIndex {
   return { songId: song.id, slideTokens }
 }
 
-function anywherePrefixMatchScore(a: string[], b: string[]): number {
-  // Allow aligning the transcript prefix anywhere within the slide tokens (continuation within a slide).
-  if (a.length === 0 || b.length === 0) return 0
-  let best = 0
-  let bestPos = -1
-  for (let j = 0; j < b.length; j++) {
-    let k = 0
-    for (let i = 0; i < a.length && j + i < b.length; i++) {
-      if (a[i] === b[j + i]) k++
-      else break
-    }
-    if (k > best) { best = k; bestPos = j }
-  }
-  let base = 0
-  if (best === 0) base = 0
-  else if (best === 1) base = 0.60
-  else if (best === 2) base = 0.85
-  else if (best === 3) base = 0.95
-  else base = Math.min(1, 0.98 + Math.min(0.02, 0.005 * (best - 3)))
-  if (bestPos > 0) {
-    const posPenalty = Math.min(0.15, bestPos * 0.03)
-    base = Math.max(0, base - posPenalty)
-  }
-  return Math.max(0, Math.min(1, base))
-}
+// function anywherePrefixMatchScore(a: string[], b: string[]): number {
+//   // Allow aligning the transcript prefix anywhere within the slide tokens (continuation within a slide).
+//   if (a.length === 0 || b.length === 0) return 0
+//   let best = 0
+//   let bestPos = -1
+//   for (let j = 0; j < b.length; j++) {
+//     let k = 0
+//     for (let i = 0; i < a.length && j + i < b.length; i++) {
+//       if (a[i] === b[j + i]) k++
+//       else break
+//     }
+//     if (k > best) { best = k; bestPos = j }
+//   }
+//   let base = 0
+//   if (best === 0) base = 0
+//   else if (best === 1) base = 0.60
+//   else if (best === 2) base = 0.85
+//   else if (best === 3) base = 0.95
+//   else base = Math.min(1, 0.98 + Math.min(0.02, 0.005 * (best - 3)))
+//   if (bestPos > 0) {
+//     const posPenalty = Math.min(0.15, bestPos * 0.03)
+//     base = Math.max(0, base - posPenalty)
+//   }
+//   return Math.max(0, Math.min(1, base))
+// }
 
-export function phoneticBestMatchAcross(params: {
-  library: Song[]
-  songIndexes: Record<string, PhoneticIndex>
-  query: string
-  preferSongId?: string
-  equalWeightSongIds?: string[]
-  preferNextSlideId?: string
-  inOrderSongIds?: string[]
-}): { songId: string; slideId: string; score: number } | null {
-  const { library, songIndexes, query, preferSongId, equalWeightSongIds, preferNextSlideId, inOrderSongIds } = params
+// export function phoneticBestMatchAcross(params: {
+//   library: Song[]
+//   songIndexes: Record<string, PhoneticIndex>
+//   query: string
+//   preferSongId?: string
+//   equalWeightSongIds?: string[]
+//   preferNextSlideId?: string
+//   inOrderSongIds?: string[]
+// }): { songId: string; slideId: string; score: number } | null {
+//   const { library, songIndexes, query, preferSongId, equalWeightSongIds, preferNextSlideId, inOrderSongIds } = params
   // const qTokens = phoneticTokens(query)
   // if (qTokens.length === 0) return null
 
@@ -150,17 +150,17 @@ export function phoneticBestMatchAcross(params: {
   // }
 
   // return best
-}
+// }
 
-export function phoneticScoresForSongs(params: {
-  library: Song[]
-  songIndexes?: Record<string, PhoneticIndex>
-  query: string
-  preferSongId?: string
-  equalWeightSongIds?: string[]
-  preferNextSlideId?: string
-  inOrderSongIds?: string[]
-}): { songId: string; slideId: string; score: number }[] {
+// export function phoneticScoresForSongs(params: {
+//   library: Song[]
+//   songIndexes?: Record<string, PhoneticIndex>
+//   query: string
+//   preferSongId?: string
+//   equalWeightSongIds?: string[]
+//   preferNextSlideId?: string
+//   inOrderSongIds?: string[]
+// }): { songId: string; slideId: string; score: number }[] {
   // const { library, songIndexes = {}, query, preferSongId, equalWeightSongIds, preferNextSlideId, inOrderSongIds } = params
   // const qTokens = phoneticTokens(query)
   // if (qTokens.length === 0) return []
@@ -182,5 +182,4 @@ export function phoneticScoresForSongs(params: {
   // }
   // out.sort((a, b) => b.score - a.score)
   // return out
-}
-
+// }

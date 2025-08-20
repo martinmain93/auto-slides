@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback, useMemo } from 'react'
 import { createSpeechController } from '../lib/speech'
+import { phoneticTokens } from '../lib/phonetics'
 
 export function useSpeechTranscript() {
   const [isListening, setIsListening] = useState(false)
@@ -34,14 +35,14 @@ export function useSpeechTranscript() {
 
   const resetTranscript = useCallback(() => {
     setPartial('')
-    setFinals([])
     lastFinalAtRef.current = null
     lastPartialAtRef.current = null
   }, [])
 
   // Simplified transcript window: use only the live partial text
   const transcriptWindow = useMemo(() => (partial || '').trim(), [partial])
+  const phoneticTranscript = phoneticTokens(transcriptWindow)
 
-  return { isListening, transcriptWindow, toggleMic, resetTranscript }
+  return { isListening, transcriptWindow, phoneticTranscript, toggleMic, resetTranscript }
 }
 
