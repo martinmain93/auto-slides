@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import type { Song } from '../types'
 import { getPhonemeDictionaryVersion } from '../lib/phonemeDict'
 import { decideSlidePhonetic, type PhoneticDecision } from '../lib/decidePhonetic'
-import { buildSongPhonemeIndex, scoreQueryAgainstSong, type SongPhonemeIndex } from '../vectorize/vectorizer'
+import { buildOrLoadSongPhonemeIndex, scoreQueryAgainstSong, type SongPhonemeIndex } from '../vectorize/vectorizer'
 
 // Minimal skeleton matcher: takes transcriptWindow and emits no navigation decision.
 export function usePhoneticSlideMatch(params: {
@@ -12,17 +12,8 @@ export function usePhoneticSlideMatch(params: {
   transcriptWindow: string
   phoneticTranscript: string[]
   slideIndex: number
-  // thresholds
-  acceptNextThreshold?: number // confidence to stick with next slide
-  acceptAnyThreshold?: number // threshold to switch within song
-  blankThreshold?: number // under this, blank
-  crossSongThreshold?: number // high threshold required to jump songs
 }): { transcriptWindow: string; vectorResults: { slideId: string; bestPos: number; score: number }[] , decision: PhoneticDecision } {
-  const { currentSong, library, queue, transcriptWindow, slideIndex } = params
-  // const acceptNextThreshold = params.acceptNextThreshold ?? 0.7
-  // const acceptAnyThreshold = params.acceptAnyThreshold ?? 0.6
-  // const blankThreshold = params.blankThreshold ?? 0.45
-  // const crossSongThreshold = params.crossSongThreshold ?? 0.8
+  const { currentSong, library, transcriptWindow } = params
 
   // Prebuild phonetic indexes for songs (cheap in-browser)
   const dictVersion = getPhonemeDictionaryVersion()
@@ -30,10 +21,23 @@ export function usePhoneticSlideMatch(params: {
   // Build phoneme-vector index per song for vector-space matching (separate from legacy phonetic index)
   const [songVectorIndexes, setSongVectorIndexes] = useState<Record<string, SongPhonemeIndex>>({})
   useEffect(() => {
-    const map: Record<string, SongPhonemeIndex> = {}
-    for (const s of library) map[s.id] = buildSongPhonemeIndex(s, { window: 3, decay: 0.85 })
-    console.log("Rebuilding phoneme index")
-    setSongVectorIndexes(map)
+    let cancelled = false
+    async function buildAll() {
+      const pairs = await Promise.all(
+        library.map(async (s) => {
+          const idx = await buildOrLoadSongPhonemeIndex(s, { window: 3, decay: 0.85 }, dictVersion)
+          return [s.id, idx] as const
+        })
+      )
+      if (cancelled) return
+      const map: Record<string, SongPhonemeIndex> = {}
+      for (const [id, idx] of pairs) map[id] = idx
+      setSongVectorIndexes(map)
+    }
+    buildAll()
+    return () => {
+      cancelled = true
+    }
   }, [library, dictVersion])
 
   // Compute vector-space scores for the current song based on the live transcript window

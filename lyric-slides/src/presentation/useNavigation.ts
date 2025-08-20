@@ -147,7 +147,7 @@ export function navigateFromDecision(
     queue: string[]
   }
 ) {
-  const { slideIndex, currentSongId, setSlideIndex, setBlankPos, setLastScore, blankPos, currentSong, queue } = params
+  const { slideIndex, currentSongId, setSlideIndex, setBlankPos, setLastScore, currentSong, queue } = params
   if (decision.action === 'none') {
     // Do nothing
     return

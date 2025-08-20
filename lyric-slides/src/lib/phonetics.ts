@@ -3,7 +3,6 @@
 // we implement a tiny metaphone variant and a phonetic similarity scorer.
 // This favors prefix continuity and next-slide bias without semantic embeddings.
 
-import type { Song } from '../types'
 import { getPhonemes } from './phonemeDict'
 
 export type PhoneticIndex = {
@@ -59,12 +58,4 @@ export function phoneticTokens(text: string): string[] {
     if (fallback) tokens.push(fallback)
   }
   return tokens
-}
-
-export function buildPhoneticIndex(song: Song): PhoneticIndex {
-  const slideTokens: Record<string, string[]> = {}
-  for (const sl of song.slides) {
-    slideTokens[sl.id] = phoneticTokens(sl.text)
-  }
-  return { songId: song.id, slideTokens }
 }

@@ -1,6 +1,7 @@
 import { getPhonemes } from '../lib/phonemeDict'
 import { arpaToVec, normalize, PHONEME_DIM, cosine } from './phonemeMap'
 import type { Vec } from './phonemeMap'
+import { getSongIndex, putSongIndex, simpleHash } from '../lib/phonemeIndexStorage'
 
 export type ContextVector = {
   // position index in the slide's phoneme sequence
@@ -84,6 +85,53 @@ export function buildSongPhonemeIndex(song: { id: string; slides: { id: string; 
     slides[sl.id] = { slideId: sl.id, phonemes, contexts }
   }
   return { songId: song.id, window, slides }
+}
+
+export function computeSongIndexCacheKey(song: { id: string; slides: { id: string; text: string }[] }, opts: VectorizeOptions = {}, dictVersion: string | number): string {
+  const window = opts.window ?? 3
+  const decay = opts.decay ?? 0.85
+  const dictVerStr = String(dictVersion)
+  const content = JSON.stringify({ slides: song.slides.map(s => ({ id: s.id, text: s.text })), window, decay, dictVersion: dictVerStr })
+  const hash = simpleHash(content)
+  return `${song.id}|${dictVerStr}|${hash}`
+}
+
+// Build-or-load from IndexedDB cache. dictVersion should come from getPhonemeDictionaryVersion()
+export async function buildOrLoadSongPhonemeIndex(
+  song: { id: string; slides: { id: string; text: string }[] },
+  opts: VectorizeOptions = {},
+  dictVersion: string | number,
+  forceRebuild = false
+): Promise<SongPhonemeIndex> {
+  const window = opts.window ?? 3
+  const decay = opts.decay ?? 0.85
+  const cacheKey = computeSongIndexCacheKey(song, { window, decay }, dictVersion)
+  if (!forceRebuild) {
+    try {
+      const cached = await getSongIndex(cacheKey)
+      if (cached) return cached
+    } catch {
+      // ignore cache errors and rebuild
+    }
+  }
+  // Build fresh
+  console.log("Rebuilding song phoneme index for", song.id, "with window", window, "and decay", decay)
+  const built = buildSongPhonemeIndex(song, { window, decay })
+  // Persist
+  try {
+    await putSongIndex(cacheKey, built)
+  } catch {
+    // ignore write errors
+  }
+  return built
+}
+
+export async function rebuildSongPhonemeIndexCache(
+  song: { id: string; slides: { id: string; text: string }[] },
+  opts: VectorizeOptions = {},
+  dictVersion: string | number
+): Promise<SongPhonemeIndex> {
+  return buildOrLoadSongPhonemeIndex(song, opts, dictVersion, true)
 }
 
 // Query handling: given a live transcript (string) already phoneme-converted elsewhere if available,
