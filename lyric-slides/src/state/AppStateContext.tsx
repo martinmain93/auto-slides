@@ -43,7 +43,7 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
       queue: [],
       currentSlideIndex: 0,
       usePhonemeDict: true,
-      phonemeSource: 'local',
+      phonemeSource: 'remote',
       phonemeStatus: 'idle',
     }
   })

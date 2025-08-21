@@ -8,8 +8,6 @@ export function decideSlidePhonetic(params: {
   transcriptWindow: string
 }): PhoneticDecision {
   const { transcriptWindow } = params
-  console.log("Here")
-  console.log(transcriptWindow)
   return { action: 'none', best: null, transcriptWindow }
 }
 

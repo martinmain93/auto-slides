@@ -25,7 +25,7 @@ export function usePhoneticSlideMatch(params: {
     async function buildAll() {
       const pairs = await Promise.all(
         library.map(async (s) => {
-          const idx = await buildOrLoadSongPhonemeIndex(s, { window: 3, decay: 0.85 }, dictVersion)
+          const idx = await buildOrLoadSongPhonemeIndex(s, { window: 16, decay: 0.95 }, dictVersion)
           return [s.id, idx] as const
         })
       )

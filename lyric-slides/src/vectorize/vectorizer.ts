@@ -66,7 +66,7 @@ function wordsToArpa(text: string): string[] {
 }
 
 export function vectorizeSlidePhonemes(slideText: string, opts: VectorizeOptions = {}): { phonemes: string[]; contexts: ContextVector[] } {
-  const window = opts.window ?? 3
+  const window = opts.window ?? 8
   const decay = opts.decay ?? 0.85
   const arpas = wordsToArpa(slideText)
   const contexts: ContextVector[] = []
@@ -78,7 +78,7 @@ export function vectorizeSlidePhonemes(slideText: string, opts: VectorizeOptions
 }
 
 export function buildSongPhonemeIndex(song: { id: string; slides: { id: string; text: string }[] }, opts: VectorizeOptions = {}): SongPhonemeIndex {
-  const window = opts.window ?? 3
+  const window = opts.window ?? 8
   const slides: Record<string, SlidePhonemeVectors> = {}
   for (const sl of song.slides) {
     const { phonemes, contexts } = vectorizeSlidePhonemes(sl.text, opts)
@@ -88,7 +88,7 @@ export function buildSongPhonemeIndex(song: { id: string; slides: { id: string; 
 }
 
 export function computeSongIndexCacheKey(song: { id: string; slides: { id: string; text: string }[] }, opts: VectorizeOptions = {}, dictVersion: string | number): string {
-  const window = opts.window ?? 3
+  const window = opts.window ?? 8
   const decay = opts.decay ?? 0.85
   const dictVerStr = String(dictVersion)
   const content = JSON.stringify({ slides: song.slides.map(s => ({ id: s.id, text: s.text })), window, decay, dictVersion: dictVerStr })
@@ -103,7 +103,7 @@ export async function buildOrLoadSongPhonemeIndex(
   dictVersion: string | number,
   forceRebuild = false
 ): Promise<SongPhonemeIndex> {
-  const window = opts.window ?? 3
+  const window = opts.window ?? 8
   const decay = opts.decay ?? 0.85
   const cacheKey = computeSongIndexCacheKey(song, { window, decay }, dictVersion)
   if (!forceRebuild) {
@@ -137,7 +137,8 @@ export async function rebuildSongPhonemeIndexCache(
 // Query handling: given a live transcript (string) already phoneme-converted elsewhere if available,
 // build a context vector for the last position and compare to each slide position by cosine.
 export function scoreQueryAgainstSong(queryText: string, songIndex: SongPhonemeIndex, opts: { window?: number; decay?: number } = {}): { slideId: string; bestPos: number; score: number }[] {
-  const window = opts.window ?? songIndex.window
+  // Prefer explicit window, then per-song window, then new default of 8
+  const window = opts.window ?? songIndex.window ?? 8
   const decay = opts.decay ?? 0.85
 
   // Convert query to ARPA; if unknown, approximate by graphemes and map to vectors via graphemeToVec
