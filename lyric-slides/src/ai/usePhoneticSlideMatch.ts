@@ -14,6 +14,9 @@ export function usePhoneticSlideMatch(params: {
 }): { transcriptWindow: string; vectorResults: { slideId: string; bestPos: number; score: number }[] , decision: PhoneticDecision } {
   const { currentSong, library, transcriptWindow, slideIndex } = params
 
+  // Track when we last moved slides to implement recency bias
+  const [lastMoveTimestamp, setLastMoveTimestamp] = useState<number | undefined>()
+
   // Prebuild phonetic indexes for songs (cheap in-browser)
   const dictVersion = getPhonemeDictionaryVersion()
 
@@ -49,12 +52,21 @@ export function usePhoneticSlideMatch(params: {
   // Touch result to avoid unused var warning while we keep it for future UI/debug integration
   void vectorResults.length
 
+  // Track slide changes to update last move timestamp
+  const [prevSlideIndex, setPrevSlideIndex] = useState(slideIndex)
+  useEffect(() => {
+    if (slideIndex !== prevSlideIndex) {
+      setLastMoveTimestamp(Date.now())
+      setPrevSlideIndex(slideIndex)
+    }
+  }, [slideIndex, prevSlideIndex])
+
   const decision: PhoneticDecision = useMemo(() => {
     const songIndex = currentSong ? songVectorIndexes[currentSong.id] : undefined
     return decideSlidePhonetic({
-      transcriptWindow, vectorResults, currentSong, slideIndex, songIndex
+      transcriptWindow, vectorResults, currentSong, slideIndex, songIndex, lastMoveTimestamp
     })
-  }, [transcriptWindow, vectorResults, currentSong, slideIndex, songVectorIndexes])
+  }, [transcriptWindow, vectorResults, currentSong, slideIndex, songVectorIndexes, lastMoveTimestamp])
 
   return { transcriptWindow, vectorResults, decision }
 }
