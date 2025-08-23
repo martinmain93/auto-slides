@@ -53,8 +53,7 @@ export function useSpeechTranscript() {
 
   // Combined transcript window: final buffer + live partial. Duplicates are avoided at source (onresult indexing).
   const transcriptWindow = useMemo(() => `${finalText} ${partial}`.trim(), [finalText, partial])
-  const phoneticTranscript = phoneticTokens(transcriptWindow)
 
-  return { isListening, transcriptWindow, phoneticTranscript, toggleMic, resetTranscript }
+  return { isListening, transcriptWindow, toggleMic, resetTranscript }
 }
 

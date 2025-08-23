@@ -25,7 +25,7 @@ export default function Presentation() {
   const [lastScore, setLastScore] = useState<number | null>(null)
 
   // Speech / mic state
-  const { isListening, transcriptWindow, phoneticTranscript, toggleMic } = useSpeechTranscript()
+  const { isListening, transcriptWindow, toggleMic } = useSpeechTranscript()
 
   // Reset debug score when song changes
   useEffect(() => { setLastScore(null) }, [currentSongId])
@@ -36,7 +36,6 @@ export default function Presentation() {
     library: state.library,
     queue,
     transcriptWindow,
-    phoneticTranscript,
     slideIndex,
   })
 
@@ -134,7 +133,6 @@ export default function Presentation() {
           currentSongId={currentSongId}
           queue={queue}
           transcript={transcriptWindow}
-          phoneticTranscript={phoneticTranscript}
           vectorResults={vectorResults}
           currentSong={currentSong}
           slideIndex={slideIndex}

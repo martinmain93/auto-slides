@@ -10,10 +10,9 @@ export function usePhoneticSlideMatch(params: {
   library: Song[]
   queue: string[]
   transcriptWindow: string
-  phoneticTranscript: string[]
   slideIndex: number
 }): { transcriptWindow: string; vectorResults: { slideId: string; bestPos: number; score: number }[] , decision: PhoneticDecision } {
-  const { currentSong, library, transcriptWindow } = params
+  const { currentSong, library, transcriptWindow, slideIndex } = params
 
   // Prebuild phonetic indexes for songs (cheap in-browser)
   const dictVersion = getPhonemeDictionaryVersion()
@@ -51,7 +50,7 @@ export function usePhoneticSlideMatch(params: {
   void vectorResults.length
 
   const decision: PhoneticDecision = useMemo(() => decideSlidePhonetic({
-    transcriptWindow,
+    transcriptWindow, vectorResults, currentSong, slideIndex
   }), [transcriptWindow])
 
   return { transcriptWindow, vectorResults, decision }

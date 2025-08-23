@@ -6,7 +6,6 @@ export type DevPanelProps = {
   currentSongId?: string
   queue: string[]
   transcript: string
-  phoneticTranscript: string[]
   vectorResults: { slideId: string; bestPos: number; score: number }[]
   currentSong?: Song
   slideIndex: number
@@ -15,9 +14,7 @@ export type DevPanelProps = {
 
 // Minimal Dev Panel showing transcript and current context. Matching telemetry removed.
 export function DevPanel(props: DevPanelProps) {
-  const { transcript, phoneticTranscript, currentSong, slideIndex, vectorResults } = props
-
-  const displayPhoneticTranscript = phoneticTranscript.join(' ')
+  const { transcript, currentSong, slideIndex, vectorResults } = props
 
   return (
     <Paper withBorder p="md" radius="md" style={{ position: 'fixed', top: 8, right: 8, width: 360, maxHeight: '85vh', overflow: 'hidden', background: 'rgba(20,20,20,0.9)', color: 'white', zIndex: 1200 }}>
@@ -26,7 +23,6 @@ export function DevPanel(props: DevPanelProps) {
       <Box mb="sm">
         <Text size="sm" c="dimmed">Transcript</Text>
         <Text style={{ wordBreak: 'break-word' }}>{transcript || '—'}</Text>
-        <Text style={{ wordBreak: 'break-word' }}>{displayPhoneticTranscript || '—'}</Text>
       </Box>
 
       <Divider my="xs" />
