@@ -49,9 +49,12 @@ export function usePhoneticSlideMatch(params: {
   // Touch result to avoid unused var warning while we keep it for future UI/debug integration
   void vectorResults.length
 
-  const decision: PhoneticDecision = useMemo(() => decideSlidePhonetic({
-    transcriptWindow, vectorResults, currentSong, slideIndex
-  }), [transcriptWindow])
+  const decision: PhoneticDecision = useMemo(() => {
+    const songIndex = currentSong ? songVectorIndexes[currentSong.id] : undefined
+    return decideSlidePhonetic({
+      transcriptWindow, vectorResults, currentSong, slideIndex, songIndex
+    })
+  }, [transcriptWindow, vectorResults, currentSong, slideIndex, songVectorIndexes])
 
   return { transcriptWindow, vectorResults, decision }
 }

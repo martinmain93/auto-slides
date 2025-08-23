@@ -10,9 +10,10 @@ export function decideSlidePhonetic(params: {
   transcriptWindow: string,
   vectorResults: { slideId: string; bestPos: number; score: number }[],
   currentSong?: Song,
-  slideIndex: number
+  slideIndex: number,
+  songIndex?: { slides: Record<string, { phonemes: string[] }> }
 }): PhoneticDecision {
-  const { transcriptWindow, vectorResults, currentSong, slideIndex } = params
+  const { transcriptWindow, vectorResults, currentSong, slideIndex, songIndex } = params
 
   // If no song is loaded or no transcript, do nothing
   if (!currentSong || !transcriptWindow.trim()) {
@@ -27,6 +28,13 @@ export function decideSlidePhonetic(params: {
     score: bestMatch.score
   } : null
 
+  // If we have words but very low confidence for all slides, go to blank
+  if (transcriptWindow.trim().length > 10 && (!bestMatch || bestMatch.score < 0.3)) {
+    const blankPos = slideIndex === 0 ? 'start' : 
+                    slideIndex >= currentSong.slides.length - 1 ? 'end' : null
+    return { action: 'blank', blankPos, best, transcriptWindow }
+  }
+
   // If no good matches found, return none
   if (!bestMatch || bestMatch.score < 0.3) {
     return { action: 'none', best, transcriptWindow }
@@ -37,6 +45,23 @@ export function decideSlidePhonetic(params: {
   
   if (targetSlideIndex === -1) {
     return { action: 'none', best, transcriptWindow }
+  }
+
+  // Check if we're matching the end of the current slide (should advance to next)
+  const currentSlideMatch = vectorResults.find(result => result.slideId === currentSong.slides[slideIndex]?.id)
+  if (currentSlideMatch && currentSlideMatch.score > 0.7 && songIndex) {
+    const currentSlideId = currentSong.slides[slideIndex]?.id
+    const slidePhonemeData = songIndex.slides[currentSlideId]
+    
+    if (slidePhonemeData) {
+      const totalPhonemes = slidePhonemeData.phonemes.length
+      const positionRatio = currentSlideMatch.bestPos / totalPhonemes
+      
+      // If we're in the last 10% of the slide, advance to next
+      if (positionRatio > 0.90 && slideIndex < currentSong.slides.length - 1) {
+        return { action: 'advance', targetIndex: slideIndex + 1, best, transcriptWindow }
+      }
+    }
   }
 
   // If we're already on the correct slide, no action needed
@@ -50,7 +75,7 @@ export function decideSlidePhonetic(params: {
   }
 
   // If the match is for a different slide and score is very high, update to that slide
-  if (bestMatch.score > 0.8) {
+  if (bestMatch.score > 0.90) {
     return { action: 'update', targetIndex: targetSlideIndex, best, transcriptWindow }
   }
 
