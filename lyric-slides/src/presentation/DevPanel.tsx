@@ -1,4 +1,4 @@
-import { Box, Paper, Title, Text, Divider } from '@mantine/core'
+import { Box, Paper, Title, Text, Divider, Switch } from '@mantine/core'
 import type { Song } from '../types'
 
 export type DevPanelProps = {
@@ -10,15 +10,31 @@ export type DevPanelProps = {
   currentSong?: Song
   slideIndex: number
   decision?: Object
+  useEnhancedAudio?: boolean
+  onToggleEnhancedAudio?: (enabled: boolean) => void
 }
 
 // Minimal Dev Panel showing transcript and current context. Matching telemetry removed.
 export function DevPanel(props: DevPanelProps) {
-  const { transcript, currentSong, slideIndex, vectorResults } = props
+  const { transcript, currentSong, slideIndex, vectorResults, useEnhancedAudio, onToggleEnhancedAudio } = props
 
   return (
     <Paper withBorder p="md" radius="md" style={{ position: 'fixed', top: 8, right: 8, width: 360, maxHeight: '85vh', overflow: 'hidden', background: 'rgba(20,20,20,0.9)', color: 'white', zIndex: 1200 }}>
       <Title order={4} mb="xs">Dev Panel</Title>
+
+      {onToggleEnhancedAudio && (
+        <Box mb="sm">
+          <Switch
+            checked={useEnhancedAudio || false}
+            onChange={(event) => onToggleEnhancedAudio(event.currentTarget.checked)}
+            label="Enhanced Audio Processing"
+            description="Use Web Audio API filters for better recognition with background music"
+            size="sm"
+          />
+        </Box>
+      )}
+
+      <Divider my="xs" />
 
       <Box mb="sm">
         <Text size="sm" c="dimmed">Transcript</Text>

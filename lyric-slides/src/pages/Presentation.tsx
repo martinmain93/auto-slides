@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { Box, Button, Text } from '@mantine/core'
 import { useAppState } from '../state/AppStateContext'
 import { useSpeechTranscript } from '../ai/useSpeechTranscript'
+import { useEnhancedSpeechTranscript } from '../ai/useEnhancedSpeechTranscript'
 import { usePhoneticSlideMatch } from '../ai/usePhoneticSlideMatch'
 import { useNavigation, navigateFromDecision } from '../presentation/useNavigation'
 import { ControlsOverlay } from '../presentation/ControlsOverlay'
@@ -17,6 +18,7 @@ export default function Presentation() {
   const { queue, currentSongId, currentSong, slideIndex, setSlideIndex, blankPos, setBlankPos, goSong } = nav
   const [controlsVisible, setControlsVisible] = useState(true)
   const [devVisible, setDevVisible] = useState(true)
+  const [useEnhancedAudio, setUseEnhancedAudio] = useState(false)
   const slidesScrollerRef = useRef<HTMLDivElement | null>(null)
 
   const hasSong = Boolean(currentSong)
@@ -24,8 +26,11 @@ export default function Presentation() {
   // Pre-index progress and last match score (debug)
   const [lastScore, setLastScore] = useState<number | null>(null)
 
-  // Speech / mic state
-  const { isListening, transcriptWindow, toggleMic } = useSpeechTranscript()
+  // Speech / mic state - use enhanced version if enabled
+  const standardSpeech = useSpeechTranscript()
+  const enhancedSpeech = useEnhancedSpeechTranscript()
+  const speechControls = useEnhancedAudio ? enhancedSpeech : standardSpeech
+  const { isListening, transcriptWindow, toggleMic } = speechControls
 
   // Reset debug score when song changes
   useEffect(() => { setLastScore(null) }, [currentSongId])
@@ -137,6 +142,8 @@ export default function Presentation() {
           currentSong={currentSong}
           slideIndex={slideIndex}
           decision={decision}
+          useEnhancedAudio={useEnhancedAudio}
+          onToggleEnhancedAudio={setUseEnhancedAudio}
         />
       )}
 
