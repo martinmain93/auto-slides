@@ -97,7 +97,7 @@ function SortableQueueItem({ id, title, selected, onSelect, onRemove }: Sortable
 
 export default function Planner() {
   const navigate = useNavigate()
-  const { state, setState, addToQueue, addRecent, selectSong, removeFromQueue, clearQueue } = useAppState()
+  const { state, setState, addToQueue, addRecent, selectSong, removeFromQueue, clearQueue, upsertSong } = useAppState()
   const currentSong = state.library.find(s => s.id === state.currentSongId)
 
   const [importOpen, setImportOpen] = useState(false)
@@ -145,7 +145,18 @@ export default function Planner() {
       existingIds.add(id)
       return id === s.id ? s : { ...s, id }
     })
-    setState(prev => ({ ...prev, library: [...merged, ...prev.library], recents: [...merged.map(x => x.id), ...prev.recents].slice(0, 12) }))
+    
+    // Use upsertSong to ensure songs are saved to Supabase and update library state
+    merged.forEach(song => {
+      upsertSong(song)
+    })
+    
+    // Update recents (library is already updated by upsertSong)
+    setState(prev => ({ 
+      ...prev, 
+      recents: [...merged.map(x => x.id), ...prev.recents.filter(id => !merged.some(s => s.id === id))].slice(0, 12) 
+    }))
+    
     setImportOpen(false)
     setImportPreview(null)
   }
@@ -219,23 +230,27 @@ export default function Planner() {
         <Box mt="md">
           <Title order={3}>Recently picked</Title>
           <Box mt="xs" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 12 }}>
-            {state.recents.filter(id => !state.queue.includes(id)).map(id => {
-              const s = state.library.find(x => x.id === id)!
-return (
-                <Card
-                  key={id}
-                  withBorder
-                  radius="md"
-                  p="sm"
-                  style={{ cursor: 'pointer', transition: 'background-color 120ms ease' }}
-                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--mantine-color-dark-5)')}
-                  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '')}
-                  onClick={() => onPick(s)}
-                >
-                  <Text fw={600}>{s.title}</Text>
-                </Card>
-              )
-            })}
+            {state.recents
+              .filter(id => !state.queue.includes(id))
+              .map(id => {
+                const s = state.library.find(x => x.id === id)
+                if (!s) return null // Skip if song doesn't exist
+                return (
+                  <Card
+                    key={id}
+                    withBorder
+                    radius="md"
+                    p="sm"
+                    style={{ cursor: 'pointer', transition: 'background-color 120ms ease' }}
+                    onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--mantine-color-dark-5)')}
+                    onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '')}
+                    onClick={() => onPick(s)}
+                  >
+                    <Text fw={600}>{s.title}</Text>
+                  </Card>
+                )
+              })
+              .filter(Boolean)}
             {state.recents.filter((id) => !state.queue.includes(id)).length === 0 && (
               <Box style={{ opacity: 0.7 }}>No recents yet. Search to add some.</Box>
             )}

@@ -48,10 +48,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       alert('Supabase is not configured. Please set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY')
       return
     }
+    const redirectUrl = `${window.location.origin}${window.location.pathname}`
     await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: window.location.origin,
+        redirectTo: redirectUrl,
       },
     })
   }
@@ -61,10 +62,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       alert('Supabase is not configured. Please set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY')
       return
     }
+    const redirectUrl = `${window.location.origin}${window.location.pathname}`
     await supabase.auth.signInWithOAuth({
       provider: 'apple',
       options: {
-        redirectTo: window.location.origin,
+        redirectTo: redirectUrl,
       },
     })
   }

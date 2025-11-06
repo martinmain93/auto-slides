@@ -69,8 +69,9 @@ export default function SongEditor() {
       }
     }
     const lineCounts = blocks.map((b) => Math.max(1, b.split('\n').length))
-    // Ensure gaps aligns to blocks - 1
-    if (gaps.length > lineCounts.length - 1) gaps.length = lineCounts.length - 1
+    // Ensure gaps aligns to blocks - 1 (but not negative)
+    const maxGaps = Math.max(0, lineCounts.length - 1)
+    if (gaps.length > maxGaps) gaps.length = maxGaps
     return { lineCounts, gaps }
   }, [content])
 

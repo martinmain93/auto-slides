@@ -150,10 +150,15 @@ export async function saveUserSetlist(userId: string, queue: string[], recents: 
 export async function loadUserState(userId: string): Promise<Partial<AppState>> {
   const [library, setlist] = await Promise.all([loadUserLibrary(userId), loadUserSetlist(userId)])
 
+  // Filter out song IDs that don't exist in the library (orphaned references)
+  const libraryIds = new Set(library.map(s => s.id))
+  const validQueue = setlist.queue.filter(id => libraryIds.has(id))
+  const validRecents = setlist.recents.filter(id => libraryIds.has(id))
+
   return {
     library,
-    queue: setlist.queue,
-    recents: setlist.recents,
+    queue: validQueue,
+    recents: validRecents,
   }
 }
 
