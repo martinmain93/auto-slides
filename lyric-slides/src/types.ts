@@ -17,10 +17,18 @@ export type PlanItem = {
   songId: string
 }
 
+export type Setlist = {
+  id: string
+  label: string
+  songIds: string[] // song ids in order
+  createdAt: string // ISO date string
+}
+
 export type AppState = {
   library: Song[]
   recents: string[] // song ids
   queue: string[] // song ids in order
+  setlists: Setlist[] // saved setlists
   currentSongId?: string
   currentSlideIndex: number
   usePhonemeDict: boolean

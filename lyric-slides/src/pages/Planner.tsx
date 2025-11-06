@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { Song } from '../types'
-import { Button, TextInput, Group, Stack, Paper, Title, Box, ScrollArea, Divider, Badge, Card, Text, AppShell, FileButton, Modal } from '@mantine/core'
+import { Button, TextInput, Group, Stack, Paper, Title, Box, ScrollArea, Divider, Badge, Card, Text, AppShell, FileButton, Modal, Menu, ActionIcon } from '@mantine/core'
 import { DndContext, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'
 import type { DragEndEvent } from '@dnd-kit/core'
 import { SortableContext, useSortable, arrayMove, verticalListSortingStrategy } from '@dnd-kit/sortable'
@@ -97,11 +97,13 @@ function SortableQueueItem({ id, title, selected, onSelect, onRemove }: Sortable
 
 export default function Planner() {
   const navigate = useNavigate()
-  const { state, setState, addToQueue, addRecent, selectSong, removeFromQueue, clearQueue, upsertSong } = useAppState()
+  const { state, setState, addToQueue, addRecent, selectSong, removeFromQueue, clearQueue, upsertSong, createSetlist, loadSetlist, deleteSetlist } = useAppState()
   const currentSong = state.library.find(s => s.id === state.currentSongId)
 
   const [importOpen, setImportOpen] = useState(false)
   const [importPreview, setImportPreview] = useState<Song[] | null>(null)
+  const [saveSetlistOpen, setSaveSetlistOpen] = useState(false)
+  const [setlistLabel, setSetlistLabel] = useState('')
 
   // dnd-kit sensors
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 6 } }))
@@ -189,10 +191,97 @@ export default function Planner() {
             </Stack>
           </SortableContext>
         </DndContext>
+        
+        <Divider my="md" />
+        
+        <Group justify="space-between" mb="xs">
+          <Title order={4} m={0}>Saved Setlists</Title>
+          <Button 
+            size="xs" 
+            variant="light" 
+            onClick={() => {
+              if (state.queue.length === 0) {
+                alert('Queue is empty. Add some songs to create a setlist.')
+                return
+              }
+              setSaveSetlistOpen(true)
+            }}
+            disabled={state.queue.length === 0}
+          >
+            Save Current
+          </Button>
+        </Group>
+        <ScrollArea h={300}>
+          <Stack gap="xs">
+            {state.setlists.length === 0 ? (
+              <Text size="sm" c="dimmed" style={{ opacity: 0.7 }}>No saved setlists</Text>
+            ) : (
+              state.setlists.map((setlist) => (
+                <Card key={setlist.id} withBorder p="xs" radius="sm">
+                  <Group justify="space-between" gap="xs">
+                    <Box style={{ flex: 1, minWidth: 0 }}>
+                      <Text size="sm" fw={500} truncate>{setlist.label}</Text>
+                      <Text size="xs" c="dimmed">
+                        {setlist.songIds.length} song{setlist.songIds.length !== 1 ? 's' : ''} • {new Date(setlist.createdAt).toLocaleDateString()}
+                      </Text>
+                    </Box>
+                    <Menu shadow="md" width={150}>
+                      <Menu.Target>
+                        <ActionIcon variant="subtle" size="sm">
+                          ⋮
+                        </ActionIcon>
+                      </Menu.Target>
+                      <Menu.Dropdown>
+                        <Menu.Item onClick={() => loadSetlist(setlist.id)}>Load</Menu.Item>
+                        <Menu.Item onClick={() => {
+                          if (confirm(`Delete "${setlist.label}"?`)) {
+                            deleteSetlist(setlist.id)
+                          }
+                        }} color="red">Delete</Menu.Item>
+                      </Menu.Dropdown>
+                    </Menu>
+                  </Group>
+                </Card>
+              ))
+            )}
+          </Stack>
+        </ScrollArea>
       </Paper>
       </AppShell.Navbar>
 
       <AppShell.Main>
+        <Modal opened={saveSetlistOpen} onClose={() => { setSaveSetlistOpen(false); setSetlistLabel('') }} title="Save Setlist">
+          <Stack>
+            <TextInput
+              label="Setlist Name"
+              placeholder="e.g., Sunday Morning Service"
+              value={setlistLabel}
+              onChange={(e) => setSetlistLabel(e.currentTarget.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && setlistLabel.trim()) {
+                  createSetlist(setlistLabel.trim())
+                  setSaveSetlistOpen(false)
+                  setSetlistLabel('')
+                }
+              }}
+              data-autofocus
+            />
+            <Text size="sm" c="dimmed">
+              This will save {state.queue.length} song{state.queue.length !== 1 ? 's' : ''} from your current queue.
+            </Text>
+            <Group justify="flex-end">
+              <Button variant="default" onClick={() => { setSaveSetlistOpen(false); setSetlistLabel('') }}>Cancel</Button>
+              <Button onClick={() => {
+                if (setlistLabel.trim()) {
+                  createSetlist(setlistLabel.trim())
+                  setSaveSetlistOpen(false)
+                  setSetlistLabel('')
+                }
+              }} disabled={!setlistLabel.trim()}>Save</Button>
+            </Group>
+          </Stack>
+        </Modal>
+        
         <Modal opened={importOpen} onClose={() => setImportOpen(false)} title="Import preview">
           {importPreview && importPreview.length > 0 ? (
             <Stack>

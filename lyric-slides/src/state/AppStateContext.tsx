@@ -5,7 +5,8 @@ import { demoLibrary } from '../types'
 import { setPhonemeDictionary } from '../lib/phonemeDict'
 import { loadCmudictFromUrl } from '../lib/phonemeLoader'
 import { useAuth } from './AuthContext'
-import { loadUserState, saveSongToLibrary, saveUserSetlist } from '../lib/supabaseSync'
+import { loadUserState, saveSongToLibrary, saveUserSetlist, saveSetlist, deleteSetlist } from '../lib/supabaseSync'
+import type { Setlist } from '../types'
 
 export type AppActions = {
   addToQueue: (songId: string) => void
@@ -20,6 +21,9 @@ export type AppActions = {
   moveNextSong: () => void
   setUsePhonemeDict: (enabled: boolean) => void
   setPhonemeSource: (src: 'local' | 'remote') => void
+  createSetlist: (label: string) => void
+  loadSetlist: (setlistId: string) => void
+  deleteSetlist: (setlistId: string) => void
 }
 
 type Ctx = { state: AppState; setState: React.Dispatch<React.SetStateAction<AppState>> } & AppActions
@@ -35,7 +39,12 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
     if (raw) {
       try {
         const parsed = JSON.parse(raw) as AppState
-        if (Array.isArray(parsed.library) && Array.isArray(parsed.queue)) return parsed
+        if (Array.isArray(parsed.library) && Array.isArray(parsed.queue)) {
+          return {
+            ...parsed,
+            setlists: parsed.setlists || [],
+          }
+        }
       } catch {
         // Ignore invalid persisted state
       }
@@ -44,6 +53,7 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
       library: demoLibrary,
       recents: [],
       queue: [],
+      setlists: [],
       currentSlideIndex: 0,
       usePhonemeDict: true,
       phonemeSource: 'remote',
@@ -83,6 +93,7 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
           library: cloudState.library || prev.library,
           queue: cloudState.queue || prev.queue,
           recents: cloudState.recents || prev.recents,
+          setlists: cloudState.setlists || prev.setlists,
         }))
       } catch (error) {
         console.error('Failed to load user data from cloud:', error)
@@ -229,8 +240,52 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
         setState((s) => ({ ...s, usePhonemeDict: enabled })),
       setPhonemeSource: (src: 'local' | 'remote') =>
         setState((s) => ({ ...s, phonemeSource: src })),
+      createSetlist: (label: string) => {
+        if (!state.queue.length) {
+          alert('Queue is empty. Add some songs to create a setlist.')
+          return
+        }
+        const newSetlist: Setlist = {
+          id: `setlist-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
+          label,
+          songIds: [...state.queue],
+          createdAt: new Date().toISOString(),
+        }
+        setState((s) => ({
+          ...s,
+          setlists: [newSetlist, ...s.setlists],
+        }))
+        // Save to Supabase if logged in
+        if (user?.id) {
+          saveSetlist(user.id, newSetlist).catch((error) => {
+            console.error('Failed to save setlist to cloud:', error)
+          })
+        }
+      },
+      loadSetlist: (setlistId: string) => {
+        const setlist = state.setlists.find((s) => s.id === setlistId)
+        if (!setlist) return
+        setState((s) => ({
+          ...s,
+          queue: [...setlist.songIds],
+          currentSongId: setlist.songIds[0],
+          currentSlideIndex: 0,
+        }))
+      },
+      deleteSetlist: (setlistId: string) => {
+        setState((s) => ({
+          ...s,
+          setlists: s.setlists.filter((sl) => sl.id !== setlistId),
+        }))
+        // Delete from Supabase if logged in
+        if (user?.id) {
+          deleteSetlist(user.id, setlistId).catch((error) => {
+            console.error('Failed to delete setlist from cloud:', error)
+          })
+        }
+      },
       }),
-    [user?.id],
+    [user?.id, state.queue, state.setlists],
   )
 
   const value: Ctx = { state, setState, ...actions }

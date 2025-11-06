@@ -24,9 +24,21 @@ CREATE TABLE IF NOT EXISTS user_setlists (
   UNIQUE(user_id) -- One setlist per user
 );
 
+-- Saved setlists table (stores multiple named setlists per user)
+CREATE TABLE IF NOT EXISTS saved_setlists (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  label TEXT NOT NULL,
+  song_ids JSONB NOT NULL DEFAULT '[]'::jsonb, -- Array of song IDs
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
 -- Indexes for faster queries
 CREATE INDEX IF NOT EXISTS idx_user_libraries_user_id ON user_libraries(user_id);
 CREATE INDEX IF NOT EXISTS idx_user_setlists_user_id ON user_setlists(user_id);
+CREATE INDEX IF NOT EXISTS idx_saved_setlists_user_id ON saved_setlists(user_id);
+CREATE INDEX IF NOT EXISTS idx_saved_setlists_created_at ON saved_setlists(user_id, created_at DESC);
 
 -- Unique index to ensure one song per user per song ID
 CREATE UNIQUE INDEX IF NOT EXISTS idx_user_libraries_unique_song 
@@ -35,6 +47,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS idx_user_libraries_unique_song
 -- Row Level Security (RLS) policies
 ALTER TABLE user_libraries ENABLE ROW LEVEL SECURITY;
 ALTER TABLE user_setlists ENABLE ROW LEVEL SECURITY;
+ALTER TABLE saved_setlists ENABLE ROW LEVEL SECURITY;
 
 -- Users can only access their own libraries
 CREATE POLICY "Users can view their own libraries"
@@ -70,6 +83,23 @@ CREATE POLICY "Users can delete their own setlists"
   ON user_setlists FOR DELETE
   USING (auth.uid() = user_id);
 
+-- Users can only access their own saved setlists
+CREATE POLICY "Users can view their own saved setlists"
+  ON saved_setlists FOR SELECT
+  USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can insert their own saved setlists"
+  ON saved_setlists FOR INSERT
+  WITH CHECK (auth.uid() = user_id);
+
+CREATE POLICY "Users can update their own saved setlists"
+  ON saved_setlists FOR UPDATE
+  USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can delete their own saved setlists"
+  ON saved_setlists FOR DELETE
+  USING (auth.uid() = user_id);
+
 -- Function to update updated_at timestamp
 CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER AS $$
@@ -87,6 +117,11 @@ CREATE TRIGGER update_user_libraries_updated_at
 
 CREATE TRIGGER update_user_setlists_updated_at
   BEFORE UPDATE ON user_setlists
+  FOR EACH ROW
+  EXECUTE FUNCTION update_updated_at_column();
+
+CREATE TRIGGER update_saved_setlists_updated_at
+  BEFORE UPDATE ON saved_setlists
   FOR EACH ROW
   EXECUTE FUNCTION update_updated_at_column();
 

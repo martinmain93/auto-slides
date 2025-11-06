@@ -1,5 +1,5 @@
 import { supabase, isSupabaseConfigured } from './supabase'
-import type { Song, AppState } from '../types'
+import type { Song, AppState, Setlist } from '../types'
 
 type UserLibraryRow = {
   id: string
@@ -145,20 +145,103 @@ export async function saveUserSetlist(userId: string, queue: string[], recents: 
 }
 
 /**
+ * Load saved setlists from Supabase
+ */
+export async function loadSavedSetlists(userId: string): Promise<Setlist[]> {
+  if (!isSupabaseConfigured) {
+    return []
+  }
+
+  const { data, error } = await supabase
+    .from('saved_setlists')
+    .select('id, label, song_ids, created_at')
+    .eq('user_id', userId)
+    .order('created_at', { ascending: false })
+
+  if (error) {
+    console.error('Error loading saved setlists:', error)
+    return []
+  }
+
+  return (data || []).map((row) => ({
+    id: row.id,
+    label: row.label,
+    songIds: row.song_ids || [],
+    createdAt: row.created_at,
+  }))
+}
+
+/**
+ * Save a setlist to Supabase
+ */
+export async function saveSetlist(userId: string, setlist: Setlist): Promise<void> {
+  if (!isSupabaseConfigured) {
+    return
+  }
+
+  const { error } = await supabase.from('saved_setlists').upsert(
+    {
+      id: setlist.id,
+      user_id: userId,
+      label: setlist.label,
+      song_ids: setlist.songIds,
+      created_at: setlist.createdAt,
+    },
+    {
+      onConflict: 'id',
+    }
+  )
+
+  if (error) {
+    console.error('Error saving setlist:', error)
+    throw error
+  }
+}
+
+/**
+ * Delete a setlist from Supabase
+ */
+export async function deleteSetlist(userId: string, setlistId: string): Promise<void> {
+  if (!isSupabaseConfigured) {
+    return
+  }
+
+  const { error } = await supabase
+    .from('saved_setlists')
+    .delete()
+    .eq('user_id', userId)
+    .eq('id', setlistId)
+
+  if (error) {
+    console.error('Error deleting setlist:', error)
+    throw error
+  }
+}
+
+/**
  * Load complete user state from Supabase
  */
 export async function loadUserState(userId: string): Promise<Partial<AppState>> {
-  const [library, setlist] = await Promise.all([loadUserLibrary(userId), loadUserSetlist(userId)])
+  const [library, setlist, savedSetlists] = await Promise.all([
+    loadUserLibrary(userId),
+    loadUserSetlist(userId),
+    loadSavedSetlists(userId),
+  ])
 
   // Filter out song IDs that don't exist in the library (orphaned references)
   const libraryIds = new Set(library.map(s => s.id))
   const validQueue = setlist.queue.filter(id => libraryIds.has(id))
   const validRecents = setlist.recents.filter(id => libraryIds.has(id))
+  const validSetlists = savedSetlists.map(setlist => ({
+    ...setlist,
+    songIds: setlist.songIds.filter(id => libraryIds.has(id)),
+  }))
 
   return {
     library,
     queue: validQueue,
     recents: validRecents,
+    setlists: validSetlists,
   }
 }
 
