@@ -23,6 +23,22 @@ Build & Preview
 - npm run build
 - npm run preview
 
+Deployment (Netlify)
+1. Push your code to GitHub
+2. Go to [Netlify](https://app.netlify.com) and sign in
+3. Click "Add new site" → "Import an existing project"
+4. Connect your GitHub repository
+5. Netlify will auto-detect the settings from `netlify.toml`:
+   - Build command: `npm run build`
+   - Publish directory: `dist`
+6. Click "Deploy site"
+7. Your site will be live at `https://your-site-name.netlify.app`
+
+The `netlify.toml` file is already configured with:
+- SPA routing (all routes redirect to index.html)
+- Node 18 environment
+- Build and publish settings
+
 Tests
 - Unit tests: npm run test
 - Watch mode: npm run test:watch
