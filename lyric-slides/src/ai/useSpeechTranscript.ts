@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState, useCallback, useMemo } from 'react'
 import { createSpeechController } from '../lib/speech'
-import { phoneticTokens } from '../lib/phonetics'
 
 // Note: with controller-level index-based onresult handling, we no longer need
 // to heuristically merge partial and final text here.
@@ -18,7 +17,7 @@ export function useSpeechTranscript() {
   useEffect(() => {
     speechRef.current = createSpeechController({
       onPartial: (t) => {
-        setPartial((prev) => t)
+        setPartial(t)
         lastPartialAtRef.current = Date.now()
       },
       onFinal: (t) => {
