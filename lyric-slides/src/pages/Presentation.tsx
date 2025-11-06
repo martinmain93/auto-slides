@@ -8,20 +8,90 @@ import { usePhoneticSlideMatch } from '../ai/usePhoneticSlideMatch'
 import { useNavigation, navigateFromDecision } from '../presentation/useNavigation'
 import { ControlsOverlay } from '../presentation/ControlsOverlay'
 import { DevPanel } from '../presentation/DevPanel'
+import { DualScreenControls } from '../presentation/DualScreenControls'
 
 const DEBUG_MATCH = true
 
 export default function Presentation() {
   const navigate = useNavigate()
-  const { state, setState } = useAppState()
+  const { state, setState, upsertSong } = useAppState()
   const nav = useNavigation({ state, setState, onExit: () => { void navigate('/plan') } })
   const { queue, currentSongId, currentSong, slideIndex, setSlideIndex, blankPos, setBlankPos, goSong } = nav
   const [controlsVisible, setControlsVisible] = useState(true)
   const [devVisible, setDevVisible] = useState(true)
   const [useEnhancedAudio, setUseEnhancedAudio] = useState(false)
+  const [dualScreenMode, setDualScreenMode] = useState(false)
   const slidesScrollerRef = useRef<HTMLDivElement | null>(null)
+  const broadcastChannelRef = useRef<BroadcastChannel | null>(null)
+  const presentationWindowRef = useRef<Window | null>(null)
 
   const hasSong = Boolean(currentSong)
+
+  // Broadcast state to presentation window
+  useEffect(() => {
+    if (dualScreenMode) {
+      if (!broadcastChannelRef.current) {
+        broadcastChannelRef.current = new BroadcastChannel('presentation-sync')
+        
+        // Listen for state requests from the presentation view
+        broadcastChannelRef.current.onmessage = (event: MessageEvent) => {
+          if ((event.data as { type?: string }).type === 'request-state') {
+            broadcastChannelRef.current?.postMessage({
+              currentSongId,
+              slideIndex,
+              blankPos,
+            })
+          }
+        }
+      }
+      
+      // Broadcast current state
+      broadcastChannelRef.current.postMessage({
+        currentSongId,
+        slideIndex,
+        blankPos,
+      })
+    }
+    
+    return () => {
+      if (!dualScreenMode && broadcastChannelRef.current) {
+        broadcastChannelRef.current.close()
+        broadcastChannelRef.current = null
+      }
+    }
+  }, [dualScreenMode, currentSongId, slideIndex, blankPos])
+
+  // Handle dual screen mode
+  const handleEnterDualScreen = () => {
+    setDualScreenMode(true)
+    // Open presentation view in new window
+    const newWindow = window.open('/presentation-view', '_blank', 'width=1920,height=1080')
+    presentationWindowRef.current = newWindow
+  }
+
+  const handleExitDualScreen = () => {
+    setDualScreenMode(false)
+    if (presentationWindowRef.current && !presentationWindowRef.current.closed) {
+      presentationWindowRef.current.close()
+    }
+    presentationWindowRef.current = null
+    if (broadcastChannelRef.current) {
+      broadcastChannelRef.current.close()
+      broadcastChannelRef.current = null
+    }
+  }
+
+  // Clean up on unmount
+  useEffect(() => {
+    return () => {
+      if (broadcastChannelRef.current) {
+        broadcastChannelRef.current.close()
+      }
+      if (presentationWindowRef.current && !presentationWindowRef.current.closed) {
+        presentationWindowRef.current.close()
+      }
+    }
+  }, [])
 
   // Pre-index progress and last match score (debug)
   const [lastScore, setLastScore] = useState<number | null>(null)
@@ -110,6 +180,24 @@ export default function Presentation() {
     }
   }, [])
 
+  if (dualScreenMode) {
+    return (
+      <DualScreenControls
+        queue={queue}
+        library={state.library}
+        currentSongId={currentSongId}
+        slideIndex={slideIndex}
+        onSelectSlide={(i) => setSlideIndex(i)}
+        blankPos={blankPos}
+        setBlankPos={setBlankPos}
+        goSong={goSong}
+        navigateToPlanner={() => { void navigate('/plan') }}
+        onExitDualScreen={handleExitDualScreen}
+        upsertSong={upsertSong}
+      />
+    )
+  }
+
   return (
     <Box onMouseMove={onMouseMove} style={{ position: 'relative', height: '100dvh', background: 'black', color: 'white', overflow: 'hidden' }}>
       {/* Centered slide text */}
@@ -123,9 +211,23 @@ export default function Presentation() {
           >
             {blankPos ? '' : currentSong!.slides[slideIndex].text}
           </Box>
-          <Text size="sm" c="dimmed" style={{ position: 'absolute', right: 8, bottom: 4, pointerEvents: 'none' }}>
-            {currentSong!.title}
-          </Text>
+          {!blankPos && slideIndex === 0 && (
+            <Box style={{ position: 'absolute', bottom: 16, left: '50%', transform: 'translateX(-50%)', textAlign: 'center', pointerEvents: 'none' }}>
+              <Text size="sm" c="dimmed" style={{ opacity: 0.7 }}>
+                {currentSong!.title}
+              </Text>
+              {currentSong!.credits && (
+                <Text size="sm" c="dimmed" style={{ opacity: 0.6, marginTop: 4 }}>
+                  {currentSong!.credits}
+                </Text>
+              )}
+            </Box>
+          )}
+          {(!blankPos && slideIndex !== 0) && (
+            <Text size="sm" c="dimmed" style={{ position: 'absolute', right: 8, bottom: 4, pointerEvents: 'none' }}>
+              {currentSong!.title}
+            </Text>
+          )}
         </>
       ) : (
         <Button variant="light" onClick={() => { void navigate('/plan') }}>Go back to planner</Button>
@@ -164,6 +266,7 @@ export default function Presentation() {
         controlsVisible={controlsVisible}
         setControlsVisible={setControlsVisible}
         slidesScrollerRef={slidesScrollerRef}
+        onEnterDualScreen={handleEnterDualScreen}
       />
     </Box>
   )

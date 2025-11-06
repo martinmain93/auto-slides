@@ -106,6 +106,11 @@ export function useNavigation(params: {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
+      // Don't handle shortcuts when user is typing in an input
+      const target = e.target as HTMLElement | null
+      const isTyping = target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)
+      if (isTyping) return
+      
       if (e.key === ' ' || e.code === 'Space') {
         e.preventDefault()
         goNextSlide()

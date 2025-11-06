@@ -21,8 +21,9 @@ export function ControlsOverlay(props: {
   controlsVisible: boolean
   setControlsVisible: (v: boolean) => void
   slidesScrollerRef: React.RefObject<HTMLDivElement | null>
+  onEnterDualScreen: () => void
 }) {
-  const { queue, library, currentSongId, slideIndex, onSelectSlide, blankPos, setBlankPos, goSong, navigateToPlanner, isListening, toggleMic, transcriptWindow, debugScore, controlsVisible, setControlsVisible, slidesScrollerRef } = props
+  const { queue, library, currentSongId, slideIndex, onSelectSlide, blankPos, setBlankPos, goSong, navigateToPlanner, isListening, toggleMic, transcriptWindow, debugScore, controlsVisible, setControlsVisible, slidesScrollerRef, onEnterDualScreen } = props
 
   const overlayStyle: React.CSSProperties = {
     position: 'fixed',
@@ -47,7 +48,10 @@ export function ControlsOverlay(props: {
   return (
     <Paper style={overlayStyle}>
       <Box style={{ display: 'grid', gridTemplateColumns: 'auto 1fr auto', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-        <Button variant="light" onClick={navigateToPlanner}>← Planner</Button>
+        <Box style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+          <Button variant="light" onClick={navigateToPlanner}>← Planner</Button>
+          <Button variant="outline" size="xs" onClick={onEnterDualScreen}>Present on 2nd screen</Button>
+        </Box>
         <Box style={{ justifySelf: 'center', maxWidth: 1100, width: '100%' }}>
           <HorizontalPicker
             className="no-scrollbar"

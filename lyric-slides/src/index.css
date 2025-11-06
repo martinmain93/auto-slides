@@ -50,3 +50,13 @@ a:hover { text-decoration: underline }
   animation: slide-fade-in 160ms ease-in;
   will-change: opacity;
 }
+
+/* Slide selector active animation */
+@keyframes slide-selector-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(30, 144, 255, 0.7); }
+  50% { box-shadow: 0 0 10px 5px rgba(30, 144, 255, 0.4); }
+  100% { box-shadow: 0 0 0 0 rgba(30, 144, 255, 0); }
+}
+.slide-selector-active {
+  animation: slide-selector-pulse 300ms ease-out;
+}

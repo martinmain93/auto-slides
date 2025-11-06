@@ -45,6 +45,35 @@ export default function HorizontalPicker({ items, activeIndex, className }: Prop
     }
   }, [items.length])
 
+  // Prevent browser navigation gestures when scrolling horizontally
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+
+    // Add CSS to prevent browser navigation gestures
+    el.style.overscrollBehaviorX = 'contain'
+    el.style.touchAction = 'pan-y pinch-zoom'
+
+    // Handle wheel events to prevent default browser behavior on horizontal scroll
+    const handleWheel = (e: WheelEvent) => {
+      // If scrolling horizontally, prevent default to avoid browser navigation gesture
+      // This prevents macOS Chrome from interpreting horizontal swipes as back/forward navigation
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+        e.preventDefault()
+        // Manually scroll to ensure smooth scrolling still works
+        el.scrollLeft += e.deltaX
+      }
+    }
+
+    el.addEventListener('wheel', handleWheel, { passive: false })
+
+    return () => {
+      el.removeEventListener('wheel', handleWheel)
+      el.style.overscrollBehaviorX = ''
+      el.style.touchAction = ''
+    }
+  }, [items.length])
+
   useEffect(() => {
     if (activeIndex == null) return
     const el = itemRefs.current[activeIndex]
