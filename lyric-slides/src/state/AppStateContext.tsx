@@ -1,9 +1,11 @@
 /* eslint-disable react-refresh/only-export-components */
-import React, { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import React, { createContext, useContext, useEffect, useMemo, useState, useRef } from 'react'
 import type { AppState } from '../types'
 import { demoLibrary } from '../types'
 import { setPhonemeDictionary } from '../lib/phonemeDict'
 import { loadCmudictFromUrl } from '../lib/phonemeLoader'
+import { useAuth } from './AuthContext'
+import { loadUserState, saveSongToLibrary, saveUserSetlist } from '../lib/supabaseSync'
 
 export type AppActions = {
   addToQueue: (songId: string) => void
@@ -27,6 +29,7 @@ const AppStateContext = createContext<Ctx | null>(null)
 const STORAGE_KEY = 'lyric-slides:app-state'
 
 export function AppStateProvider({ children }: { children: React.ReactNode }) {
+  const { user, loading: authLoading } = useAuth()
   const [state, setState] = useState<AppState>(() => {
     const raw = localStorage.getItem(STORAGE_KEY)
     if (raw) {
@@ -47,10 +50,92 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
       phonemeStatus: 'idle',
     }
   })
+  const [isLoadingFromCloud, setIsLoadingFromCloud] = useState(false)
+  const syncTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined)
 
+  // Load user data from Supabase when user logs in
   useEffect(() => {
+    if (authLoading) return
+
+    async function loadUserData() {
+      if (!user?.id) {
+        // Not logged in, use localStorage
+        const raw = localStorage.getItem(STORAGE_KEY)
+        if (raw) {
+          try {
+            const parsed = JSON.parse(raw) as AppState
+            if (Array.isArray(parsed.library) && Array.isArray(parsed.queue)) {
+              setState(() => parsed)
+            }
+          } catch {
+            // Ignore invalid persisted state
+          }
+        }
+        return
+      }
+
+      // User is logged in, load from Supabase
+      setIsLoadingFromCloud(true)
+      try {
+        const cloudState = await loadUserState(user.id)
+        setState((prev) => ({
+          ...prev,
+          library: cloudState.library || prev.library,
+          queue: cloudState.queue || prev.queue,
+          recents: cloudState.recents || prev.recents,
+        }))
+      } catch (error) {
+        console.error('Failed to load user data from cloud:', error)
+        // Fall back to localStorage
+        const raw = localStorage.getItem(STORAGE_KEY)
+        if (raw) {
+          try {
+            const parsed = JSON.parse(raw) as AppState
+            if (Array.isArray(parsed.library) && Array.isArray(parsed.queue)) {
+              setState(() => parsed)
+            }
+          } catch {
+            // Ignore invalid persisted state
+          }
+        }
+      } finally {
+        setIsLoadingFromCloud(false)
+      }
+    }
+
+    void loadUserData()
+  }, [user?.id, authLoading])
+
+  // Sync state to storage (localStorage or Supabase)
+  useEffect(() => {
+    if (authLoading || isLoadingFromCloud) return
+
+    // Clear any pending sync
+    if (syncTimeoutRef.current) {
+      clearTimeout(syncTimeoutRef.current)
+    }
+
+    // Always save to localStorage as backup
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state))
-  }, [state])
+
+    // If logged in, sync to Supabase (debounced)
+    if (user?.id) {
+      syncTimeoutRef.current = setTimeout(async () => {
+        try {
+          // Sync setlist (queue and recents)
+          await saveUserSetlist(user.id, state.queue, state.recents)
+        } catch (error) {
+          console.error('Failed to sync setlist to cloud:', error)
+        }
+      }, 1000) // Debounce by 1 second
+    }
+
+    return () => {
+      if (syncTimeoutRef.current) {
+        clearTimeout(syncTimeoutRef.current)
+      }
+    }
+  }, [state.queue, state.recents, user?.id, authLoading, isLoadingFromCloud])
 
   // Load/clear phoneme dictionary whenever the toggle changes.
   useEffect(() => {
@@ -109,12 +194,19 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
         })),
       clearQueue: () =>
         setState((s) => ({ ...s, queue: [], currentSongId: undefined, currentSlideIndex: 0 })),
-      upsertSong: (song) =>
+      upsertSong: (song) => {
         setState((s) => {
           const idx = s.library.findIndex((x) => x.id === song.id)
           const library = idx >= 0 ? [...s.library.slice(0, idx), song, ...s.library.slice(idx + 1)] : [song, ...s.library]
           return { ...s, library }
-        }),
+        })
+        // Sync song to Supabase if logged in
+        if (user?.id) {
+          saveSongToLibrary(user.id, song).catch((error) => {
+            console.error('Failed to save song to cloud:', error)
+          })
+        }
+      },
       enqueue: (songId: string) =>
         setState((s) => (s.queue.includes(songId) ? s : { ...s, queue: [...s.queue, songId] })),
       nextSlide: () =>
@@ -137,8 +229,8 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
         setState((s) => ({ ...s, usePhonemeDict: enabled })),
       setPhonemeSource: (src: 'local' | 'remote') =>
         setState((s) => ({ ...s, phonemeSource: src })),
-    }),
-    [],
+      }),
+    [user?.id],
   )
 
   const value: Ctx = { state, setState, ...actions }

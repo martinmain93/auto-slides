@@ -9,6 +9,7 @@ import Presentation from './pages/Presentation'
 import PresentationView from './pages/PresentationView'
 import SongEditor from './pages/SongEditor'
 import { MantineProvider } from '@mantine/core'
+import { AuthProvider } from './state/AuthContext'
 import { AppStateProvider } from './state/AppStateContext'
 
 const router = createBrowserRouter([
@@ -28,9 +29,11 @@ createRoot(document.getElementById('root')!).render(
         headings: { fontFamily: 'Outfit, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji", sans-serif' },
       }}
     >
-      <AppStateProvider>
-        <RouterProvider router={router} />
-      </AppStateProvider>
+      <AuthProvider>
+        <AppStateProvider>
+          <RouterProvider router={router} />
+        </AppStateProvider>
+      </AuthProvider>
     </MantineProvider>
   </StrictMode>,
 )

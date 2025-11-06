@@ -11,10 +11,24 @@ Features
 
 Getting Started
 Requirements
-- Node >= 18.18
+- Node >= 20.0.0
 
 Install
 - npm install
+
+Environment Variables (for cloud sync)
+Create a `.env` file in the `lyric-slides` directory with your Supabase credentials:
+```
+VITE_SUPABASE_URL=your-project-url
+VITE_SUPABASE_ANON_KEY=your-anon-key
+```
+
+To get these values:
+1. Create a free account at [Supabase](https://supabase.com)
+2. Create a new project
+3. Go to Project Settings → API
+4. Copy the "Project URL" and "anon public" key
+5. Run the SQL schema in `supabase-schema.sql` in the SQL Editor
 
 Development
 - npm run dev
@@ -36,8 +50,17 @@ Deployment (Netlify)
 
 The `netlify.toml` file is already configured with:
 - SPA routing (all routes redirect to index.html)
-- Node 18 environment
+- Node 20 environment
 - Build and publish settings
+
+For Netlify deployment with Supabase:
+1. Add environment variables in Netlify dashboard:
+   - Go to Site settings → Environment variables
+   - Add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`
+2. Configure OAuth providers in Supabase:
+   - Go to Authentication → Providers
+   - Enable Google and/or Apple OAuth
+   - Add redirect URLs (your Netlify domain)
 
 Tests
 - Unit tests: npm run test
@@ -72,8 +95,15 @@ Notes
 - Multiple songs can exist in a single file by repeating `Title: <Name>` headers
 
 State Persistence
-- App state (library, recents, queue, current slide) is stored in localStorage under `lyric-slides:app-state`
-- To reset, clear browser storage or remove that key
+- **When logged in**: App state (library, recents, queue) is synced to Supabase cloud storage
+- **When not logged in**: App state is stored in localStorage under `lyric-slides:app-state`
+- Data automatically syncs when you sign in/out
+- To reset, clear browser storage or sign out
+
+Authentication
+- Sign in with Google or Apple OAuth
+- Your library and setlists are automatically synced across devices
+- No account required for local-only usage
 
 Contributing
 - Code style is enforced by ESLint and Prettier

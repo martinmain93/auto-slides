@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
-import { Button, Container, Stack, Text, Title, Center } from '@mantine/core'
+import { Button, Container, Stack, Text, Title, Center, Group } from '@mantine/core'
+import { AuthButton } from '../components/AuthButton'
 
 export default function Splash() {
   const navigate = useNavigate()
@@ -14,6 +15,9 @@ export default function Splash() {
       backgroundRepeat: 'no-repeat'
     }}>
       <Container size={560} mih="100dvh" style={{ position: 'relative' }}>
+      <Group justify="flex-end" pt="md">
+        <AuthButton />
+      </Group>
       <Center mih="100dvh">
         <Stack gap="sm" align="center">
           <Title order={1} size={56} ta="center" c="white">Church Slides</Title>
