@@ -246,7 +246,7 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
           return
         }
         const newSetlist: Setlist = {
-          id: `setlist-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
+          id: crypto.randomUUID(),
           label,
           songIds: [...state.queue],
           createdAt: new Date().toISOString(),
