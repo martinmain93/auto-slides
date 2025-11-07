@@ -5,8 +5,8 @@ import { demoLibrary } from '../types'
 import { setPhonemeDictionary } from '../lib/phonemeDict'
 import { loadCmudictFromUrl } from '../lib/phonemeLoader'
 import { useAuth } from './AuthContext'
-import { loadUserState, saveSongToLibrary, saveUserSetlist, saveSetlist, deleteSetlist } from '../lib/supabaseSync'
-import type { Setlist } from '../types'
+import { loadUserState, saveSongToLibrary, saveUserSetlist, saveSetlist, deleteSetlist, type SharedSetlistPayload } from '../lib/supabaseSync'
+import type { Setlist, Song } from '../types'
 
 export type AppActions = {
   addToQueue: (songId: string) => void
@@ -24,6 +24,7 @@ export type AppActions = {
   createSetlist: (label: string) => void
   loadSetlist: (setlistId: string) => void
   deleteSetlist: (setlistId: string) => void
+  importSharedSetlist: (payload: SharedSetlistPayload) => Promise<void>
 }
 
 type Ctx = { state: AppState; setState: React.Dispatch<React.SetStateAction<AppState>> } & AppActions
@@ -284,8 +285,79 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
           })
         }
       },
-      }),
-    [user?.id, state.queue, state.setlists],
+      importSharedSetlist: async ({ label, songIds, songs }: SharedSetlistPayload) => {
+        if (!songs || songs.length === 0) return
+
+        let newSetlist: Setlist | null = null
+        let insertedSongs: Song[] = []
+        setState((s) => {
+          const existingIds = new Set(s.library.map((song) => song.id))
+          const idMap = new Map<string, string>()
+          const updatedLibrary = [...s.library]
+
+          songs.forEach((originalSong) => {
+            let newId = originalSong.id
+            while (existingIds.has(newId) || idMap.has(newId)) {
+              newId = `${originalSong.id}-${Math.random().toString(36).slice(2, 6)}`
+            }
+            idMap.set(originalSong.id, newId)
+            existingIds.add(newId)
+
+            const slides = (originalSong.slides || []).map((slide, idx) => ({
+              ...slide,
+              id: `${newId}-slide-${idx + 1}`,
+            }))
+
+            const normalizedSong: Song = {
+              ...originalSong,
+              id: newId,
+              slides,
+            }
+
+            insertedSongs.push(normalizedSong)
+
+            const idx = updatedLibrary.findIndex((song) => song.id === normalizedSong.id)
+            if (idx >= 0) {
+              updatedLibrary[idx] = normalizedSong
+            } else {
+              updatedLibrary.push(normalizedSong)
+            }
+          })
+
+          const mappedIds = songIds
+            .map((id) => idMap.get(id) || id)
+            .filter((id) => updatedLibrary.some((song) => song.id === id))
+
+          const createdSetlist: Setlist = {
+            id: `setlist-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+            label,
+            songIds: mappedIds,
+            createdAt: new Date().toISOString(),
+          }
+
+          newSetlist = createdSetlist
+
+          return {
+            ...s,
+            library: updatedLibrary,
+            setlists: mappedIds.length ? [createdSetlist, ...s.setlists] : s.setlists,
+            queue: mappedIds,
+            currentSongId: mappedIds[0],
+            currentSlideIndex: 0,
+          }
+        })
+
+        const createdSetlistRef = newSetlist as Setlist | null
+
+        if (user?.id && createdSetlistRef && createdSetlistRef.songIds.length > 0) {
+          if (insertedSongs.length > 0) {
+            await Promise.all(insertedSongs.map((song) => saveSongToLibrary(user.id, song)))
+          }
+          await saveSetlist(user.id, createdSetlistRef)
+        }
+      },
+    }),
+    [user?.id, state.queue, state.setlists, state.library],
   )
 
   const value: Ctx = { state, setState, ...actions }

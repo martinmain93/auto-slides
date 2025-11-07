@@ -31,6 +31,7 @@ This guide will help you set up Supabase for authentication and cloud storage.
 This creates:
 - `user_libraries` table (stores songs)
 - `user_setlists` table (stores queue and recents)
+- `shared_setlists` table (publicly shared setlist snapshots)
 - Row Level Security policies (users can only access their own data)
 
 ## Step 4: Configure OAuth Providers
@@ -53,17 +54,6 @@ This creates:
    - For production: `https://your-site.netlify.app` (replace with your actual Netlify URL)
    - You can add multiple URLs - add both localhost and your Netlify domain
    - **This is required for OAuth to work in production!**
-
-### Apple OAuth (Optional)
-
-1. Go to **Authentication** → **Providers**
-2. Find **Apple** and click to expand
-3. Toggle **Enable Apple provider**
-4. You'll need:
-   - Apple Developer account
-   - Service ID
-   - Key ID and Private Key
-   - See [Supabase Apple OAuth docs](https://supabase.com/docs/guides/auth/social-login/auth-apple) for details
 
 ## Step 5: Configure Environment Variables
 

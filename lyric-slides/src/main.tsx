@@ -8,6 +8,7 @@ import Planner from './pages/Planner'
 import Presentation from './pages/Presentation'
 import PresentationView from './pages/PresentationView'
 import SongEditor from './pages/SongEditor'
+import ShareImport from './pages/Share'
 import { MantineProvider } from '@mantine/core'
 import { AuthProvider } from './state/AuthContext'
 import { AppStateProvider } from './state/AppStateContext'
@@ -18,6 +19,7 @@ const router = createBrowserRouter([
   { path: '/present', element: <Presentation /> },
   { path: '/presentation-view', element: <PresentationView /> },
   { path: '/edit', element: <SongEditor /> },
+  { path: '/share/:code', element: <ShareImport /> },
 ])
 
 createRoot(document.getElementById('root')!).render(

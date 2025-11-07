@@ -12,6 +12,20 @@ type UserSetlistRow = {
   recents: string[]
 }
 
+type SharedSetlistRow = {
+  id: string
+  label: string
+  song_ids: string[]
+  songs: Song[]
+  created_at: string
+}
+
+export type SharedSetlistPayload = {
+  label: string
+  songIds: string[]
+  songs: Song[]
+}
+
 /**
  * Load user's library from Supabase
  */
@@ -141,6 +155,71 @@ export async function saveUserSetlist(userId: string, queue: string[], recents: 
   if (error) {
     console.error('Error saving setlist:', error)
     throw error
+  }
+}
+
+function generateShareCode(): string {
+  const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'
+  let code = ''
+  for (let i = 0; i < 6; i += 1) {
+    code += alphabet[Math.floor(Math.random() * alphabet.length)]
+  }
+  return code
+}
+
+export async function createSharedSetlist(userId: string, setlist: Setlist, songs: Song[]): Promise<string> {
+  if (!isSupabaseConfigured) {
+    throw new Error('Sharing is unavailable without Supabase configuration.')
+  }
+
+  for (let attempt = 0; attempt < 5; attempt += 1) {
+    const code = generateShareCode()
+    const { error } = await supabase.from('shared_setlists').insert({
+      id: code,
+      label: setlist.label,
+      song_ids: setlist.songIds,
+      songs,
+      created_by: userId,
+    })
+
+    if (!error) {
+      return code
+    }
+
+    if (error.code !== '23505') {
+      console.error('Error creating shared setlist:', error)
+      throw error
+    }
+  }
+
+  throw new Error('Unable to generate a share link. Please try again.')
+}
+
+export async function fetchSharedSetlist(code: string): Promise<SharedSetlistPayload | null> {
+  if (!isSupabaseConfigured) {
+    return null
+  }
+
+  const shareCode = code.trim().toUpperCase()
+  if (!shareCode) return null
+
+  const { data, error } = await supabase
+    .from('shared_setlists')
+    .select('id, label, song_ids, songs, created_at')
+    .eq('id', shareCode)
+    .maybeSingle<SharedSetlistRow>()
+
+  if (error) {
+    console.error('Error fetching shared setlist:', error)
+    return null
+  }
+
+  if (!data) return null
+
+  return {
+    label: data.label,
+    songIds: data.song_ids || [],
+    songs: data.songs || [],
   }
 }
 

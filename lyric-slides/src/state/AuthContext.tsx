@@ -7,7 +7,6 @@ type AuthContextType = {
   session: Session | null
   loading: boolean
   signInWithGoogle: () => Promise<void>
-  signInWithApple: () => Promise<void>
   signOut: () => Promise<void>
 }
 
@@ -57,27 +56,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     })
   }
 
-  const signInWithApple = async () => {
-    if (!isSupabaseConfigured) {
-      alert('Supabase is not configured. Please set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY')
-      return
-    }
-    const redirectUrl = `${window.location.origin}${window.location.pathname}`
-    await supabase.auth.signInWithOAuth({
-      provider: 'apple',
-      options: {
-        redirectTo: redirectUrl,
-      },
-    })
-  }
-
   const signOut = async () => {
     if (!isSupabaseConfigured) return
     await supabase.auth.signOut()
   }
 
   return (
-    <AuthContext.Provider value={{ user, session, loading, signInWithGoogle, signInWithApple, signOut }}>
+    <AuthContext.Provider value={{ user, session, loading, signInWithGoogle, signOut }}>
       {children}
     </AuthContext.Provider>
   )

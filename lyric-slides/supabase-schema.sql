@@ -40,6 +40,18 @@ CREATE INDEX IF NOT EXISTS idx_user_setlists_user_id ON user_setlists(user_id);
 CREATE INDEX IF NOT EXISTS idx_saved_setlists_user_id ON saved_setlists(user_id);
 CREATE INDEX IF NOT EXISTS idx_saved_setlists_created_at ON saved_setlists(user_id, created_at DESC);
 
+-- Shared setlists table (publicly shareable setlists snapshot)
+CREATE TABLE IF NOT EXISTS shared_setlists (
+  id TEXT PRIMARY KEY,
+  label TEXT NOT NULL,
+  song_ids JSONB NOT NULL DEFAULT '[]'::jsonb,
+  songs JSONB NOT NULL DEFAULT '[]'::jsonb,
+  created_by UUID REFERENCES auth.users(id) ON DELETE SET NULL,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_shared_setlists_created_at ON shared_setlists(created_at DESC);
+
 -- Unique index to ensure one song per user per song ID
 CREATE UNIQUE INDEX IF NOT EXISTS idx_user_libraries_unique_song 
   ON user_libraries(user_id, ((song_data->>'id')));
@@ -48,6 +60,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS idx_user_libraries_unique_song
 ALTER TABLE user_libraries ENABLE ROW LEVEL SECURITY;
 ALTER TABLE user_setlists ENABLE ROW LEVEL SECURITY;
 ALTER TABLE saved_setlists ENABLE ROW LEVEL SECURITY;
+ALTER TABLE shared_setlists ENABLE ROW LEVEL SECURITY;
 
 -- Users can only access their own libraries
 CREATE POLICY "Users can view their own libraries"
@@ -100,6 +113,18 @@ CREATE POLICY "Users can delete their own saved setlists"
   ON saved_setlists FOR DELETE
   USING (auth.uid() = user_id);
 
+CREATE POLICY "Anyone can view shared setlists"
+  ON shared_setlists FOR SELECT
+  USING (true);
+
+CREATE POLICY "Authenticated users can create shared setlists"
+  ON shared_setlists FOR INSERT
+  WITH CHECK (auth.role() = 'authenticated' AND auth.uid() = created_by);
+
+CREATE POLICY "Creators can delete shared setlists"
+  ON shared_setlists FOR DELETE
+  USING (auth.uid() = created_by);
+
 -- Function to update updated_at timestamp
 CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER AS $$
@@ -122,6 +147,11 @@ CREATE TRIGGER update_user_setlists_updated_at
 
 CREATE TRIGGER update_saved_setlists_updated_at
   BEFORE UPDATE ON saved_setlists
+  FOR EACH ROW
+  EXECUTE FUNCTION update_updated_at_column();
+
+CREATE TRIGGER update_shared_setlists_updated_at
+  BEFORE UPDATE ON shared_setlists
   FOR EACH ROW
   EXECUTE FUNCTION update_updated_at_column();
 

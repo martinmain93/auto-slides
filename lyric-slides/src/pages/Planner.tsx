@@ -1,13 +1,16 @@
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { Song } from '../types'
-import { Button, TextInput, Group, Stack, Paper, Title, Box, ScrollArea, Divider, Badge, Card, Text, AppShell, FileButton, Modal, Menu, ActionIcon } from '@mantine/core'
+import { Button, TextInput, Group, Stack, Paper, Title, Box, ScrollArea, Divider, Badge, Card, Text, AppShell, FileButton, Modal, Menu, ActionIcon, CopyButton, Loader, Alert, Center } from '@mantine/core'
 import { DndContext, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'
 import type { DragEndEvent } from '@dnd-kit/core'
 import { SortableContext, useSortable, arrayMove, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { useAppState } from '../state/AppStateContext'
 import { sectionToColor } from '../utils/sections'
+import { AuthButton } from '../components/AuthButton'
+import { useAuth } from '../state/AuthContext'
+import { createSharedSetlist } from '../lib/supabaseSync'
 
 function SongSearch({ library, onPick, selectedIds }: { library: Song[]; onPick: (song: Song) => void; selectedIds: string[] }) {
   const [q, setQ] = useState('')
@@ -95,8 +98,13 @@ function SortableQueueItem({ id, title, selected, onSelect, onRemove }: Sortable
   )
 }
 
+const LoadIcon = () => <span aria-hidden="true" style={{ fontSize: 12 }}>▶</span>
+const ShareIcon = () => <span aria-hidden="true" style={{ fontSize: 12 }}>🔗</span>
+const DeleteIcon = () => <span aria-hidden="true" style={{ fontSize: 12 }}>🗑</span>
+
 export default function Planner() {
   const navigate = useNavigate()
+  const { user } = useAuth()
   const { state, setState, addToQueue, addRecent, selectSong, removeFromQueue, clearQueue, upsertSong, createSetlist, loadSetlist, deleteSetlist } = useAppState()
   const currentSong = state.library.find(s => s.id === state.currentSongId)
 
@@ -104,6 +112,10 @@ export default function Planner() {
   const [importPreview, setImportPreview] = useState<Song[] | null>(null)
   const [saveSetlistOpen, setSaveSetlistOpen] = useState(false)
   const [setlistLabel, setSetlistLabel] = useState('')
+  const [shareModalOpen, setShareModalOpen] = useState(false)
+  const [shareLink, setShareLink] = useState<string | null>(null)
+  const [shareLoading, setShareLoading] = useState(false)
+  const [shareError, setShareError] = useState<string | null>(null)
 
   // dnd-kit sensors
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 6 } }))
@@ -163,6 +175,48 @@ export default function Planner() {
     setImportPreview(null)
   }
 
+  const resetShareModal = () => {
+    setShareModalOpen(false)
+    setShareLink(null)
+    setShareError(null)
+    setShareLoading(false)
+  }
+
+  const handleShare = async (setlistId: string) => {
+    const target = state.setlists.find((sl) => sl.id === setlistId)
+    if (!target) return
+
+    if (!user) {
+      alert('Sign in to share setlists.')
+      return
+    }
+
+    const songs = target.songIds
+      .map((id) => state.library.find((song) => song.id === id))
+      .filter((song): song is Song => Boolean(song))
+
+    if (songs.length !== target.songIds.length) {
+      alert('Some songs in this setlist are missing from your library. Please ensure all songs exist before sharing.')
+      return
+    }
+
+    setShareModalOpen(true)
+    setShareLoading(true)
+    setShareError(null)
+    setShareLink(null)
+
+    try {
+      const code = await createSharedSetlist(user.id, target, songs)
+      const origin = typeof window !== 'undefined' ? window.location.origin.replace(/\/$/, '') : ''
+      setShareLink(`${origin}/share/${code}`)
+    } catch (error) {
+      console.error('Failed to create share link:', error)
+      setShareError('Unable to create share link. Please try again.')
+    } finally {
+      setShareLoading(false)
+    }
+  }
+ 
   return (
     <AppShell padding="md" withBorder={false} navbar={{ width: 320, breakpoint: 'sm' }}>
       <AppShell.Navbar p="md">
@@ -232,12 +286,19 @@ export default function Planner() {
                         </ActionIcon>
                       </Menu.Target>
                       <Menu.Dropdown>
-                        <Menu.Item onClick={() => loadSetlist(setlist.id)}>Load</Menu.Item>
-                        <Menu.Item onClick={() => {
-                          if (confirm(`Delete "${setlist.label}"?`)) {
-                            deleteSetlist(setlist.id)
-                          }
-                        }} color="red">Delete</Menu.Item>
+                        <Menu.Item leftSection={<LoadIcon />} onClick={() => loadSetlist(setlist.id)}>Load</Menu.Item>
+                        <Menu.Item leftSection={<ShareIcon />} onClick={() => handleShare(setlist.id)}>Share</Menu.Item>
+                        <Menu.Item
+                          leftSection={<DeleteIcon />}
+                          onClick={() => {
+                            if (confirm(`Delete "${setlist.label}"?`)) {
+                              deleteSetlist(setlist.id)
+                            }
+                          }}
+                          color="red"
+                        >
+                          Delete
+                        </Menu.Item>
                       </Menu.Dropdown>
                     </Menu>
                   </Group>
@@ -281,6 +342,44 @@ export default function Planner() {
             </Group>
           </Stack>
         </Modal>
+
+        <Modal opened={shareModalOpen} onClose={resetShareModal} title="Share Setlist">
+          <Stack gap="sm">
+            {shareLoading ? (
+              <Center>
+                <Loader size="sm" />
+              </Center>
+            ) : shareError ? (
+              <Alert color="red" variant="light">
+                {shareError}
+              </Alert>
+            ) : shareLink ? (
+              <Stack gap="xs">
+                <Text size="sm">Share this link:</Text>
+                <Group gap="xs" align="center" wrap="nowrap">
+                  <TextInput value={shareLink} readOnly style={{ flex: 1 }} />
+                  <CopyButton value={shareLink} timeout={2000}>
+                    {({ copied, copy }) => (
+                      <Button variant={copied ? 'light' : 'filled'} color={copied ? 'teal' : 'blue'} onClick={copy}>
+                        {copied ? 'Copied!' : 'Copy'}
+                      </Button>
+                    )}
+                  </CopyButton>
+                </Group>
+                <Text size="xs" c="dimmed">
+                  Anyone with the link can import this setlist.
+                </Text>
+              </Stack>
+            ) : (
+              <Text size="sm" c="dimmed">Generating share link...</Text>
+            )}
+            {!shareLoading && !shareError && shareLink && (
+              <Button variant="light" onClick={() => window.open(shareLink, '_blank')}>
+                Open link
+              </Button>
+            )}
+          </Stack>
+        </Modal>
         
         <Modal opened={importOpen} onClose={() => setImportOpen(false)} title="Import preview">
           {importPreview && importPreview.length > 0 ? (
@@ -305,13 +404,16 @@ export default function Planner() {
         </Modal>
         <Box p="md" style={{ position: 'relative' }}>
         <Box style={{ position: 'relative' }}>
-          <Group justify="space-between" mb="sm">
+          <Group justify="space-between" mb="sm" align="flex-start">
             <SongSearch library={state.library} onPick={onPick} selectedIds={state.queue} />
-            <Stack gap={6} align="end">
-              <FileButton onChange={file => { if (file) void onImport(file) }} accept=".txt">
-                {(props) => <Button {...props} variant="light">Import ProPresenter .txt</Button>}
-              </FileButton>
-              <Button variant="default" onClick={() => { void navigate('/edit?new=1') }}>Add New Song</Button>
+            <Stack gap="md" align="end">
+              <AuthButton />
+              <Stack gap={6} align="end">
+                <FileButton onChange={file => { if (file) void onImport(file) }} accept=".txt">
+                  {(props) => <Button {...props} variant="light">Import ProPresenter .txt</Button>}
+                </FileButton>
+                <Button variant="default" onClick={() => { void navigate('/edit?new=1') }}>Add New Song</Button>
+              </Stack>
             </Stack>
           </Group>
         </Box>

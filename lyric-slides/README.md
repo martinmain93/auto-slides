@@ -8,6 +8,7 @@ Features
 - Present mode: keyboard-driven navigation with start/end blank slides for smooth transitions
 - Quick access: recent picks and live slide preview
 - Import: parse ProPresenter .txt exports into your library
+- Share setlists: generate shareable links that import songs and queues into another account
 
 Getting Started
 Requirements
@@ -57,9 +58,9 @@ For Netlify deployment with Supabase:
 1. Add environment variables in Netlify dashboard:
    - Go to Site settings → Environment variables
    - Add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`
-2. Configure OAuth providers in Supabase:
+2. Configure OAuth provider in Supabase:
    - Go to Authentication → Providers
-   - Enable Google and/or Apple OAuth
+   - Enable Google OAuth
    - Add redirect URLs (your Netlify domain)
 
 Tests
@@ -101,9 +102,14 @@ State Persistence
 - To reset, clear browser storage or sign out
 
 Authentication
-- Sign in with Google or Apple OAuth
+- Sign in with Google OAuth
 - Your library and setlists are automatically synced across devices
 - No account required for local-only usage
+
+Sharing
+- Save a queue as a setlist then use the menu • Share option
+- A link like `https://your-site.netlify.app/share/ABC123` is generated
+- Opening the link imports the songs and setlist and redirects to the planner
 
 Contributing
 - Code style is enforced by ESLint and Prettier
