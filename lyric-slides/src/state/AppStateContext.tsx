@@ -33,6 +33,29 @@ const AppStateContext = createContext<Ctx | null>(null)
 
 const STORAGE_KEY = 'lyric-slides:app-state'
 
+function generateUuid(): string {
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+    return crypto.randomUUID()
+  }
+  // Fallback UUIDv4 generator
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+    const r = (Math.random() * 16) | 0
+    const v = c === 'x' ? r : (r & 0x3) | 0x8
+    return v.toString(16)
+  })
+}
+
+function normalizeSetlists(setlists: Setlist[] | undefined | null): Setlist[] {
+  if (!Array.isArray(setlists)) return []
+  return setlists.map((sl) => {
+    const hasUuid = typeof sl.id === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(sl.id)
+    return {
+      ...sl,
+      id: hasUuid ? sl.id : generateUuid(),
+    }
+  })
+}
+
 export function AppStateProvider({ children }: { children: React.ReactNode }) {
   const { user, loading: authLoading } = useAuth()
   const [state, setState] = useState<AppState>(() => {
@@ -41,9 +64,10 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
       try {
         const parsed = JSON.parse(raw) as AppState
         if (Array.isArray(parsed.library) && Array.isArray(parsed.queue)) {
+          const setlists = normalizeSetlists(parsed.setlists)
           return {
             ...parsed,
-            setlists: parsed.setlists || [],
+            setlists,
           }
         }
       } catch {
@@ -76,7 +100,10 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
           try {
             const parsed = JSON.parse(raw) as AppState
             if (Array.isArray(parsed.library) && Array.isArray(parsed.queue)) {
-              setState(() => parsed)
+              setState(() => ({
+                ...parsed,
+                setlists: normalizeSetlists(parsed.setlists),
+              }))
             }
           } catch {
             // Ignore invalid persisted state
@@ -94,7 +121,7 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
           library: cloudState.library || prev.library,
           queue: cloudState.queue || prev.queue,
           recents: cloudState.recents || prev.recents,
-          setlists: cloudState.setlists || prev.setlists,
+          setlists: cloudState.setlists ? normalizeSetlists(cloudState.setlists) : prev.setlists,
         }))
       } catch (error) {
         console.error('Failed to load user data from cloud:', error)
@@ -104,7 +131,10 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
           try {
             const parsed = JSON.parse(raw) as AppState
             if (Array.isArray(parsed.library) && Array.isArray(parsed.queue)) {
-              setState(() => parsed)
+              setState(() => ({
+                ...parsed,
+                setlists: normalizeSetlists(parsed.setlists),
+              }))
             }
           } catch {
             // Ignore invalid persisted state
@@ -247,7 +277,7 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
           return
         }
         const newSetlist: Setlist = {
-          id: crypto.randomUUID(),
+          id: generateUuid(),
           label,
           songIds: [...state.queue],
           createdAt: new Date().toISOString(),
@@ -329,7 +359,7 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
             .filter((id) => updatedLibrary.some((song) => song.id === id))
 
           const createdSetlist: Setlist = {
-            id: `setlist-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+            id: generateUuid(),
             label,
             songIds: mappedIds,
             createdAt: new Date().toISOString(),
