@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Center, Loader, Stack, Title, Text, Button, Paper } from '@mantine/core'
 import { fetchSharedSetlist } from '../lib/supabaseSync'
@@ -8,8 +8,13 @@ export default function ShareImport() {
   const { code } = useParams<{ code: string }>()
   const navigate = useNavigate()
   const { importSharedSetlist } = useAppState()
+  const importSharedSetlistRef = useRef(importSharedSetlist)
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading')
   const [message, setMessage] = useState<string>('Loading setlist...')
+
+  useEffect(() => {
+    importSharedSetlistRef.current = importSharedSetlist
+  }, [importSharedSetlist])
 
   useEffect(() => {
     let cancelled = false
@@ -32,7 +37,7 @@ export default function ShareImport() {
       }
 
       try {
-        await importSharedSetlist(payload)
+        await importSharedSetlistRef.current(payload)
         if (cancelled) return
         setStatus('success')
         setMessage('Setlist imported! Redirecting to planner...')
@@ -52,7 +57,7 @@ export default function ShareImport() {
     return () => {
       cancelled = true
     }
-  }, [code, importSharedSetlist, navigate])
+  }, [code, navigate])
 
   return (
     <Center mih="100vh" p="md">
