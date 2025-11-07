@@ -18,7 +18,7 @@ export default function Presentation() {
   const nav = useNavigation({ state, setState, onExit: () => { void navigate('/plan') } })
   const { queue, currentSongId, currentSong, slideIndex, setSlideIndex, blankPos, setBlankPos, goSong } = nav
   const [controlsVisible, setControlsVisible] = useState(true)
-  const [devVisible, setDevVisible] = useState(true)
+  const [devVisible, setDevVisible] = useState(false)
   const [useEnhancedAudio, setUseEnhancedAudio] = useState(false)
   const [dualScreenMode, setDualScreenMode] = useState(false)
   const slidesScrollerRef = useRef<HTMLDivElement | null>(null)
