@@ -90,7 +90,7 @@ function SortableQueueItem({ id, title, selected, onSelect, onRemove }: Sortable
         size="compact-sm"
         aria-label="remove"
         onClick={onRemove}
-        style={{ position: 'absolute', top: -6, right: -6, width: 22, height: 22, borderRadius: 999, padding: 0, lineHeight: 1, display: 'grid', placeItems: 'center' }}
+        style={{ position: 'absolute', top: -6, right: 5, width: 22, height: 22, borderRadius: 999, padding: 0, lineHeight: 1, display: 'grid', placeItems: 'center' }}
       >
         ×
       </Button>
@@ -220,31 +220,34 @@ export default function Planner() {
   return (
     <AppShell padding="md" withBorder={false} navbar={{ width: 320, breakpoint: 'sm' }}>
       <AppShell.Navbar p="md">
-      <Paper withBorder p="md" radius={0} style={{ borderRight: '1px solid var(--mantine-color-dark-5)', background: 'var(--mantine-color-dark-8)' }}>
+      <Paper withBorder p="md" radius={0} style={{ borderRight: '1px solid var(--mantine-color-dark-5)', background: 'var(--mantine-color-dark-8)', height: '100%', display: 'flex', flexDirection: 'column' }}>
         <Button fullWidth size="md" onClick={() => { void navigate('/present') }}>
           Start Presentation
         </Button>
+        
         <Group justify="space-between" mt="md" mb="xs">
           <Title order={3} m={0}>Queue</Title>
           <Button size="xs" variant="subtle" color="gray" onClick={() => clearQueue()} disabled={state.queue.length === 0}>Clear</Button>
         </Group>
-        <DndContext sensors={sensors} onDragEnd={onDragEnd}>
-          <SortableContext items={state.queue} strategy={verticalListSortingStrategy}>
-            <Stack gap="xs">
-              {state.queue.map((id) => (
-                <SortableQueueItem
-                  key={id}
-                  id={id}
-                  title={state.library.find(x => x.id === id)?.title || id}
-                  selected={id === state.currentSongId}
-                  onSelect={() => selectSong(id)}
-                  onRemove={() => removeFromQueue(id)}
-                />
-              ))}
-              {state.queue.length === 0 && <Box style={{ opacity: 0.7 }}>No songs yet</Box>}
-            </Stack>
-          </SortableContext>
-        </DndContext>
+        <ScrollArea flex={1} style={{ minHeight: 0 }}>
+          <DndContext sensors={sensors} onDragEnd={onDragEnd}>
+            <SortableContext items={state.queue} strategy={verticalListSortingStrategy}>
+              <Stack gap="xs">
+                {state.queue.map((id) => (
+                  <SortableQueueItem
+                    key={id}
+                    id={id}
+                    title={state.library.find(x => x.id === id)?.title || id}
+                    selected={id === state.currentSongId}
+                    onSelect={() => selectSong(id)}
+                    onRemove={() => removeFromQueue(id)}
+                  />
+                ))}
+                {state.queue.length === 0 && <Box style={{ opacity: 0.7 }}>No songs yet</Box>}
+              </Stack>
+            </SortableContext>
+          </DndContext>
+        </ScrollArea>
         
         <Divider my="md" />
         
@@ -265,7 +268,7 @@ export default function Planner() {
             Save Current
           </Button>
         </Group>
-        <ScrollArea h={300}>
+        <ScrollArea flex={1} style={{ minHeight: 0 }}>
           <Stack gap="xs">
             {state.setlists.length === 0 ? (
               <Text size="sm" c="dimmed" style={{ opacity: 0.7 }}>No saved setlists</Text>

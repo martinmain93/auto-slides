@@ -29,6 +29,28 @@ a:hover { text-decoration: underline }
   display: none; /* Safari and Chrome */
 }
 
+/* Never show horizontal scrollbars - hide them globally */
+* {
+  scrollbar-width: thin; /* Firefox - thin vertical scrollbars only */
+}
+*::-webkit-scrollbar {
+  height: 0 !important; /* Hide horizontal scrollbar in Chrome/Safari */
+  width: 8px; /* Show vertical scrollbar */
+}
+*::-webkit-scrollbar:horizontal {
+  display: none !important;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background: rgba(128, 128, 128, 0.5);
+  border-radius: 4px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(128, 128, 128, 0.7);
+}
+
 /* HorizontalPicker fade edges */
 .hp-fade {
   position: absolute;
