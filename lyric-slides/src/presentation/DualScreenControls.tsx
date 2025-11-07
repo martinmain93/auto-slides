@@ -36,7 +36,7 @@ export function DualScreenControls(props: {
   return (
     <Box style={{ position: 'fixed', inset: 0, background: '#1a1a1a', color: 'white', display: 'flex', flexDirection: 'row' }}>
       {/* Left side - 25% */}
-      <Box style={{ flex: '0 0 25%', background: '#0f0f0f', borderRight: '2px solid #333', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+      <Box style={{ flex: '0 0 410px', background: '#0f0f0f', borderRight: '2px solid #333', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
         {/* Top left - Controls */}
         <Box style={{ padding: 16, borderBottom: '2px solid #333', display: 'flex', flexDirection: 'column', gap: 12 }}>
           <Box style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>

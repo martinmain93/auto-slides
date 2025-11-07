@@ -53,7 +53,7 @@ export function AuthButton() {
       color="dark"
       leftSection={<GoogleIcon />}
       onClick={() => void signInWithGoogle()}
-      style={{ boxShadow: '0 1px 2px rgba(0,0,0,0.1)' }}
+      style={{ boxShadow: '0 1px 2px rgba(0,0,0,0.1)', width: '193px' }}
     >
       Sign in with Google
     </Button>

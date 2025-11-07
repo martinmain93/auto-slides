@@ -408,11 +408,11 @@ export default function Planner() {
             <SongSearch library={state.library} onPick={onPick} selectedIds={state.queue} />
             <Stack gap="md" align="end">
               <AuthButton />
-              <Stack gap={6} align="end">
+              <Stack gap={4} align="end">
                 <FileButton onChange={file => { if (file) void onImport(file) }} accept=".txt">
                   {(props) => <Button {...props} variant="light">Import ProPresenter .txt</Button>}
                 </FileButton>
-                <Button variant="default" onClick={() => { void navigate('/edit?new=1') }}>Add New Song</Button>
+                <Button variant="default" style={{ width: '193px', marginTop: '10px' }} onClick={() => { void navigate('/edit?new=1') }}>Add New Song</Button>
               </Stack>
             </Stack>
           </Group>
