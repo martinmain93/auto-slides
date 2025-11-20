@@ -2,6 +2,13 @@
 
 A modern web application for planning, editing, and presenting song lyrics in real-time. Built with React, TypeScript, and Vite.
 
+See a running version here:
+
+https://church-slides.netlify.app/
+
+- Front end serving by Netlify
+- Backend database and auth by Supabase
+
 ## Project Structure
 
 This repository contains:
