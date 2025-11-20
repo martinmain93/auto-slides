@@ -25,6 +25,9 @@ export type AppActions = {
   loadSetlist: (setlistId: string) => void
   deleteSetlist: (setlistId: string) => void
   importSharedSetlist: (payload: SharedSetlistPayload) => Promise<void>
+  renameCurrentSet: (newLabel: string) => void
+  saveCurrentSet: (label?: string) => void
+  deleteCurrentSet: () => void
 }
 
 type Ctx = { state: AppState; setState: React.Dispatch<React.SetStateAction<AppState>> } & AppActions
@@ -79,6 +82,7 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
       recents: [],
       queue: [],
       setlists: [],
+      currentSetlistId: undefined,
       currentSlideIndex: 0,
       usePhonemeDict: true,
       phonemeSource: 'remote',
@@ -223,19 +227,25 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
           if (s.queue.includes(songId)) {
             return { ...s, currentSongId: s.currentSongId ?? songId }
           }
-          return { ...s, queue: [...s.queue, songId], currentSongId: s.currentSongId ?? songId }
+          // Clear currentSetlistId when queue is modified
+          return { ...s, queue: [...s.queue, songId], currentSongId: s.currentSongId ?? songId, currentSetlistId: undefined }
         }),
       addRecent: (songId: string) =>
         setState((s) => ({ ...s, recents: [songId, ...s.recents.filter((id) => id !== songId)].slice(0, 12) })),
       selectSong: (songId: string) => setState((s) => ({ ...s, currentSongId: songId, currentSlideIndex: 0 })),
       removeFromQueue: (songId: string) =>
-        setState((s) => ({
+        setState((s) => {
+          const newQueue = s.queue.filter((id) => id !== songId)
+          // Clear currentSetlistId when queue is modified
+          return {
           ...s,
-          queue: s.queue.filter((id) => id !== songId),
+            queue: newQueue,
           currentSongId: s.currentSongId === songId ? undefined : s.currentSongId,
-        })),
+            currentSetlistId: undefined,
+          }
+        }),
       clearQueue: () =>
-        setState((s) => ({ ...s, queue: [], currentSongId: undefined, currentSlideIndex: 0 })),
+        setState((s) => ({ ...s, queue: [], currentSongId: undefined, currentSlideIndex: 0, currentSetlistId: undefined })),
       upsertSong: (song) => {
         setState((s) => {
           const idx = s.library.findIndex((x) => x.id === song.id)
@@ -285,6 +295,7 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
         setState((s) => ({
           ...s,
           setlists: [newSetlist, ...s.setlists],
+          currentSetlistId: newSetlist.id,
         }))
         // Save to Supabase if logged in
         if (user?.id) {
@@ -301,6 +312,7 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
           queue: [...setlist.songIds],
           currentSongId: setlist.songIds[0],
           currentSlideIndex: 0,
+          currentSetlistId: setlistId,
         }))
       },
       deleteSetlist: (setlistId: string) => {
@@ -322,16 +334,36 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
         let insertedSongs: Song[] = []
         setState((s) => {
           const existingIds = new Set(s.library.map((song) => song.id))
+          // Map of title -> song for deduplication
+          const titleToSong = new Map<string, Song>()
+          s.library.forEach((song) => {
+            const key = song.title.toLowerCase().trim()
+            if (!titleToSong.has(key)) {
+              titleToSong.set(key, song)
+            }
+          })
+
           const idMap = new Map<string, string>()
           const updatedLibrary = [...s.library]
 
           songs.forEach((originalSong) => {
+            const titleKey = originalSong.title.toLowerCase().trim()
+            const existingSong = titleToSong.get(titleKey)
+
+            // If a song with the same title exists, reuse it
+            if (existingSong) {
+              idMap.set(originalSong.id, existingSong.id)
+              return // Skip adding duplicate
+            }
+
+            // Otherwise, create new song with deduplicated ID
             let newId = originalSong.id
             while (existingIds.has(newId) || idMap.has(newId)) {
               newId = `${originalSong.id}-${Math.random().toString(36).slice(2, 6)}`
             }
             idMap.set(originalSong.id, newId)
             existingIds.add(newId)
+            titleToSong.set(titleKey, { ...originalSong, id: newId } as Song)
 
             const slides = (originalSong.slides || []).map((slide, idx) => ({
               ...slide,
@@ -345,13 +377,7 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
             }
 
             insertedSongs.push(normalizedSong)
-
-            const idx = updatedLibrary.findIndex((song) => song.id === normalizedSong.id)
-            if (idx >= 0) {
-              updatedLibrary[idx] = normalizedSong
-            } else {
-              updatedLibrary.push(normalizedSong)
-            }
+            updatedLibrary.push(normalizedSong)
           })
 
           const mappedIds = songIds
@@ -374,6 +400,7 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
             queue: mappedIds,
             currentSongId: mappedIds[0],
             currentSlideIndex: 0,
+            currentSetlistId: createdSetlist.id,
           }
         })
 
@@ -386,8 +413,102 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
           await saveSetlist(user.id, createdSetlistRef)
         }
       },
+      renameCurrentSet: (newLabel: string) => {
+        if (!state.currentSetlistId) return
+        const setlist = state.setlists.find((s) => s.id === state.currentSetlistId)
+        if (!setlist) return
+        
+        const updatedSetlist: Setlist = {
+          ...setlist,
+          label: newLabel,
+        }
+        setState((s) => ({
+          ...s,
+          setlists: s.setlists.map((sl) => (sl.id === state.currentSetlistId ? updatedSetlist : sl)),
+        }))
+        
+        // Save to Supabase if logged in
+        if (user?.id) {
+          saveSetlist(user.id, updatedSetlist).catch((error) => {
+            console.error('Failed to save renamed setlist to cloud:', error)
+          })
+        }
+      },
+      saveCurrentSet: (label?: string) => {
+        if (!state.queue.length) {
+          alert('Queue is empty. Add some songs to save.')
+          return
+        }
+        
+        if (state.currentSetlistId) {
+          // Update existing setlist
+          const setlist = state.setlists.find((s) => s.id === state.currentSetlistId)
+          if (setlist) {
+            const updatedSetlist: Setlist = {
+              ...setlist,
+              songIds: [...state.queue],
+            }
+            setState((s) => ({
+              ...s,
+              setlists: s.setlists.map((sl) => (sl.id === state.currentSetlistId ? updatedSetlist : sl)),
+            }))
+            
+            // Save to Supabase if logged in
+            if (user?.id) {
+              saveSetlist(user.id, updatedSetlist).catch((error) => {
+                console.error('Failed to save setlist to cloud:', error)
+              })
+            }
+            return
+          }
+        }
+        
+        // Create new setlist
+        if (!label) {
+          alert('Please provide a name for the setlist.')
+          return
+        }
+        const newSetlist: Setlist = {
+          id: generateUuid(),
+          label,
+          songIds: [...state.queue],
+          createdAt: new Date().toISOString(),
+        }
+        setState((s) => ({
+          ...s,
+          setlists: [newSetlist, ...s.setlists],
+          currentSetlistId: newSetlist.id,
+        }))
+        
+        // Save to Supabase if logged in
+        if (user?.id) {
+          saveSetlist(user.id, newSetlist).catch((error) => {
+            console.error('Failed to save setlist to cloud:', error)
+          })
+        }
+      },
+      deleteCurrentSet: () => {
+        if (!state.currentSetlistId) return
+        const setlist = state.setlists.find((s) => s.id === state.currentSetlistId)
+        if (!setlist) return
+        
+        if (!confirm(`Delete "${setlist.label}"?`)) return
+        
+        setState((s) => ({
+          ...s,
+          setlists: s.setlists.filter((sl) => sl.id !== state.currentSetlistId),
+          currentSetlistId: undefined,
+        }))
+        
+        // Delete from Supabase if logged in
+        if (user?.id) {
+          deleteSetlist(user.id, state.currentSetlistId).catch((error) => {
+            console.error('Failed to delete setlist from cloud:', error)
+          })
+        }
+      },
     }),
-    [user?.id, state.queue, state.setlists, state.library],
+    [user?.id, state.queue, state.setlists, state.library, state.currentSetlistId],
   )
 
   const value: Ctx = { state, setState, ...actions }

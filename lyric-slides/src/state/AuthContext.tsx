@@ -47,7 +47,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       alert('Supabase is not configured. Please set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY')
       return
     }
+    // Use the current origin and pathname for redirect
+    // Make sure this URL is added to Supabase redirect URLs:
+    // - For localhost: http://localhost:5173 (or your Vite port)
+    // - For production: https://your-site.netlify.app
     const redirectUrl = `${window.location.origin}${window.location.pathname}`
+    console.log('OAuth redirect URL:', redirectUrl)
     await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {

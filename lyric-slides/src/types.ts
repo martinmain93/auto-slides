@@ -29,6 +29,7 @@ export type AppState = {
   recents: string[] // song ids
   queue: string[] // song ids in order
   setlists: Setlist[] // saved setlists
+  currentSetlistId?: string // ID of the setlist that the current queue represents
   currentSongId?: string
   currentSlideIndex: number
   usePhonemeDict: boolean

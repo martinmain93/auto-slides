@@ -105,7 +105,7 @@ const DeleteIcon = () => <span aria-hidden="true" style={{ fontSize: 12 }}>🗑<
 export default function Planner() {
   const navigate = useNavigate()
   const { user } = useAuth()
-  const { state, setState, addToQueue, addRecent, selectSong, removeFromQueue, clearQueue, upsertSong, createSetlist, loadSetlist, deleteSetlist } = useAppState()
+  const { state, setState, addToQueue, addRecent, selectSong, removeFromQueue, clearQueue, upsertSong, loadSetlist, deleteSetlist, renameCurrentSet, saveCurrentSet, deleteCurrentSet } = useAppState()
   const currentSong = state.library.find(s => s.id === state.currentSongId)
 
   const [importOpen, setImportOpen] = useState(false)
@@ -116,6 +116,10 @@ export default function Planner() {
   const [shareLink, setShareLink] = useState<string | null>(null)
   const [shareLoading, setShareLoading] = useState(false)
   const [shareError, setShareError] = useState<string | null>(null)
+  const [renameModalOpen, setRenameModalOpen] = useState(false)
+  const [renameLabel, setRenameLabel] = useState('')
+  
+  const currentSetlist = state.currentSetlistId ? state.setlists.find(s => s.id === state.currentSetlistId) : null
 
   // dnd-kit sensors
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 6 } }))
@@ -225,9 +229,43 @@ export default function Planner() {
           Start Presentation
         </Button>
         
-        <Group justify="space-between" mt="md" mb="xs">
-          <Title order={3} m={0}>Queue</Title>
-          <Button size="xs" variant="subtle" color="gray" onClick={() => clearQueue()} disabled={state.queue.length === 0}>Clear</Button>
+        <Group justify="space-between" mt="md" mb="xs" align="center">
+          {currentSetlist ? (
+            <>
+              <Group gap="xs" align="center" style={{ flex: 1 }}>
+                <Title order={3} m={0} style={{ flex: 1 }}>{currentSetlist.label}</Title>
+                <Menu shadow="md" width={180}>
+                  <Menu.Target>
+                    <ActionIcon variant="subtle" size="lg">
+                      ⋮
+                    </ActionIcon>
+                  </Menu.Target>
+                  <Menu.Dropdown>
+                    <Menu.Item leftSection={<span>✏️</span>} onClick={() => {
+                      setRenameLabel(currentSetlist.label)
+                      setRenameModalOpen(true)
+                    }}>Rename</Menu.Item>
+                    <Menu.Item leftSection={<span>💾</span>} onClick={() => saveCurrentSet()}>Save Changes</Menu.Item>
+                    <Menu.Item leftSection={<ShareIcon />} onClick={() => handleShare(state.currentSetlistId!)}>Share</Menu.Item>
+                    <Menu.Divider />
+                    <Menu.Item
+                      leftSection={<DeleteIcon />}
+                      onClick={() => deleteCurrentSet()}
+                      color="red"
+                    >
+                      Delete
+                    </Menu.Item>
+                  </Menu.Dropdown>
+                </Menu>
+              </Group>
+              <Button size="xs" variant="subtle" color="gray" onClick={() => clearQueue()} disabled={state.queue.length === 0}>Clear</Button>
+            </>
+          ) : (
+            <>
+              <Title order={3} m={0}>Queue</Title>
+              <Button size="xs" variant="subtle" color="gray" onClick={() => clearQueue()} disabled={state.queue.length === 0}>Clear</Button>
+            </>
+          )}
         </Group>
         <ScrollArea flex={1} style={{ minHeight: 0 }}>
           <DndContext sensors={sensors} onDragEnd={onDragEnd}>
@@ -261,11 +299,15 @@ export default function Planner() {
                 alert('Queue is empty. Add some songs to create a setlist.')
                 return
               }
-              setSaveSetlistOpen(true)
+              if (currentSetlist) {
+                saveCurrentSet()
+              } else {
+                setSaveSetlistOpen(true)
+              }
             }}
             disabled={state.queue.length === 0}
           >
-            Save Current
+            {currentSetlist ? 'Save' : 'Save Current'}
           </Button>
         </Group>
         <ScrollArea flex={1} style={{ minHeight: 0 }}>
@@ -323,7 +365,7 @@ export default function Planner() {
               onChange={(e) => setSetlistLabel(e.currentTarget.value)}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && setlistLabel.trim()) {
-                  createSetlist(setlistLabel.trim())
+                  saveCurrentSet(setlistLabel.trim())
                   setSaveSetlistOpen(false)
                   setSetlistLabel('')
                 }
@@ -337,11 +379,40 @@ export default function Planner() {
               <Button variant="default" onClick={() => { setSaveSetlistOpen(false); setSetlistLabel('') }}>Cancel</Button>
               <Button onClick={() => {
                 if (setlistLabel.trim()) {
-                  createSetlist(setlistLabel.trim())
+                  saveCurrentSet(setlistLabel.trim())
                   setSaveSetlistOpen(false)
                   setSetlistLabel('')
                 }
               }} disabled={!setlistLabel.trim()}>Save</Button>
+            </Group>
+          </Stack>
+        </Modal>
+        
+        <Modal opened={renameModalOpen} onClose={() => { setRenameModalOpen(false); setRenameLabel('') }} title="Rename Setlist">
+          <Stack>
+            <TextInput
+              label="Setlist Name"
+              placeholder="e.g., Sunday Morning Service"
+              value={renameLabel}
+              onChange={(e) => setRenameLabel(e.currentTarget.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && renameLabel.trim()) {
+                  renameCurrentSet(renameLabel.trim())
+                  setRenameModalOpen(false)
+                  setRenameLabel('')
+                }
+              }}
+              data-autofocus
+            />
+            <Group justify="flex-end">
+              <Button variant="default" onClick={() => { setRenameModalOpen(false); setRenameLabel('') }}>Cancel</Button>
+              <Button onClick={() => {
+                if (renameLabel.trim()) {
+                  renameCurrentSet(renameLabel.trim())
+                  setRenameModalOpen(false)
+                  setRenameLabel('')
+                }
+              }} disabled={!renameLabel.trim()}>Rename</Button>
             </Group>
           </Stack>
         </Modal>

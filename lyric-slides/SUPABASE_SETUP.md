@@ -50,10 +50,13 @@ This creates:
    - Authorized redirect URIs: Add `https://YOUR_PROJECT_REF.supabase.co/auth/v1/callback`
    - Copy the **Client ID** and **Client Secret** to Supabase
 5. **IMPORTANT**: Add your site URLs to **Redirect URLs** in Supabase:
-   - For local dev: `http://localhost:5173`
-   - For production: `https://your-site.netlify.app` (replace with your actual Netlify URL)
-   - You can add multiple URLs - add both localhost and your Netlify domain
-   - **This is required for OAuth to work in production!**
+   - Go to **Authentication** → **URL Configuration** (or **Settings** → **Auth** → **URL Configuration**)
+   - In the **Redirect URLs** section, add:
+     - For local dev: `http://localhost:5173` (or whatever port Vite uses - check your terminal)
+     - For production: `https://your-site.netlify.app` (replace with your actual Netlify URL)
+   - **You MUST add both URLs** - add them one at a time, clicking "Add URL" after each
+   - If you only add the Netlify URL, localhost logins will redirect to Netlify!
+   - **This is required for OAuth to work in both development and production!**
 
 ## Step 5: Configure Environment Variables
 
